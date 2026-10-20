@@ -8,6 +8,15 @@ from pathlib import Path
 
 INK = '#D3D3D3'
 PEN = 1.6  # felt-tip weight multiplier
+# Two marker inks, one job each: 'yolk' = the flock, 'dusk' = the venue in its quiet hours.
+# Pick a palette with --palette=NAME when rendering with --color.
+PALETTES = {
+    'yolk-dusk': {'yolk': '#FFAE1A', 'dusk': '#8B7FF0', 'ink': '#2b2b2b'},
+    'coral':     {'yolk': '#F35E3E', 'dusk': '#6173F4', 'ink': '#3B2E40'},   # flame coral / periwinkle / midnight plum
+    'classico':  {'yolk': '#F2D21B', 'dusk': '#E8262A', 'ink': '#120D0D', 'boost': 1.25},   # lemon yellow / fire red / black
+}
+PALETTE = PALETTES['coral']
+COLOR_INK = PALETTE['ink']
 W, H = 1100, 950
 
 
@@ -157,6 +166,9 @@ class Sheet:
     def __init__(self, seed):
         self.r = random.Random(seed)
         self.items = []
+        self.fills = []     # marker colour, printed under the ink
+        self.cr = random.Random(seed * 7 + 1)  # separate stream so colour never changes the ink
+        self.color = None   # when set, boxes and cylinders get filled with it
 
     def _emit(self, pts, width, wobble, ox, oy):
         r = self.r
@@ -237,6 +249,44 @@ class Sheet:
             for p, q in segs:
                 self.line([p, q], width=width, passes=1, wobble=0.5, over=3)
 
+    def marker(self, poly, color, angle=None, spacing=11.0, width=9.0, opacity=0.8, shift=5.0):
+        """Scribble a convex area in with a fat translucent marker, slightly off-register."""
+        if not color or len(poly) < 3:
+            return
+        r = self.cr
+        col = PALETTE.get(color, color)
+        if 'boost' in PALETTE:
+            opacity = round(min(1.0, opacity * PALETTE['boost']), 2)
+        dx, dy = r.uniform(-shift, shift), r.uniform(-shift, shift)
+        poly = [(x + dx, y + dy) for x, y in poly]
+        a = math.radians(angle if angle is not None else r.choice([28, 38, 52, 64, 118, 132]))
+        d = (math.cos(a), math.sin(a))
+        n = (-d[1], d[0])
+        proj = [q[0] * n[0] + q[1] * n[1] for q in poly]
+        c, hi = min(proj) + spacing * 0.45, max(proj) - spacing * 0.2
+        path = []
+        k = 0
+        while c < hi:
+            seg = clip(poly, n, c, d)
+            if seg:
+                (x0, y0), (x1, y1) = seg
+                L = math.hypot(x1 - x0, y1 - y0)
+                if L > 2:
+                    ux, uy = (x1 - x0) / L, (y1 - y0) / L
+                    i0, i1 = r.uniform(0.05, 0.35) * spacing, r.uniform(0.05, 0.35) * spacing
+                    if L > i0 + i1 + 2:
+                        x0, y0, x1, y1 = x0 + ux * i0, y0 + uy * i0, x1 - ux * i1, y1 - uy * i1
+                    path += [(x0, y0), (x1, y1)] if k % 2 == 0 else [(x1, y1), (x0, y0)]
+                    k += 1
+            c += spacing * r.uniform(0.85, 1.15)
+        if len(path) < 2:
+            return
+        saved, self.items = self.items, self.fills
+        saved_r, self.r = self.r, self.cr
+        self._emit(resample(path, 8), width, 0.9, 0, 0)
+        self.items, self.r = saved, saved_r
+        self.fills[-1] = self.fills[-1].replace('<path ', f'<path stroke="{col}" stroke-opacity="{opacity}" ', 1)
+
     def text(self, s, x, y, size=24, rot=0.0, width=2.1, anchor='start'):
         r = self.r
         k = size / 100
@@ -280,12 +330,18 @@ class Sheet:
         mx, my = (p[0] + q[0]) / 2, (p[1] + q[1]) / 2
         self.text(label, mx + nx * (12 + off), my + ny * (12 + off) + size * 0.9 * (1 if ny > 0 else 0), size=size, rot=a, anchor='middle', width=1.9)
 
-    def svg(self):
+    def svg(self, color=False):
+        ink = COLOR_INK if color else INK
+        fills = ''
+        if color and self.fills:
+            fills = ('<g stroke-linecap="round" stroke-linejoin="round" style="mix-blend-mode:multiply" filter="url(#ink)">'
+                     + ''.join(self.fills) + '</g>')
         return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" fill="none">'
                 '<defs><filter id="ink" x="-2%" y="-2%" width="104%" height="104%">'
                 '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="1" seed="4"/>'
                 '<feDisplacementMap in="SourceGraphic" scale="1.6"/></filter></defs>'
-                f'<g stroke="{INK}" stroke-linecap="round" stroke-linejoin="round" filter="url(#ink)">'
+                + fills +
+                f'<g stroke="{ink}" stroke-linecap="round" stroke-linejoin="round" filter="url(#ink)">'
                 + ''.join(self.items) + '</g></svg>')
 
 
@@ -339,6 +395,8 @@ def box(sh, cam, x, y, z, w, d, h, shade=0.35, spacing=7.0, width=2.6, top_shade
             edges.add(tuple(sorted((a, b))))
         fr = cam.facing_right(n)
         poly = [cam.P(c[i]) for i in idx]
+        if sh.color:
+            sh.marker(poly, sh.color)
         if (fr > shade) or (top_shade and n[2] == 1):
             ang = hatch_angle if hatch_angle is not None else sh.r.choice([35, 50, 62])
             sh.hatch(poly, angle=ang, spacing=spacing)
@@ -372,6 +430,9 @@ def cylinder(sh, cam, cx, cy, z, r, h, width=2.6, shade=True):
     bp = [cam.P(p) for p in bot]
     i0 = min(range(len(tp)), key=lambda i: tp[i][0])
     i1 = max(range(len(tp)), key=lambda i: tp[i][0])
+    if sh.color:
+        sh.marker(tp[:-1], sh.color)
+        sh.marker([tp[i0], tp[i1], bp[i1], bp[i0]], sh.color)
     sh.line([tp[i0], bp[i0]], width=width)
     sh.line([tp[i1], bp[i1]], width=width)
     if shade:
@@ -402,12 +463,15 @@ def sheet_table():
     sh = Sheet(11)
     cam = Cam(-26, 27, 2.1, 540, 620, D=1100)
     # far chair backs, peeking over the table
+    sh.color = 'dusk'
     for x in (-150, -70, 10, 90, 170):
         for px in (x - 18, x + 15):
             box(sh, cam, px, 60, 77, 3, 3, 16, shade=2, width=2.1)
         box(sh, cam, x - 18, 60, 88, 36, 3, 8, spacing=5)
     # top + legs
+    sh.color = 'dusk'
     box(sh, cam, -210, -45, 72, 420, 90, 6, spacing=6)
+    sh.color = None
     for lx, ly in ((-205, -40), (199, -40), (-205, 34), (199, 34)):
         box(sh, cam, lx, ly, 0, 6, 6, 72, shade=0.2, spacing=5, width=2.3)
     # plates and food
@@ -415,13 +479,17 @@ def sheet_table():
         for y in (-27, 27):
             sh.poly([cam.P(p) for p in circle3d(cam, x, y, 78.5, 12)[:-1]], width=2.3)
             sh.poly([cam.P(p) for p in circle3d(cam, x, y, 78.5, 7.5)[:-1]], width=1.6, passes=1)
+    sh.color = 'yolk'
     cylinder(sh, cam, -95, 0, 78, 11, 6)
     cylinder(sh, cam, 70, 2, 78, 9, 9)
+    sh.color = None
     box(sh, cam, -20, -7, 78, 34, 14, 9, spacing=5)
     for sx in (-10, 0, 10):
         sh.line([cam.P((sx, -6, 87)), cam.P((sx + 6, 6, 87))], width=1.8, passes=1)
     # the pulled-out chair
+    sh.color = 'yolk'
     chair(sh, cam, 235, -110, back=-1)
+    sh.color = None
     # notes
     sh.text('TABLE FOR 20', 70, 130, size=40, rot=-0.04, width=2.6)
     sh.arrow(bez((250, 150), (300, 200), (330, 250), (360, 330)))
@@ -437,11 +505,14 @@ def sheet_table():
 def sheet_chair():
     sh = Sheet(23)
     big = Cam(-32, 22, 5.2, 400, 760, D=700)
+    sh.color = 'dusk'
     chair(sh, big, 0, 0)
+    sh.color = 'dusk'
     front = Cam(0, 0, 2.6, 860, 470, D=10000)
     chair(sh, front, 0, 0, slats=True)
     side = Cam(90, 0, 2.6, 860, 860, D=10000)
     chair(sh, side, 0, 0, slats=False)
+    sh.color = None
     sh.text('BISTRO CHAIR', 80, 110, size=40, width=2.6)
     sh.text('THE ONE WE SAVE FOR YOU', 84, 160, size=20, width=1.8)
     sh.text('FRONT', 815, 210, size=20)
@@ -455,10 +526,13 @@ def sheet_chair():
 def sheet_storefront():
     sh = Sheet(37)
     cam = Cam(-28, 10, 1.55, 470, 820, D=2200)
+    sh.color = 'dusk'
     box(sh, cam, -200, 0, 0, 400, 260, 330, shade=0.5, spacing=8)
+    sh.color = None
     P = lambda x, z, y=0: cam.P((x, y, z))
     # window
     sh.poly([P(-175, 40), P(40, 40), P(40, 235), P(-175, 235)])
+    sh.marker([P(-175, 40), P(40, 40), P(40, 235), P(-175, 235)], 'yolk', opacity=0.55)
     sh.line([P(-68, 40), P(-68, 205)], width=2.2)
     sh.line([P(-175, 205), P(40, 205)], width=2.2)
     box(sh, cam, -185, -10, 30, 235, 10, 10, spacing=5)
@@ -471,6 +545,7 @@ def sheet_storefront():
     sh.line([P(-82, 172, 25), P(-75, 182, 25), P(-61, 182, 25), P(-54, 172, 25)], width=2, passes=1)
     # door
     sh.poly([P(80, 0), P(165, 0), P(165, 255), P(80, 255)])
+    sh.marker([P(80, 0), P(165, 0), P(165, 255), P(80, 255)], None)
     sh.poly([P(96, 140), P(150, 140), P(150, 238), P(96, 238)], width=2.1)
     sh.poly(ellipse(*P(152, 110), 4, 4, n=12), width=2, passes=1)
     sh.text('OPEN', *P(103, 175), size=14, rot=-0.06, width=1.6)
@@ -479,6 +554,7 @@ def sheet_storefront():
     for i, (x0, x1) in enumerate(zip(xs, xs[1:])):
         quad = [P(x0, 280), P(x1, 280), P(x1, 238, -75), P(x0, 238, -75)]
         if i % 2 == 0:
+            sh.marker(quad, 'yolk', angle=80, spacing=9)
             sh.hatch(quad, angle=78, spacing=5.5)
         sh.line([P(x0, 280), P(x0, 238, -75)], width=1.9, passes=1)
     sh.poly([P(-190, 280), P(190, 280), P(190, 238, -75), P(-190, 238, -75)])
@@ -497,6 +573,7 @@ def sheet_storefront():
     sh.line([cam.P((-320, -165, 0)), cam.P((360, -165, 0))], width=1.8, passes=1)
     fb = [cam.P((235, -112, 0)), cam.P((300, -112, 0)), cam.P((293, -95, 105)), cam.P((242, -95, 105))]
     sh.poly(fb)
+    sh.marker(fb, 'yolk')
     sh.line([cam.P((300, -112, 0)), cam.P((300, -78, 0)), cam.P((293, -95, 105))], width=2.2)
     inner = [cam.P((245, -110, 15)), cam.P((290, -110, 15)), cam.P((286, -97, 95)), cam.P((249, -97, 95))]
     sh.hatch(inner, angle=12, spacing=4.5)
@@ -521,6 +598,7 @@ def sheet_calendar():
         sh.poly([cam.P((x0 + dx, y0 + dy - 34, -2 - k)), cam.P((-x0 + dx, y0 + dy - 34, -2 - k)), cam.P((-x0 + dx, -y0 + dy + 6, -2 - k)), cam.P((x0 + dx, -y0 + dy + 6, -2 - k))], width=2, passes=1)
     page = [cam.P((x0, y0 - 34, 0)), cam.P((-x0, y0 - 34, 0)), cam.P((-x0, -y0 + 6, 0)), cam.P((x0, -y0 + 6, 0))]
     sh.poly(page)
+    sh.marker(page, 'dusk', spacing=14, opacity=0.45)
     # header band (the far side of the page is +y)
     sh.line([cam.P((x0, -y0 - 4 + 10, 0)), cam.P((-x0, -y0 - 4 + 10, 0))], width=2.2)
     a, b = cam.P((x0 + 20, -y0 - 0, 0)), cam.P((-x0 - 20, -y0 - 0, 0))
@@ -550,6 +628,7 @@ def sheet_calendar():
         l, rr = cam.P((x0 + cw, -y0 - 6 - j * ch - ch / 2, 0)), cam.P((x0 + 2 * cw, -y0 - 6 - j * ch - ch / 2, 0))
         t, b = cam.P((x0 + cw * 1.5, -y0 - 6 - j * ch, 0)), cam.P((x0 + cw * 1.5, -y0 - 6 - (j + 1) * ch, 0))
         rx, ry = abs(rr[0] - l[0]) * 0.46, abs(b[1] - t[1]) * 0.47
+        sh.marker(ellipse(c[0], c[1], rx * 0.85, ry * 0.8, n=16)[:-1], 'yolk', spacing=7, width=7)
         sh.poly(ellipse(c[0], c[1], rx * sh.r.uniform(0.93, 1.08), ry * sh.r.uniform(0.9, 1.1), rot=sh.r.uniform(-0.12, 0.12)), width=2.4, passes=1)
     # one tuesday hatched in: today
     j = 2
@@ -577,6 +656,8 @@ def sheet_card():
             pp = [cam.P(p) for p in pts]
             for a, b in zip(pp, pp[1:] + pp[:1]):
                 edges.append((a, b))
+            if n[1] < 0 or n[0] == 1:
+                sh.marker(pp, 'yolk')
             if n[0] == 1:
                 sh.hatch(pp, angle=60, spacing=6)
     for a, b in edges:
@@ -588,6 +669,7 @@ def sheet_card():
     # unfolded net
     nx, ny, nw, nh = 600, 520, 380, 260
     sh.poly([(nx, ny), (nx + nw, ny), (nx + nw, ny + nh), (nx, ny + nh)])
+    sh.marker([(nx, ny), (nx + nw, ny), (nx + nw, ny + nh), (nx, ny + nh)], 'yolk', opacity=0.6)
     for x in range(nx + 6, nx + nw, 22):
         sh.line([(x, ny + nh / 2), (x + 11, ny + nh / 2)], width=1.8, passes=1, over=1)
     sh.text('RESERVED', nx + nw / 2, ny + nh * 0.78, size=30, anchor='middle')
@@ -608,6 +690,7 @@ def sheet_supper():
     cx, cy, r = 280, 330, 150
     sh.poly(ellipse(cx, cy, r, r, n=60))
     sh.poly(ellipse(cx, cy, r - 18, r - 18, n=60), width=2.1, passes=1)
+    sh.marker(ellipse(cx, cy, r - 6, r - 6, n=30)[:-1], 'yolk')
     for k in range(8):
         a = k * math.pi / 4 + 0.2
         if k == 1:
@@ -616,6 +699,7 @@ def sheet_supper():
     for _ in range(14):
         a, d = sh.r.uniform(0, 6.3), sh.r.uniform(25, r - 40)
         px, py = cx + d * math.cos(a), cy + d * math.sin(a)
+        sh.marker(ellipse(px, py, 9, 8, n=10)[:-1], 'dusk', spacing=5, width=6, shift=2)
         sh.poly(ellipse(px, py, 9, 8, n=12), width=1.9, passes=1)
         if sh.r.random() < 0.5:
             sh.hatch(ellipse(px, py, 7, 6, n=10)[:-1], angle=45, spacing=3.5, width=1.5)
@@ -625,6 +709,7 @@ def sheet_supper():
     tip = (cx + ox, cy + oy)
     arc = ellipse(cx + ox, cy + oy, r, r, a0=a0, a1=a1, n=12)
     sh.poly([tip] + arc)
+    sh.marker([tip] + arc, 'yolk')
     sh.text('8 SLICES', 70, 110, size=24, rot=-0.04)
     sh.text('ONE GONE', 74, 146, size=20, rot=-0.04, width=1.8)
     # noodle bowl
@@ -641,6 +726,7 @@ def sheet_supper():
     base = [cam.P(p) for p in circle3d(cam, 0, 0, 0, 16)]
     front = [p for p in base if p[1] >= cam.P((0, 0, 0))[1] - 1]
     sh.line(prof_l + sorted(front, key=lambda q: q[0]) + prof_r[::-1])
+    sh.marker(prof_l + prof_r[::-1], 'dusk')
     sh.hatch([prof_r[0], prof_r[4], prof_r[8], cam.P((16, -4, 0)), cam.P((30, -20, 26))], angle=75, spacing=6)
     cxr, cyr = cam.P((0, 0, 30))
     for k in range(4):
@@ -655,6 +741,7 @@ def sheet_supper():
     bx, by = 260, 700
     loaf = bez((bx - 150, by + 60), (bx - 160, by - 70), (bx + 160, by - 70), (bx + 150, by + 60)) + [(bx - 150, by + 60)]
     sh.poly(loaf[:-1])
+    sh.marker(loaf[:-1], 'yolk', opacity=0.55)
     for k in range(-2, 3):
         sh.line([(bx + k * 50 - 18, by - 30), (bx + k * 50 + 14, by + 4)], width=2.4)
     sh.hatch([(bx + 40, by + 60), (bx + 150, by + 60), (bx + 140, by + 10), (bx + 90, by + 20)], angle=60, spacing=6)
@@ -684,6 +771,7 @@ def sheet_clubkit():
     T = lambda pts: [(ox + x * s, oy + y * s) for x, y in pts]
     upper = bez((10, 140), (0, 60), (30, 40), (70, 40)) + bez((70, 40), (120, 40), (150, 70), (200, 80))[1:] + bez((200, 80), (260, 90), (300, 110), (300, 140))[1:]
     sh.line(T(upper))
+    sh.marker(T(upper + [(300, 140), (10, 140)]), 'yolk')
     sole = [(4, 140), (304, 140), (300, 162), (10, 162), (4, 140)]
     sh.poly(T(sole[:-1]))
     sh.hatch(T([(10, 150), (300, 150), (298, 161), (12, 161)]), angle=80, spacing=5)
@@ -701,7 +789,9 @@ def sheet_clubkit():
     # books
     for i, yaw in enumerate((-18, -32, -12)):
         cam = Cam(yaw, 30, 2.5, 790, 330, D=900)
+        sh.color = ('yolk', 'dusk', 'yolk')[i]
         box(sh, cam, -34, -24, i * 10, 68, 48, 10, shade=0.3, spacing=4.5)
+        sh.color = None
     sh.text('BOOK', 750, 450, size=26)
     # yarn ball + needles
     yx, yy, yr = 240, 640, 78
@@ -710,6 +800,7 @@ def sheet_clubkit():
     sh.poly(ellipse(yx - 30, yy - 146, 7, 7, n=10), width=2, passes=1)
     sh.poly(ellipse(yx + 62, yy - 156, 7, 7, n=10), width=2, passes=1)
     sh.poly(ellipse(yx, yy, yr, yr, n=48))
+    sh.marker(ellipse(yx, yy, yr - 4, yr - 4, n=30)[:-1], 'dusk')
     for k in range(7):
         sh.line(ellipse(yx, yy, yr * 0.95, yr * (0.25 + k * 0.08), rot=0.5 + k * 0.42, a0=0.2, a1=2.9, n=24), width=1.9, passes=1)
     sh.line(bez((yx + yr, yy + 20), (yx + 160, yy + 40), (yx + 120, yy + 140), (yx + 220, yy + 150)), width=2.1, passes=1)
@@ -726,7 +817,9 @@ def sheet_clubkit():
     sh.text('CHESS', 510, 800, size=26)
     # notebook + pen
     cam = Cam(-24, 34, 2.3, 860, 640, D=900)
+    sh.color = 'yolk'
     box(sh, cam, -45, -32, 0, 90, 64, 8, shade=0.3, spacing=4.5)
+    sh.color = None
     sh.line([cam.P((25, -32, 8.2)), cam.P((25, 32, 8.2))], width=2.2)
     sh.line([(760, 720), (980, 560)], width=3.0)
     sh.line([(768, 728), (988, 568)], width=2.0, passes=1)
@@ -749,6 +842,7 @@ def sheet_plan():
     sh.text('IN', ex + 60, y1 + 95, size=22)
     # bar + stools
     sh.poly([(140, 190), (210, 190), (210, 560), (140, 560)])
+    sh.marker([(140, 190), (210, 190), (210, 560), (140, 560)], 'dusk')
     sh.hatch([(140, 190), (210, 190), (210, 560), (140, 560)], angle=45, spacing=9)
     for y in range(220, 550, 52):
         sh.poly(ellipse(242, y, 14, 14, n=14), width=2.1)
@@ -762,9 +856,11 @@ def sheet_plan():
     bx0, by0, bx1, by1 = 620, 120, 1000, 540
     sh.line([(bx0, by0), (bx0, 300)], width=2.8)
     sh.line([(bx0, 400), (bx0, by1), (bx1, by1)], width=2.8)
+    sh.marker([(bx0, by0), (bx1, by0), (bx1, by1), (bx0, by1)], 'yolk', spacing=14, opacity=0.5)
     sh.hatch([(bx0, by0), (bx1, by0), (bx1, by1), (bx0, by1)], angle=-35, spacing=26, width=1.4, zigzag=False, inset=0.0)
     tx0, ty0, tx1, ty1 = 690, 290, 950, 370
     sh.poly([(tx0, ty0), (tx1, ty0), (tx1, ty1), (tx0, ty1)], width=2.8)
+    sh.marker([(tx0, ty0), (tx1, ty0), (tx1, ty1), (tx0, ty1)], 'dusk')
     n = 9
     for i in range(n):
         x = tx0 + 14 + i * (tx1 - tx0 - 28) / (n - 1)
@@ -776,6 +872,7 @@ def sheet_plan():
     sh.text('20 PPL', 760, 455, size=22)
     # kitchen
     sh.poly([(760, 600), (1000, 600), (1000, 800), (760, 800)])
+    sh.marker([(760, 600), (1000, 600), (1000, 800), (760, 800)], 'dusk', opacity=0.5)
     sh.line([(760, 600), (1000, 800)], width=1.8, passes=1)
     sh.line([(1000, 600), (760, 800)], width=1.8, passes=1)
     sh.text('KITCHEN', 800, 712, size=22)
@@ -837,6 +934,7 @@ def sheet_lamps():
         sh.line([(cx, 40), (cx + sh.r.uniform(-3, 3), 290)], width=2.2)
     cx = 230
     sh.line(bez((cx - 120, 420), (cx - 118, 290), (cx + 118, 290), (cx + 120, 420)))
+    sh.marker(bez((cx - 120, 420), (cx - 118, 290), (cx + 118, 290), (cx + 120, 420)), 'dusk')
     sh.poly(ellipse(cx, 420, 120, 24, n=40))
     sh.hatch([(cx + 30, 318), (cx + 100, 350), (cx + 118, 418), (cx + 40, 432)], angle=70, spacing=6)
     sh.poly(ellipse(cx, 300, 16, 6, n=12), width=2, passes=1)
@@ -846,9 +944,11 @@ def sheet_lamps():
     sh.line([(cx + 22, 300), (cx + 105, 440)])
     sh.poly(ellipse(cx, 300, 22, 6, n=14), width=2.2)
     sh.poly(ellipse(cx, 440, 105, 22, n=40))
+    sh.marker([(cx - 22, 300), (cx + 22, 300), (cx + 105, 440), (cx - 105, 440)], 'yolk')
     sh.hatch([(cx + 10, 306), (cx + 22, 302), (cx + 105, 440), (cx + 50, 452)], angle=65, spacing=6)
     cx = 870
     sh.poly(ellipse(cx, 390, 95, 95, n=48))
+    sh.marker(ellipse(cx, 390, 90, 90, n=30)[:-1], 'dusk')
     for k in range(4):
         sh.line(ellipse(cx, 390, 95, 18 + k * 22, a0=0.05, a1=math.pi - 0.05, n=24), width=1.8, passes=1)
     sh.poly(ellipse(cx, 290, 20, 7, n=12), width=2.2)
@@ -868,8 +968,11 @@ def sheet_coffee():
     sh = Sheet(113)
     cam = Cam(-8, 30, 3.4, 330, 560, D=900)
     sh.poly([cam.P(p) for p in circle3d(cam, 0, 0, 0, 62)[:-1]], width=2.4)
+    sh.marker([cam.P(p) for p in circle3d(cam, 0, 0, 0, 60, n=24)[:-1]], 'dusk', opacity=0.6)
     sh.poly([cam.P(p) for p in circle3d(cam, 0, 0, 0, 44)[:-1]], width=1.8, passes=1)
+    sh.color = 'dusk'
     cylinder(sh, cam, 0, 0, 2, 30, 36)
+    sh.color = None
     sh.poly([cam.P(p) for p in circle3d(cam, 0, 0, 35, 25)[:-1]], width=1.8, passes=1)
     hx, hy = cam.P((31, 0, 22))
     sh.line(bez((hx, hy - 30), (hx + 60, hy - 40), (hx + 60, hy + 30), (hx, hy + 20)))
@@ -881,6 +984,7 @@ def sheet_coffee():
         r = 26 + (2 - abs(i - 2)) * 18
         x, y = cx + 150 * math.sin(a), cy - 70 * math.cos(a) + 60
         sh.poly(ellipse(x, y, r * 0.8, r, rot=a, n=24), width=2.4)
+        sh.marker(ellipse(x, y, r * 0.75, r * 0.95, rot=a, n=16)[:-1], 'yolk')
         if i >= 3:
             sh.hatch(ellipse(x + 6, y + 6, r * 0.55, r * 0.7, rot=a, n=14)[:-1], angle=55, spacing=5)
     sh.poly(ellipse(cx, 610, 230, 40, n=40), width=2.2)
@@ -897,7 +1001,9 @@ def sheet_chess():
     cam = Cam(-30, 38, 3.0, 520, 560, D=900)
     n, c = 6, 22
     x0 = -n * c / 2
+    sh.color = 'yolk'
     box(sh, cam, x0 - 6, x0 - 6, -6, n * c + 12, n * c + 12, 6, shade=0.3, spacing=5)
+    sh.color = None
     for i in range(n):
         for j in range(n):
             if (i + j) % 2 == 0:
@@ -920,11 +1026,13 @@ def sheet_chess():
 def sheet_stack():
     sh = Sheet(139)
     cam = Cam(-34, 20, 4.2, 430, 860, D=700)
+    sh.color = 'dusk'
     for i in range(4):
         chair(sh, cam, 0, 0, z0=i * 10, slats=(i == 3))
     side = Cam(90, 0, 2.2, 900, 860, D=10000)
     for i in range(6):
         chair(sh, side, 0, 0, z0=i * 10, slats=False)
+    sh.color = None
     sh.text('STACKS X6', 70, 110, size=36, rot=-0.02)
     sh.text('OUT ON TUESDAYS', 74, 160, size=22, rot=-0.02, width=1.8)
     sh.text('SIDE', 860, 330, size=20)
@@ -939,6 +1047,7 @@ def sheet_boards():
         top, bot = 250, 700
         sh.poly([(cx - 110, top), (cx + 110, top), (cx + 130, bot), (cx - 130, bot)])
         sh.poly([(cx - 92, top + 18), (cx + 92, top + 18), (cx + 108, bot - 90), (cx - 108, bot - 90)], width=2.1)
+        sh.marker([(cx - 92, top + 18), (cx + 92, top + 18), (cx + 108, bot - 90), (cx - 108, bot - 90)], ('yolk', 'dusk', 'yolk')[k], opacity=0.6)
         sh.line([(cx - 130, bot), (cx - 150, bot + 120)], width=2.6)
         sh.line([(cx + 130, bot), (cx + 150, bot + 120)], width=2.6)
         sh.line([(cx - 140, bot + 50), (cx + 140, bot + 50)], width=2.0, passes=1)
@@ -961,17 +1070,20 @@ def sheet_route():
         sh.line([(x + sh.r.uniform(-6, 6), y0), (x + sh.r.uniform(-12, 12), y1)], width=1.8, passes=1)
     for k in range(3):
         sh.line([(x0 + 20 + k * 30 + 8 * math.sin(t / 30), t) for t in range(y0, y1, 6)], width=1.6, passes=1)
+    sh.marker([(x0 + 5, y0), (x0 + 105, y0), (x0 + 105, y1), (x0 + 5, y1)], 'dusk', opacity=0.5, spacing=14)
     sh.text('RIVER', x0 + 92, 600, size=18, rot=-math.pi / 2)
     route = (bez((320, 780), (180, 640), (190, 330), (420, 280)) + bez((420, 280), (650, 230), (900, 280), (860, 500))[1:]
              + bez((860, 500), (820, 700), (620, 760), (700, 640))[1:])
     dashed(sh, route, on=18, off=10, width=2.6)
     sh.poly(ellipse(320, 780, 14, 14, n=12))
+    sh.marker(ellipse(320, 780, 14, 14, n=12)[:-1], 'yolk', spacing=6, width=7)
     sh.text('START', 240, 835, size=20)
     px, py = 700, 640
     sh.line(bez((px, py), (px - 34, py - 40), (px - 30, py - 80), (px, py - 80)) + bez((px, py - 80), (px + 30, py - 80), (px + 34, py - 40), (px, py))[1:], width=2.6)
     sh.poly(ellipse(px, py - 56, 10, 10, n=10), width=2, passes=1)
     blk = [(620, 500), (740, 500), (740, 560), (620, 560)]
     sh.poly(blk, width=2.2)
+    sh.marker(blk, 'yolk')
     sh.hatch(blk, angle=45, spacing=6)
     sh.text('THE LOCAL', 760, 545, size=20)
     sh.text('RUN CLUB ROUTE', 80, 110, size=36, rot=-0.02)
@@ -985,17 +1097,20 @@ def sheet_hello():
     cx, cy, r = 550, 500, 150
     sh.poly(ellipse(cx, cy, r, r, n=60))
     sh.poly(ellipse(cx, cy, r - 14, r - 14, n=60), width=1.7, passes=1)
+    sh.marker(ellipse(cx, cy, r - 6, r - 6, n=30)[:-1], 'yolk')
     words = ['HOLA', 'BONJOUR', 'CIAO', 'HALLO', 'OLA', 'HI']
     for k in range(6):
         a = k * math.pi / 3 - math.pi / 2
         sx, sy = cx + (r + 46) * math.cos(a), cy + (r + 46) * math.sin(a)
         sh.poly(rotate(rrect(sx - 32, sy - 24, 64, 48, 10), sx, sy, a + math.pi / 2), width=2.3)
+        sh.marker(rotate(rrect(sx - 32, sy - 24, 64, 48, 10), sx, sy, a + math.pi / 2), 'dusk')
         px, py = cx + (r - 48) * math.cos(a), cy + (r - 48) * math.sin(a)
         sh.poly(ellipse(px, py, 24, 24, n=18), width=2.0)
         sh.poly(ellipse(px, py, 14, 14, n=14), width=1.6, passes=1)
         bx, by = cx + (r + 230) * math.cos(a) * 1.15, cy + (r + 160) * math.sin(a)
         w = 34 + len(words[k]) * 19
         sh.poly(ellipse(bx, by, w / 2 + 14, 34, n=30), width=2.2)
+        sh.marker(ellipse(bx, by, w / 2 + 10, 30, n=20)[:-1], 'yolk', opacity=0.5)
         tx, ty = cx + (r + 90) * math.cos(a), cy + (r + 86) * math.sin(a)
         mx, my = bx + (tx - bx) * 0.42, by + (ty - by) * 0.42
         sh.line([(mx - 8, my - 6), (tx, ty), (mx + 8, my + 6)], width=2.0, passes=1)
@@ -1008,9 +1123,11 @@ def sheet_logo():
     sh = Sheet(189)
     sh.poly(egg(200, 330, 1.2)[:-1])
     sh.poly(ellipse(200, 370, 44, 44, n=20), width=2.2)
+    sh.marker(ellipse(200, 370, 44, 44, n=16)[:-1], 'yolk', opacity=0.95)
     sh.hatch(ellipse(200, 370, 40, 40, n=16)[:-1], angle=40, spacing=6)
     hx, hy = 560, 360
     sh.poly([(hx - 130, hy + 120), (hx - 130, hy - 30), (hx, hy - 150), (hx + 130, hy - 30), (hx + 130, hy + 120)])
+    sh.marker([(hx - 130, hy + 120), (hx - 130, hy - 30), (hx, hy - 150), (hx + 130, hy - 30), (hx + 130, hy + 120)], 'dusk', opacity=0.55)
     sh.poly(egg(hx, hy + 30, 0.8)[:-1], width=2.3)
     sh.line([(hx - 150, hy - 20), (hx, hy - 170), (hx + 150, hy - 20)], width=2.0, passes=1)
     ex, ey = 880, 330
@@ -1033,14 +1150,17 @@ def sheet_phone():
     for k, (cx, cy, a) in enumerate(((330, 520, -0.12), (770, 540, 0.1))):
         sh.poly(rotate(rrect(cx - 150, cy - 300, 300, 600, 42), cx, cy, a))
         sh.poly(rotate(rrect(cx - 132, cy - 280, 264, 560, 30), cx, cy, a), width=2.0, passes=1)
+        sh.marker(rotate(rrect(cx - 132, cy - 280, 264, 560, 30), cx, cy, a), 'dusk', opacity=0.3, spacing=16)
         sh.poly(rotate(rrect(cx - 40, cy - 268, 80, 22, 11), cx, cy, a), width=1.8, passes=1)
         sh.hatch(rotate([(cx + 150, cy - 260), (cx + 162, cy - 250), (cx + 162, cy + 290), (cx + 150, cy + 290)], cx, cy, a), angle=80, spacing=4)
         if k == 0:
             sh.poly(rotate(rrect(cx - 110, cy - 200, 210, 90, 18), cx, cy, a), width=2.2)
+            sh.marker(rotate(rrect(cx - 110, cy - 200, 210, 90, 18), cx, cy, a), 'yolk')
             for i, t in enumerate(('BOOK CLUB', 'TONIGHT 7PM')):
                 p = rotate([(cx - 92, cy - 166 + i * 36)], cx, cy, a)[0]
                 sh.text(t, p[0], p[1], size=20, rot=a, width=1.8)
             sh.poly(rotate(rrect(cx - 20, cy - 70, 130, 64, 18), cx, cy, a), width=2.2)
+            sh.marker(rotate(rrect(cx - 20, cy - 70, 130, 64, 18), cx, cy, a), 'dusk')
             p = rotate([(cx + 45, cy - 28)], cx, cy, a)[0]
             sh.text("I'M IN!", p[0], p[1], size=22, rot=a, anchor='middle')
         else:
@@ -1052,6 +1172,7 @@ def sheet_phone():
                 c = rotate([(cx - 90 + i * 45, cy + 40)], cx, cy, a)[0]
                 sh.poly(ellipse(c[0], c[1], 18, 18, n=14), width=2.0)
             sh.poly(rotate(rrect(cx - 100, cy + 130, 200, 70, 30), cx, cy, a), width=2.4)
+            sh.marker(rotate(rrect(cx - 100, cy + 130, 200, 70, 30), cx, cy, a), 'yolk')
             p = rotate([(cx, cy + 178)], cx, cy, a)[0]
             sh.text('RSVP', p[0], p[1], size=26, rot=a, anchor='middle')
     sh.text('NO APP NEEDED', 340, 110, size=30, rot=-0.02)
@@ -1075,6 +1196,7 @@ def sheet_receipt():
         sh.text(b, 620, y, size=24)
         y += 70
     dashed(sh, [(370, y - 30), (730, y - 30)], on=10, off=8, width=1.8)
+    sh.marker([(356, y - 8), (742, y - 8), (742, y + 42), (356, y + 42)], 'yolk', angle=4, spacing=9, opacity=0.75)
     sh.text('YOURS', 370, y + 30, size=28)
     sh.text('$1800', 610, y + 30, size=28)
     sh.text('NOT A FORECAST', 550, 760, size=20, anchor='middle', width=1.8)
@@ -1104,7 +1226,9 @@ def pin(sh, px, py, k=1.0):
 def sheet_espresso():
     sh = Sheet(509)
     cam = Cam(-32, 16, 3.3, 500, 780, D=900)
+    sh.color = 'dusk'
     box(sh, cam, -60, -35, 0, 120, 70, 72, shade=0.4, spacing=7)
+    sh.color = None
     box(sh, cam, -62, -37, 72, 124, 74, 6, shade=0.4, spacing=4)
     box(sh, cam, -55, -62, 0, 110, 27, 8, shade=0.4, spacing=4)
     for x in range(-48, 50, 9):
@@ -1118,8 +1242,10 @@ def sheet_espresso():
     for bx in (-8, 0, 8):
         poly3d(sh, cam, circle3d(cam, bx, -35.2, 44, 2.6, plane='xz')[:-1], closed=True, width=1.8, passes=1)
     poly3d(sh, cam, [(62, -20, 55), (72, -26, 52), (78, -34, 40), (80, -40, 20)], width=2.6)
+    sh.color = 'yolk'
     for cx, cy in ((-35, 5), (-12, 12), (15, 0)):
         cylinder(sh, cam, cx, cy, 78, 7, 9, shade=False)
+    sh.color = None
     side = Cam(90, 0, 1.5, 930, 860, D=10000)
     box(sh, side, -60, -35, 0, 120, 70, 72, shade=2, width=2.2)
     box(sh, side, -62, -37, 72, 124, 74, 6, shade=2, width=2.0)
@@ -1141,9 +1267,11 @@ def sheet_clicker():
     sh = Sheet(521)
     cx, cy = 420, 540
     sh.poly(ellipse(cx, cy, 170, 170, n=60))
+    sh.marker(ellipse(cx, cy, 166, 166, n=36)[:-1], 'dusk', opacity=0.7)
     sh.poly(ellipse(cx, cy, 150, 150, n=60), width=2.0, passes=1)
     win = rrect(cx - 114, cy - 62, 228, 96, 10)
     sh.poly(win)
+    sh.marker(win, 'yolk', opacity=0.9)
     for k in (1, 2):
         sh.line([(cx - 114 + k * 76, cy - 62), (cx - 114 + k * 76, cy + 34)], width=2.0, passes=1)
     for k, dgt in enumerate('018'):
@@ -1162,6 +1290,7 @@ def sheet_clicker():
     # small 3/4 view
     ox, oy = 880, 420
     sh.poly(ellipse(ox, oy, 70, 80, n=36))
+    sh.marker(ellipse(ox, oy, 68, 78, n=24)[:-1], 'dusk', opacity=0.7)
     sh.line(ellipse(ox + 24, oy - 10, 70, 80, a0=-1.2, a1=1.6, n=20), width=2.2)
     sh.line([(ox - 10, oy - 79), (ox + 14, oy - 89)], width=2.0)
     sh.line([(ox + 2, oy + 79), (ox + 26, oy + 69)], width=2.0)
@@ -1187,6 +1316,7 @@ def sheet_beacon():
         if cam.visible(n):
             pp = [cam.P(p) for p in pts]
             sh.poly(pp)
+            sh.marker(pp, 'dusk')
             if n[0] == 1:
                 sh.hatch(pp, angle=62, spacing=5.5)
     lerp = lambda p, q, t: tuple(p[i] + (q[i] - p[i]) * t for i in range(3))
@@ -1194,6 +1324,7 @@ def sheet_beacon():
         return lerp(lerp(A, B, u), lerp(D_, C, u), v)
     scr = [face_pt(0.08, 0.18), face_pt(0.92, 0.18), face_pt(0.92, 0.86), face_pt(0.08, 0.86)]
     sh.poly([cam.P(p) for p in scr], width=2.3)
+    sh.marker([cam.P(p) for p in scr], 'yolk', opacity=0.45)
     a, b = cam.P(face_pt(0.16, 0.62)), cam.P(face_pt(0.84, 0.62))
     ang = math.atan2(b[1] - a[1], b[0] - a[0])
     sh.text('BOOK CLUB', a[0], a[1], size=26, rot=ang, width=2.2)
@@ -1208,6 +1339,7 @@ def sheet_beacon():
         sh.text(label, x0 + 250, y0 + 14, size=18)
         if k:
             dashed(sh, [(x0 - 34 + 20, y0 - 110 + 20), (x0 + 20, y0 + 20)], on=8, off=7, width=1.6)
+    sh.marker([(668, 520), (868, 480), (908, 520), (708, 560)], 'yolk')
     sh.hatch([(668, 520), (868, 480), (908, 520), (708, 560)], angle=20, spacing=6)
     sh.text('SMART RESERVED SIGN?', 70, 110, size=34, rot=-0.02)
     sh.text("SHOWS TONIGHT'S GROUP", 74, 156, size=20, rot=-0.02, width=1.8)
@@ -1220,7 +1352,9 @@ def sheet_beacon():
 def sheet_printer():
     sh = Sheet(547)
     cam = Cam(-30, 24, 3.4, 460, 760, D=800)
+    sh.color = 'dusk'
     box(sh, cam, -40, -45, 0, 80, 90, 40, shade=0.4, spacing=6)
+    sh.color = None
     sh.line([cam.P((-30, -10, 40.2)), cam.P((30, -10, 40.2))], width=2.4)
     path = [(-10, 40), (-10, 58), (-12, 74), (-17, 88), (-25, 97), (-34, 100)]
     left = poly3d(sh, cam, [(-27, y, z) for y, z in path], width=2.3)
@@ -1244,12 +1378,15 @@ def sheet_printer():
 def sheet_record():
     sh = Sheet(559)
     cam = Cam(-28, 32, 3.0, 520, 640, D=800)
+    sh.color = 'dusk'
     box(sh, cam, -70, -55, 0, 140, 110, 14, shade=0.4, spacing=6)
+    sh.color = None
     cylinder(sh, cam, -15, 0, 14, 46, 4, shade=False)
     for rr in (42, 34, 26):
         poly3d(sh, cam, circle3d(cam, -15, 0, 18.2, rr)[:-1], closed=True, width=1.7, passes=1)
     lab = [cam.P(p) for p in circle3d(cam, -15, 0, 18.3, 12, n=18)[:-1]]
     sh.poly(lab, width=2.0)
+    sh.marker(lab, 'yolk', opacity=0.9)
     sh.hatch(lab, angle=40, spacing=4.5)
     cylinder(sh, cam, -15, 0, 18, 1.5, 4, shade=False)
     cylinder(sh, cam, 50, 35, 14, 8, 6, shade=False)
@@ -1279,10 +1416,12 @@ def stool(sh, cam, x, y):
 def sheet_stools():
     sh = Sheet(571)
     cam = Cam(-35, 15, 3.4, 330, 860, D=900)
+    sh.color = 'dusk'
     for i in range(3):
         stool(sh, cam, i * 55, i * 8)
     ex = Cam(0, 0, 3.0, 900, 860, D=10000)
     stool(sh, ex, 0, 0)
+    sh.color = None
     sh.dim((1010, 860), (1010, 860 - 78 * 3.0), '75 CM', size=18)
     sh.text('BAR SEATING', 70, 110, size=38, rot=-0.02)
     sh.text('X8 ALONG THE WINDOW', 74, 160, size=22, rot=-0.02, width=1.9)
@@ -1295,17 +1434,22 @@ def sheet_stools():
 def sheet_booth():
     sh = Sheet(583)
     cam = Cam(-34, 24, 2.4, 560, 760, D=1100)
+    sh.color = 'dusk'
     box(sh, cam, -110, -10, 0, 220, 50, 40, shade=0.4, spacing=6)
     box(sh, cam, -110, 40, 40, 220, 12, 55, shade=0.4, spacing=6)
     box(sh, cam, -160, -100, 0, 50, 140, 40, shade=0.4, spacing=6)
     box(sh, cam, -172, -100, 40, 12, 152, 55, shade=0.4, spacing=6)
+    sh.color = None
     for x in range(-90, 110, 30):
         sh.line([cam.P((x, 39.8, 46)), cam.P((x, 39.8, 90))], width=1.7, passes=1)
+    sh.color = 'yolk'
     box(sh, cam, -60, -85, 72, 130, 62, 4, shade=0.4, spacing=4)
+    sh.color = None
     box(sh, cam, 1, -58, 3, 8, 8, 69, shade=0.3, spacing=4, width=2.2)
     box(sh, cam, -20, -74, 0, 48, 40, 3, shade=0.4, spacing=4, width=2.2)
     win = [(-100, 52, 110), (100, 52, 110), (100, 52, 175), (-100, 52, 175)]
     poly3d(sh, cam, win, closed=True, width=2.2)
+    sh.marker([cam.P(q) for q in win], 'yolk', opacity=0.45, spacing=14)
     sh.line([cam.P((0, 52, 110)), cam.P((0, 52, 175))], width=1.9, passes=1)
     for x, y in ((-30, -60), (30, -70)):
         poly3d(sh, cam, circle3d(cam, x, y, 76.2, 10)[:-1], closed=True, width=1.9, passes=1)
@@ -1323,7 +1467,9 @@ def sheet_menu():
     L = [(0, 0, 0), (-55, 28, 0), (-55, 28, 82), (0, 0, 82)]
     R = [(0, 0, 0), (55, 28, 0), (55, 28, 82), (0, 0, 82)]
     lp = poly3d(sh, cam, L, closed=True)
+    sh.marker(lp, 'yolk', opacity=0.6)
     rp = poly3d(sh, cam, R, closed=True)
+    sh.marker(rp, 'dusk')
     sh.hatch(rp, angle=70, spacing=7, width=1.6)
     a, b = cam.P((-48, 24, 60)), cam.P((-8, 4, 60))
     ang = math.atan2(b[1] - a[1], b[0] - a[0])
@@ -1334,6 +1480,7 @@ def sheet_menu():
     # flat version
     x0, y0, w, h = 600, 380, 200, 300
     sh.poly([(x0, y0), (x0 + w, y0), (x0 + w, y0 + h), (x0, y0 + h)])
+    sh.marker([(x0, y0), (x0 + w, y0), (x0 + w, y0 + h), (x0, y0 + h)], 'yolk', opacity=0.5)
     sh.poly([(x0 + w, y0), (x0 + 2 * w - 20, y0), (x0 + 2 * w - 20, y0 + h), (x0 + w, y0 + h)])
     dashed(sh, [(x0 + w, y0 - 20), (x0 + w, y0 + h + 20)], on=10, off=8, width=1.6)
     sh.text('TUESDAY', x0 + 30, y0 + 70, size=26)
@@ -1365,9 +1512,13 @@ def sheet_shelf():
             if rnd.random() < 0.12:
                 x += 10
                 continue
+            sh.color = sh.cr.choice(['yolk', 'dusk', 'yolk', 'dusk', None, None])
             box(sh, cam, x, 4, z0, w, 22, min(hgt, 54), shade=0.6 if rnd.random() < 0.18 else 2, spacing=3.5, width=1.9)
+            sh.color = None
             x += w + 0.6
+    sh.color = 'dusk'
     cylinder(sh, cam, 45, 15, 180, 10, 14, shade=False)
+    sh.color = None
     top = cam.P((45, 15, 194))
     for dx, dy in ((-40, -60), (10, -90), (50, -50), (-10, -110), (30, -120)):
         sh.line(bez(top, (top[0] + dx * 0.3, top[1] + dy * 0.6), (top[0] + dx * 0.8, top[1] + dy * 0.9), (top[0] + dx, top[1] + dy)), width=2.0, passes=1)
@@ -1386,6 +1537,7 @@ def sheet_nametags():
         sh.poly(tag)
         band = rotate([(cx - 160, cy - 40), (cx + 160, cy - 40)], cx, cy, a)
         sh.line(band, width=2.0)
+        sh.marker(rotate([(cx - 156, cy - 96), (cx + 156, cy - 96), (cx + 156, cy - 42), (cx - 156, cy - 42)], cx, cy, a), 'yolk', opacity=0.85)
         p = rotate([(cx, cy - 66)], cx, cy, a)[0]
         sh.text('HELLO', p[0], p[1], size=24, rot=a, anchor='middle', width=2.2)
         p = rotate([(cx, cy - 46)], cx, cy, a)[0]
@@ -1395,6 +1547,7 @@ def sheet_nametags():
     dashed(sh, rotate([(870, 700), (842, 740)], 700, 640, -0.04), on=6, off=5, width=1.6)
     pen = rotate(rrect(860, 200, 46, 300, 18), 883, 350, 0.5)
     sh.poly(pen)
+    sh.marker(pen, 'dusk')
     sh.poly(rotate(rrect(860, 200, 46, 90, 18), 883, 350, 0.5), width=2.0)
     sh.hatch(rotate([(864, 210), (902, 210), (902, 286), (864, 286)], 883, 350, 0.5), angle=10, spacing=5)
     sh.text('NAME TAGS', 70, 110, size=38, rot=-0.02)
@@ -1435,11 +1588,13 @@ def sheet_map():
     sh.text('BROADWAY', *R([(cx + 40, cy + 120)])[0], size=16, rot=a + 1.17, width=1.6)
     for k in range(3):
         sh.line([(60 + k * 22 + 8 * math.sin(t / 30), t) for t in range(210, 900, 8)], width=1.5, passes=1)
+    sh.marker([(52, 212), (122, 212), (122, 898), (52, 898)], 'dusk', opacity=0.5, spacing=13)
     sh.text('HUDSON', 52, 640, size=16, rot=-math.pi / 2, width=1.6)
     zones = [((470, 400), 'CHELSEA / FLATIRON', (300, 290)), ((740, 720), 'EAST VILLAGE / LES', (560, 880))]
     for (zx, zy), label, (tx, ty) in zones:
         pts = ellipse(zx, zy, 200, 120, rot=a, n=60)
         dashed(sh, pts, on=14, off=10, width=2.2)
+        sh.marker(ellipse(zx, zy, 190, 110, rot=a, n=30)[:-1], 'yolk', opacity=0.55, spacing=13)
         for dx, dy in ((-60, 10), (20, -30), (70, 30), (-10, 50)):
             pin(sh, zx + dx, zy + dy, k=0.45)
         sh.text(label, tx, ty, size=22)
@@ -1463,6 +1618,9 @@ def sheet_bikes():
             poly3d(sh, cam, circle3d(cam, bx, wy, 33, 33, plane='yz', n=32)[:-1], closed=True, width=2.3)
             poly3d(sh, cam, circle3d(cam, bx, wy, 33, 4, plane='yz', n=10)[:-1], closed=True, width=1.8, passes=1)
         rear, crank, front, seat, head = (bx, 48, 33), (bx, 5, 30), (bx, -48, 33), (bx, 18, 82), (bx, -30, 85)
+        col = 'yolk' if bx < 0 else 'dusk'
+        sh.marker([cam.P(rear), cam.P(crank), cam.P(seat)], col, spacing=8, width=7)
+        sh.marker([cam.P(crank), cam.P(head), cam.P(seat)], col, spacing=8, width=7)
         poly3d(sh, cam, [rear, crank, seat, rear], width=2.4)
         poly3d(sh, cam, [crank, head, seat], width=2.4)
         poly3d(sh, cam, [head, front], width=2.4)
@@ -1513,7 +1671,17 @@ SHEETS = {
 if __name__ == '__main__':
     out = Path(sys.argv[1])
     out.mkdir(parents=True, exist_ok=True)
-    only = sys.argv[2:] or list(SHEETS)
+    args = sys.argv[2:]
+    color = '--color' in args
+    for a in args:
+        if a.startswith('--palette='):
+            PALETTE = PALETTES[a.split('=', 1)[1]]
+            COLOR_INK = PALETTE['ink']
+        if a.startswith('--ink='):   # one-colour mode: line and a light tint of the same colour
+            hexc = a.split('=', 1)[1]
+            PALETTE = {'yolk': hexc, 'dusk': hexc, 'ink': hexc, 'boost': 0.42}
+            COLOR_INK = hexc
+    only = [a for a in args if not a.startswith('--')] or list(SHEETS)
     for name in only:
-        (out / f'{name}.svg').write_text(SHEETS[name]().svg(), encoding='utf-8')
+        (out / f'{name}.svg').write_text(SHEETS[name]().svg(color=color), encoding='utf-8')
         print('wrote', name)
