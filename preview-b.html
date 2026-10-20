@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coop — Because every flock needs one</title>
+    <meta
+      name="description"
+      content="Coop helps NYC restaurants, bars, and cafés turn quieter hours into recurring group business — and gives local clubs a regular home."
+    />
+    <meta name="theme-color" content="#ede3c9" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* preview-only extras */
+      .poster-art .part { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; }
+      .poster-art .sign { font: 800 30px var(--sans); fill: var(--ink); text-anchor: middle; letter-spacing: .02em; }
+      .poster-art .chalk { font: 400 20px var(--hand); fill: var(--paper); text-anchor: middle; }
+      .poster-art .chalk-l { text-anchor: start; }
+      .poster-art .chalk-ln { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .poster-art .chalk-dash { fill: none; stroke: var(--paper); stroke-width: 1.5; stroke-dasharray: 3 8; opacity: .45; }
+      .picker {
+        position: fixed; left: 50%; bottom: 16px; z-index: 300; transform: translateX(-50%);
+        display: flex; gap: 4px; align-items: center; padding: 6px;
+        background: var(--ink); color: var(--paper);
+        font: 700 12px var(--sans); letter-spacing: .05em; text-transform: uppercase;
+      }
+      .picker span { padding: 0 8px; opacity: .7; }
+      .picker a { padding: 8px 12px; }
+      .picker a[aria-current="page"] { background: var(--red); }
+      .picker a:hover { background: #333; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Shared SVG filters: marker texture for lettering, a slight wobble for line drawings -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="shape" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="grit" />
+        <feColorMatrix in="grit" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -14 10.4" result="specks" />
+        <feComposite in="shape" in2="specks" operator="in" />
+      </filter>
+      <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" />
+        <feDisplacementMap in="SourceGraphic" scale="3.2" />
+      </filter>
+    </svg>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <a href="index.html" class="logo" aria-label="Coop home">
+        <svg viewBox="0 0 236 112" aria-hidden="true">
+          <g class="marker-ink">
+            <path d="M50 36 C 42 26, 14 26, 11 52 C 9 78, 40 82, 50 70" />
+            <path transform="translate(62 2) rotate(-4 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(124 -1) rotate(5 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(186 1)" d="M12 30 C 12 56, 12 82, 13 106 M13 34 C 52 22, 58 74, 14 72" />
+          </g>
+        </svg>
+      </a>
+      <nav class="masthead-nav" aria-label="Pages">
+        <a href="how.html">How it works</a>
+        <a href="how.html#faq">FAQ</a>
+      </nav>
+      <a class="masthead-cta" href="join.html">Join the pilot</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ 01 · HERO — a folded flyer ============ -->
+      <section class="poster" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="visually-hidden">
+          Table for twenty, every Tuesday. Coop brings recurring local groups to NYC venues on their quiet nights.
+        </h1>
+
+        <svg class="poster-title" viewBox="0 0 709 262" aria-hidden="true">
+          <g class="marker-red">
+            <g transform="translate(20.0 20)"><path transform="translate(0.0 3.1) rotate(0.2 39.0 50) scale(1.046)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(91.6 2.7) rotate(-2.1 38.0 50) scale(1.020)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(179.1 -3.9) rotate(1.6 32.0 50) scale(0.953)" d="M11 5 C 10 36, 10 68, 11 97 M11 6 C 60 0, 64 44, 14 49 M14 49 C 70 46, 72 101, 11 96"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(250.1 2.5) rotate(-1.2 30.0 50) scale(0.975)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(318.6 -1.8) rotate(0.0 31.0 50) scale(1.035)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(432.8 -1.0) rotate(4.5 30.0 50) scale(1.050)" d="M58 5 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 97 M12 51 C 24 50, 35 49, 48 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(505.8 3.1) rotate(-4.4 40.0 50) scale(1.038)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(598.8 2.1) rotate(-3.5 35.0 50) scale(1.006)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(0.0 -2.9) rotate(4.6 39.0 50) scale(1.004)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(88.3 1.4) rotate(3.8 46.0 50) scale(0.981)" d="M4 5 C 10 36, 16 66, 23 96 C 30 74, 38 52, 46 30 C 52 52, 59 74, 66 96 C 73 66, 80 36, 88 4"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(188.6 4.4) rotate(-4.2 31.0 50) scale(0.997)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(260.4 -3.6) rotate(5.0 36.0 50) scale(1.031)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(344.6 4.2) rotate(3.1 39.0 50) scale(0.952)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(428.9 -4.5) rotate(-1.3 36.0 50) scale(1.025)" d="M4 5 C 14 20, 25 35, 36 50 C 47 35, 58 20, 69 4 M36 50 C 36 66, 36 82, 37 98"/></g>
+          </g>
+        </svg>
+
+        <div class="poster-middle">
+          <p class="poster-corner poster-corner-l">No fee<br />to list<br />your spot</p>
+
+          <!-- The table: one object per kind of club -->
+          <svg class="poster-art" viewBox="0 0 1000 640" role="img" aria-label="A neighborhood café at night: through the big window a group shares dinner around one table, an OPEN sign hangs on the door, and a chalkboard on the sidewalk reads Tuesday, book club 7pm, run club 8pm, as two people arrive.">
+<g filter="url(#wobble)"><g class="ln"><path d="M48 70 L56 88 L74 90 L60 102 L64 120 L48 110 L32 120 L36 102 L22 90 L40 88 Z" /><path d="M110 40 L114 50 L124 51 L116 58 L118 68 L110 62 L102 68 L104 58 L96 51 L106 50 Z" /><path d="M930 60 C 900 70, 900 120, 940 130 C 912 116, 912 76, 930 60 Z" /></g>
+<rect class="pp" x="136" y="26" width="668" height="22" />
+<rect class="pp" x="150" y="48" width="640" height="542" />
+<rect class="pp" x="330" y="72" width="280" height="60" rx="4" /><text class="sign" x="470" y="113">THE LOCAL</text>
+<path class="pp" d="M168 156 L772 156 L788 204 L152 204 Z" />
+<path class="ink" d="M168 156 L208 156 L194 204 L152 204 Z" />
+<path class="ink" d="M248 156 L288 156 L278 204 L236 204 Z" />
+<path class="ink" d="M328 156 L368 156 L363 204 L320 204 Z" />
+<path class="ink" d="M408 156 L448 156 L447 204 L405 204 Z" />
+<path class="ink" d="M488 156 L528 156 L531 204 L489 204 Z" />
+<path class="ink" d="M568 156 L608 156 L615 204 L573 204 Z" />
+<path class="ink" d="M648 156 L688 156 L700 204 L657 204 Z" />
+<path class="ink" d="M728 156 L768 156 L784 204 L742 204 Z" />
+<path class="pp" d="M152 204 Q 172 228, 192 204 Q 212 228, 232 204 Q 252 228, 272 204 Q 292 228, 312 204 Q 332 228, 352 204 Q 372 228, 392 204 Q 412 228, 432 204 Q 452 228, 472 204 Q 492 228, 512 204 Q 532 228, 552 204 Q 572 228, 592 204 Q 612 228, 632 204 Q 652 228, 672 204 Q 692 228, 712 204 Q 732 228, 752 204 Q 772 228, 792 204 L152 204 Z" />
+<rect class="pp" x="190" y="240" width="380" height="250" />
+<path class="pp" d="M202 440 C 202 410, 214 398, 232 398 C 250 398, 262 410, 262 440" />
+<circle class="pp" cx="232" cy="372" r="21" />
+<path class="ink" d="M211 370 C 210 346, 254 346, 253 370 C 242 360, 222 360, 211 370 Z" />
+<circle class="dot" cx="225" cy="375" r="2.4" /><circle class="dot" cx="239" cy="375" r="2.4" />
+<path class="ln" d="M226 383 C 229 387, 235 387, 238 383" />
+<path class="pp" d="M262 440 C 262 410, 274 398, 292 398 C 310 398, 322 410, 322 440" />
+<circle class="pp" cx="292" cy="372" r="21" />
+<circle class="dot" cx="285" cy="375" r="2.4" /><circle class="dot" cx="299" cy="375" r="2.4" />
+<path class="ln" d="M286 383 C 289 387, 295 387, 298 383" />
+<path class="pp" d="M320 440 C 320 410, 332 398, 350 398 C 368 398, 380 410, 380 440" />
+<circle class="pp" cx="350" cy="372" r="21" />
+<circle class="ink" cx="350" cy="348" r="9" /><path class="ink" d="M329 368 C 330 348, 370 348, 371 368 C 360 358, 340 358, 329 368 Z" />
+<circle class="dot" cx="343" cy="375" r="2.4" /><circle class="dot" cx="357" cy="375" r="2.4" />
+<path class="ln" d="M344 383 C 347 387, 353 387, 356 383" />
+<path class="pp" d="M388 440 C 388 410, 400 398, 418 398 C 436 398, 448 410, 448 440" />
+<circle class="pp" cx="418" cy="372" r="21" />
+<circle class="ink" cx="402" cy="362" r="7" /><circle class="ink" cx="408" cy="352" r="7" /><circle class="ink" cx="418" cy="348" r="7" /><circle class="ink" cx="428" cy="352" r="7" /><circle class="ink" cx="434" cy="362" r="7" />
+<circle class="dot" cx="411" cy="375" r="2.4" /><circle class="dot" cx="425" cy="375" r="2.4" />
+<path class="ln" d="M412 383 C 415 387, 421 387, 424 383" />
+<path class="pp" d="M450 440 C 450 410, 462 398, 480 398 C 498 398, 510 410, 510 440" />
+<circle class="pp" cx="480" cy="372" r="21" />
+<path class="ink" d="M459 370 C 458 346, 502 346, 501 370 C 490 360, 470 360, 459 370 Z" />
+<circle class="dot" cx="473" cy="375" r="2.4" /><circle class="dot" cx="487" cy="375" r="2.4" />
+<path class="ln" d="M474 383 C 477 387, 483 387, 486 383" />
+<path class="pp" d="M510 440 C 510 410, 522 398, 540 398 C 558 398, 570 410, 570 440" />
+<circle class="pp" cx="540" cy="372" r="21" />
+<circle class="dot" cx="533" cy="375" r="2.4" /><circle class="dot" cx="547" cy="375" r="2.4" />
+<path class="ln" d="M534 383 C 537 387, 543 387, 546 383" />
+<path class="pp" d="M200 440 L560 440 L560 452 L200 452 Z" />
+<ellipse class="pp" cx="300" cy="436" rx="34" ry="8" /><ellipse class="pp" cx="452" cy="434" rx="24" ry="8" /><path class="pp" d="M498 436 C 498 420, 530 420, 530 436 Z" />
+<path class="ln" d="M380 240 L380 282" /><path class="pp" d="M356 304 C 356 282, 404 282, 404 304 Z" /><path class="ln" d="M366 316 L360 326 M380 318 L380 330 M394 316 L400 326" />
+<path class="ln" d="M190 240 L570 240 L570 490 L190 490 Z M380 240 L380 300 M380 460 L380 490" />
+<path class="ln" d="M214 262 L246 262 M534 262 L548 276" />
+<rect class="pp" x="180" y="490" width="400" height="16" />
+<path class="pp" d="M196 506 L564 506 L556 540 L204 540 Z" /><path class="ln" d="M220 506 C 214 490, 228 484, 232 496 C 236 482, 252 486, 248 506 M300 506 C 296 488, 312 484, 314 498 C 320 486, 334 492, 328 506 M400 506 C 394 490, 410 484, 412 496 C 418 484, 432 490, 428 506 M490 506 C 484 490, 500 484, 502 496 C 508 484, 522 490, 518 506" />
+<rect class="pp" x="608" y="248" width="124" height="342" /><rect class="pp" x="628" y="268" width="84" height="120" /><circle class="dot" cx="716" cy="440" r="5" />
+<path class="ln" d="M670 280 L646 318 M670 280 L694 318" /><rect class="pp" x="638" y="318" width="64" height="30" rx="3" /><text class="sign" x="670" y="341" style="font-size:18px">OPEN</text>
+<path class="ln" d="M766 540 C 752 500, 760 480, 770 470 M776 540 C 780 500, 796 486, 806 482 M772 540 C 770 512, 752 500, 742 498" />
+<path class="pp" d="M748 540 L800 540 L794 590 L754 590 Z" />
+<path class="ln" d="M832 440 L816 590 M928 440 L944 590 M824 520 L936 520" />
+<rect class="pp" x="820" y="430" width="120" height="132" rx="6" /><rect class="ink" x="830" y="440" width="100" height="112" rx="3" />
+<text class="chalk" x="880" y="470" style="font-size:20px">TUESDAY</text><path class="chalk-ln" d="M846 478 C 862 474, 898 474, 914 478" /><text class="chalk" x="880" y="504" style="font-size:16px">book club 7pm</text><text class="chalk" x="880" y="530" style="font-size:16px">run club 8pm</text>
+<path class="ln" d="M0 590 L1000 590 M60 612 L120 612 M300 616 L380 616 M620 612 L700 612 M880 616 L960 616" />
+<path class="ln" d="M58 590 L66 534 M86 590 L80 534" />
+<path class="pp" d="M50 536 C 48 488, 56 462, 74 462 C 92 462, 100 488, 98 536 Z" />
+<path class="ln" d="M52 480 C 38 468, 34 448, 38 430" /><circle class="pp" cx="38" cy="424" r="8" />
+<circle class="pp" cx="74" cy="438" r="22" /><path class="ink" d="M53 432 C 52 414, 96 414, 95 432 C 84 424, 64 424, 53 432 Z" /><path class="pp" d="M52 430 C 66 424, 82 424, 96 430 L96 438 C 82 432, 66 432, 52 438 Z" />
+<circle class="dot" cx="67" cy="444" r="2.4" /><circle class="dot" cx="81" cy="444" r="2.4" /><path class="ln" d="M66 452 C 70 457, 78 457, 82 452" />
+<path class="ln" d="M120 590 L124 536 M140 590 L138 536" />
+<path class="pp" d="M104 538 C 102 494, 112 470, 130 470 C 148 470, 158 494, 156 538 Z" />
+<rect class="pp" x="108" y="496" width="44" height="12" /><rect class="pp" x="112" y="484" width="38" height="12" /><rect class="pp" x="106" y="508" width="46" height="12" />
+<circle class="pp" cx="130" cy="446" r="22" /><path class="ink" d="M108 452 C 100 418, 160 418, 152 452 L146 452 C 148 436, 140 428, 130 428 C 120 428, 112 436, 114 452 Z" />
+<circle class="dot" cx="123" cy="450" r="2.4" /><circle class="dot" cx="137" cy="450" r="2.4" /><path class="ln" d="M124 458 C 127 462, 133 462, 136 458" /></g></svg>
+
+          <p class="poster-corner poster-corner-r">You pick<br />the night<br />&amp; the group</p>
+        </div>
+
+        <p class="poster-date">Every Tuesday<sup>7pm</sup></p>
+
+        <p class="poster-pitch">
+          Coop brings run clubs, book clubs, supper clubs &amp; more to NYC restaurants,
+          bars and cafés — the same group, the same night, every week.
+        </p>
+
+        <p class="poster-reserve">Now signing up pilot venues <span>(&amp; clubs)</span></p>
+        <p class="poster-ctas">
+          <a href="join.html#venue">I run a venue →</a>
+          <span aria-hidden="true">/</span>
+          <a href="join.html#club">I run a club →</a>
+        </p>
+
+        <div class="poster-foot">
+          <span>Chelsea · Flatiron</span>
+          <span>Because every flock needs one.</span>
+          <span>East Village · LES</span>
+        </div>
+      </section>
+
+    </main>
+    <nav class="picker" aria-label="Compare pictures"><span>Picture</span><a href="index.html">Original</a><a href="preview-a.html">A · From above</a><a href="preview-b.html" aria-current="page">B · Storefront</a><a href="preview-c.html">C · The week</a></nav>
+  </body>
+</html>

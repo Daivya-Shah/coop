@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coop — Because every flock needs one</title>
+    <meta
+      name="description"
+      content="Coop helps NYC restaurants, bars, and cafés turn quieter hours into recurring group business — and gives local clubs a regular home."
+    />
+    <meta name="theme-color" content="#ede3c9" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Shared SVG filters: marker texture for lettering, a slight wobble for line drawings -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="shape" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="grit" />
+        <feColorMatrix in="grit" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -14 10.4" result="specks" />
+        <feComposite in="shape" in2="specks" operator="in" />
+      </filter>
+      <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" />
+        <feDisplacementMap in="SourceGraphic" scale="3.2" />
+      </filter>
+    </svg>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <a href="index.html" class="logo" aria-label="Coop home">
+        <svg viewBox="0 0 236 112" aria-hidden="true">
+          <g class="marker-ink">
+            <path d="M50 36 C 42 26, 14 26, 11 52 C 9 78, 40 82, 50 70" />
+            <path transform="translate(62 2) rotate(-4 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(124 -1) rotate(5 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(186 1)" d="M12 30 C 12 56, 12 82, 13 106 M13 34 C 52 22, 58 74, 14 72" />
+          </g>
+        </svg>
+      </a>
+      <nav class="masthead-nav" aria-label="Pages">
+        <a href="how.html">How it works</a>
+        <a href="how.html#faq">FAQ</a>
+      </nav>
+      <a class="masthead-cta" href="join.html">Join the pilot</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ 01 · HERO — a folded flyer ============ -->
+      <section class="poster" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="visually-hidden">
+          Table for twenty, every Tuesday. Coop brings recurring local groups to NYC venues on their quiet nights.
+        </h1>
+
+        <svg class="poster-title" viewBox="0 0 709 262" aria-hidden="true">
+          <g class="marker-red">
+            <g transform="translate(20.0 20)"><path transform="translate(0.0 3.1) rotate(0.2 39.0 50) scale(1.046)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(91.6 2.7) rotate(-2.1 38.0 50) scale(1.020)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(179.1 -3.9) rotate(1.6 32.0 50) scale(0.953)" d="M11 5 C 10 36, 10 68, 11 97 M11 6 C 60 0, 64 44, 14 49 M14 49 C 70 46, 72 101, 11 96"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(250.1 2.5) rotate(-1.2 30.0 50) scale(0.975)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(318.6 -1.8) rotate(0.0 31.0 50) scale(1.035)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(432.8 -1.0) rotate(4.5 30.0 50) scale(1.050)" d="M58 5 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 97 M12 51 C 24 50, 35 49, 48 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(505.8 3.1) rotate(-4.4 40.0 50) scale(1.038)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(598.8 2.1) rotate(-3.5 35.0 50) scale(1.006)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(0.0 -2.9) rotate(4.6 39.0 50) scale(1.004)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(88.3 1.4) rotate(3.8 46.0 50) scale(0.981)" d="M4 5 C 10 36, 16 66, 23 96 C 30 74, 38 52, 46 30 C 52 52, 59 74, 66 96 C 73 66, 80 36, 88 4"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(188.6 4.4) rotate(-4.2 31.0 50) scale(0.997)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(260.4 -3.6) rotate(5.0 36.0 50) scale(1.031)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(344.6 4.2) rotate(3.1 39.0 50) scale(0.952)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(428.9 -4.5) rotate(-1.3 36.0 50) scale(1.025)" d="M4 5 C 14 20, 25 35, 36 50 C 47 35, 58 20, 69 4 M36 50 C 36 66, 36 82, 37 98"/></g>
+          </g>
+        </svg>
+
+        <div class="poster-middle">
+          <p class="poster-corner poster-corner-l">No fee<br />to list<br />your spot</p>
+
+          <!-- The table: one object per kind of club -->
+          <svg class="poster-art" viewBox="0 0 1000 640" role="img"
+            aria-label="A line drawing of a crowded table: people reading, knitting, playing chess, sharing pizza, noodles and bread, writing in a notebook, and saying hello in different languages.">
+            <g filter="url(#wobble)">
+              <!-- pendant lamps -->
+              <g class="ln">
+                <path d="M380 0 L380 60" />
+                <path class="pp" d="M340 98 C 340 70, 420 70, 420 98 Z" />
+                <path d="M371 98 C 371 109, 389 109, 389 98" />
+                <path d="M350 116 L342 128 M380 118 L380 132 M410 116 L418 128" />
+                <path d="M640 0 L640 40" />
+                <path class="pp" d="M600 78 C 600 50, 680 50, 680 78 Z" />
+                <path d="M631 78 C 631 89, 649 89, 649 78" />
+                <path d="M610 96 L602 108 M640 98 L640 112 M670 96 L678 108" />
+              </g>
+
+              <!-- speech bubbles (language exchange) -->
+              <path class="pp" d="M196 148 L268 180 L214 134 Z" />
+              <ellipse class="pp" cx="170" cy="126" rx="66" ry="29" />
+              <text class="bubble" x="170" y="135">bonjour!</text>
+
+              <path class="pp" d="M438 108 L452 150 L466 106 Z" />
+              <ellipse class="pp" cx="452" cy="92" rx="46" ry="23" />
+              <text class="bubble" x="452" y="101">ciao!</text>
+
+              <path class="pp" d="M886 256 L898 300 L912 254 Z" />
+              <ellipse class="pp" cx="900" cy="236" rx="54" ry="26" />
+              <text class="bubble" x="900" y="245">¡hola!</text>
+
+              <!-- P1 · reading (book club) -->
+              <path class="pp" d="M240 322 C 240 266, 262 246, 300 246 C 338 246, 360 266, 360 322" />
+              <circle class="pp" cx="300" cy="200" r="31" />
+              <path class="ink" d="M268 228 C 260 176, 282 164, 300 164 C 320 164, 342 176, 333 228 L 324 228 C 326 202, 318 190, 300 188 C 284 190, 274 202, 277 228 Z" />
+              <circle class="dot" cx="291" cy="205" r="3" /><circle class="dot" cx="310" cy="205" r="3" />
+              <path class="ln" d="M292 215 C 296 221, 305 221, 309 215" />
+              <path class="pp" d="M262 244 L300 258 L338 244 L338 288 L300 300 L262 288 Z" />
+              <path class="ln" d="M300 258 L300 300 M272 260 L292 266 M272 270 L292 276 M308 266 L328 260 M308 276 L328 270" />
+              <circle class="pp" cx="262" cy="282" r="8" /><circle class="pp" cx="338" cy="282" r="8" />
+
+              <!-- P2 · cap, laughing, grabbing a slice -->
+              <path class="pp" d="M390 322 C 390 270, 412 238, 450 238 C 488 238, 510 270, 510 322" />
+              <circle class="pp" cx="450" cy="190" r="31" />
+              <path class="ink" d="M419 186 C 417 152, 483 150, 481 186 Z" />
+              <path class="ink" d="M476 182 C 492 179, 506 182, 514 189 L 478 190 Z" />
+              <path class="ln" d="M436 196 C 439 191, 444 191, 447 196 M455 196 C 458 191, 463 191, 466 196" />
+              <path class="ink" d="M440 205 C 444 218, 458 218, 462 205 Z" />
+              <path class="ln" d="M505 262 C 525 240, 532 210, 530 182" />
+              <path class="pp" d="M518 172 L566 152 L552 218 Z" />
+              <path class="ln" d="M523 180 L561 164" />
+              <circle class="dot" cx="543" cy="178" r="4.5" /><circle class="dot" cx="551" cy="196" r="4" />
+              <circle class="pp" cx="528" cy="178" r="8" />
+
+              <!-- P3 · curls, twirling noodles (supper club) -->
+              <path class="pp" d="M540 322 C 540 270, 562 248, 600 248 C 638 248, 660 270, 660 322" />
+              <circle class="pp" cx="600" cy="198" r="31" />
+              <g class="ink">
+                <circle cx="571" cy="192" r="9" /><circle cx="575" cy="177" r="9" /><circle cx="586" cy="167" r="9" />
+                <circle cx="600" cy="164" r="9" /><circle cx="614" cy="167" r="9" /><circle cx="625" cy="177" r="9" />
+                <circle cx="629" cy="192" r="9" /><circle cx="593" cy="176" r="7" /><circle cx="608" cy="176" r="7" />
+              </g>
+              <circle class="dot" cx="591" cy="205" r="3" /><circle class="dot" cx="610" cy="205" r="3" />
+              <path class="ln" d="M592 214 C 597 221, 605 221, 609 214" />
+              <path class="ln" d="M655 270 C 672 250, 676 226, 672 200" />
+              <path class="ln" d="M672 190 L676 142 M667 142 L686 140 M668 142 L669 126 M676 141 L676 124 M685 140 L683 126" />
+              <path class="ln" d="M676 150 C 692 156, 660 162, 676 170 C 688 176, 664 180, 672 186" />
+              <circle class="pp" cx="672" cy="196" r="8" />
+
+              <!-- P4 · headband + medal (run club) -->
+              <path class="pp" d="M690 322 C 690 270, 712 246, 750 246 C 788 246, 810 270, 810 322" />
+              <circle class="pp" cx="750" cy="194" r="31" />
+              <path class="ink" d="M721 186 C 719 166, 734 160, 740 167 C 744 156, 758 156, 762 167 C 768 160, 783 166, 779 186 Z" />
+              <path class="pp" d="M719 182 C 738 174, 762 174, 781 182 L 781 193 C 762 185, 738 185, 719 193 Z" />
+              <circle class="dot" cx="740" cy="204" r="3" /><circle class="dot" cx="759" cy="204" r="3" />
+              <path class="ln" d="M738 212 C 744 225, 756 225, 762 212" />
+              <path class="ln" d="M727 252 L750 286 L773 252" />
+              <circle class="pp" cx="750" cy="296" r="12" />
+              <path class="ink" d="M750 289 L752.5 294 L758 294.5 L754 298 L755 303.5 L750 301 L745 303.5 L746 298 L742 294.5 L747.5 294 Z" />
+              <path class="ln" d="M806 268 C 826 250, 838 228, 834 206" />
+              <circle class="pp" cx="834" cy="199" r="10" />
+
+              <!-- the table -->
+              <path class="pp" d="M120 470 L880 470 L880 490 L120 490 Z" />
+              <path class="pp" d="M200 312 L800 312 L880 470 L120 470 Z" />
+
+              <!-- fruit bowl (wellness) -->
+              <circle class="pp" cx="232" cy="388" r="16" /><circle class="pp" cx="262" cy="385" r="17" />
+              <path class="ln" d="M232 372 L234 362 M262 368 L266 358 M266 362 C 274 356, 280 360, 276 366 C 272 368, 268 366, 266 362" />
+              <path class="pp" d="M204 392 C 208 430, 290 430, 294 392 Z" />
+              <path class="ln" d="M236 426 L262 426" />
+
+              <!-- pizza (supper club) -->
+              <ellipse class="pp" cx="392" cy="392" rx="68" ry="30" />
+              <ellipse class="ln" cx="392" cy="392" rx="55" ry="23" />
+              <path class="ln" d="M337 392 L447 392 M354 375 L430 409 M430 375 L354 409" />
+              <g class="ink">
+                <ellipse cx="372" cy="383" rx="5" ry="3" /><ellipse cx="412" cy="384" rx="5" ry="3" />
+                <ellipse cx="396" cy="403" rx="5" ry="3" /><ellipse cx="368" cy="401" rx="5" ry="3" />
+                <ellipse cx="416" cy="401" rx="5" ry="3" />
+              </g>
+
+              <!-- noodles -->
+              <path class="ln" d="M598 334 L630 372 M610 330 L638 366" />
+              <path class="pp" d="M534 362 C 537 394, 613 394, 616 362 Z" />
+              <ellipse class="pp" cx="575" cy="362" rx="41" ry="9" />
+              <path class="ln" d="M549 362 C 556 354, 562 368, 568 358 C 574 351, 580 367, 588 357 C 594 351, 598 363, 603 359 M562 391 L588 391" />
+
+              <!-- bread on a board -->
+              <path class="pp" d="M650 394 L752 394 L760 412 L642 412 Z" />
+              <path class="pp" d="M660 396 C 656 366, 744 362, 742 396 Z" />
+              <path class="ln" d="M680 374 L688 386 M698 370 L706 384 M716 370 L724 384" />
+
+              <!-- plates -->
+              <ellipse class="pp" cx="300" cy="448" rx="34" ry="12" /><ellipse class="ln" cx="300" cy="448" rx="21" ry="7" />
+              <path class="ln" d="M344 438 L358 462 M340 440 L344 432 M348 437 L350 430" />
+              <ellipse class="pp" cx="488" cy="446" rx="34" ry="12" /><ellipse class="ln" cx="488" cy="446" rx="21" ry="7" />
+              <path class="ln" d="M532 436 L540 462" />
+
+              <!-- dice (game night) -->
+              <path class="pp" d="M582 428 L597 422 L612 428 L597 434 Z M582 428 L582 445 L597 452 L597 434 Z M597 434 L597 452 L612 445 L612 428 Z" />
+              <circle class="dot" cx="597" cy="428" r="2.4" /><circle class="dot" cx="589" cy="438" r="2.2" /><circle class="dot" cx="604" cy="436" r="2.2" /><circle class="dot" cx="606" cy="444" r="2.2" />
+
+              <!-- chess board (game night) -->
+              <path class="pp" d="M764 420 L834 420 L852 454 L748 454 Z" />
+              <path class="ln" d="M781 420 L774 454 M799 420 L800 454 M817 420 L826 454 M756 437 L843 437" />
+              <path class="ink" d="M764 420 L781 420 L777 437 L756 437 Z M799 420 L817 420 L821 437 L800 437 Z M777 437 L800 437 L800 454 L774 454 Z M821 437 L843 437 L852 454 L826 454 Z" />
+              <circle class="pp" cx="790" cy="410" r="6" />
+              <path class="pp" d="M783 426 C 785 418, 795 418, 797 426 L 800 432 L 780 432 Z" />
+              <path class="pp" d="M818 404 L818 398 L822 398 L822 402 L826 402 L826 398 L830 398 L830 404 L828 406 L829 428 L817 428 L818 406 Z" />
+
+              <!-- notebook (writing group) -->
+              <path class="pp" d="M640 438 L712 438 L720 464 L632 464 Z" />
+              <path class="ln" d="M676 438 L676 464 M644 447 C 650 445, 660 449, 668 446 M642 456 C 652 454, 660 458, 669 455 M684 447 L706 447 M686 456 L710 456" />
+
+              <!-- yarn ball (craft night) -->
+              <circle class="pp" cx="196" cy="446" r="19" />
+              <path class="ln" d="M180 438 C 190 446, 202 446, 212 440 M178 451 C 190 459, 202 459, 212 452 M194 428 C 186 440, 188 456, 198 465" />
+
+              <!-- arms resting on the table -->
+              <path class="ln" d="M398 272 C 390 302, 398 324, 414 336" /><circle class="pp" cx="418" cy="338" r="8" />
+              <path class="ln" d="M548 274 C 540 302, 548 330, 562 344" /><circle class="pp" cx="566" cy="347" r="8" />
+              <path class="ln" d="M698 274 C 690 302, 698 330, 714 344" /><circle class="pp" cx="718" cy="347" r="8" />
+
+              <!-- L · beanie, knitting (craft night) -->
+              <path class="pp" d="M36 640 C 36 420, 64 386, 104 386 C 144 386, 172 420, 172 640" />
+              <circle class="pp" cx="104" cy="342" r="31" />
+              <path class="ink" d="M73 336 C 71 298, 137 298, 135 336 Z" />
+              <path class="pp" d="M70 326 C 92 320, 116 320, 138 326 L 138 338 C 116 332, 92 332, 70 338 Z" />
+              <circle class="ink" cx="104" cy="298" r="8" />
+              <circle class="dot" cx="100" cy="350" r="3" /><circle class="dot" cx="118" cy="350" r="3" />
+              <path class="ln" d="M102 360 C 106 366, 114 366, 119 360" />
+              <path class="ln" d="M126 448 C 150 474, 170 472, 178 458" />
+              <path class="pp" d="M90 430 L132 430 L128 462 L94 462 Z" />
+              <path class="ln" d="M96 440 L102 447 L108 440 L114 447 L120 440 L126 447 M97 452 L103 459 L109 452 L115 459 L121 452 L126 458" />
+              <path class="ln" d="M66 418 L154 444 M154 414 L74 448" />
+              <circle class="pp" cx="84" cy="426" r="8" /><circle class="pp" cx="132" cy="424" r="8" />
+
+              <!-- R · glasses, moving a chess piece -->
+              <path class="pp" d="M840 640 C 840 420, 866 386, 905 386 C 944 386, 970 420, 970 640" />
+              <circle class="pp" cx="905" cy="342" r="31" />
+              <path class="ink" d="M872 382 C 864 322, 878 304, 905 304 C 932 304, 948 322, 940 382 L 930 382 C 934 352, 926 330, 905 328 C 886 330, 876 352, 881 382 Z" />
+              <circle class="ln" cx="895" cy="347" r="8" /><circle class="ln" cx="916" cy="347" r="8" />
+              <path class="ln" d="M903 347 L908 347" />
+              <circle class="dot" cx="896" cy="348" r="2.4" /><circle class="dot" cx="917" cy="348" r="2.4" />
+              <path class="ln" d="M898 362 C 902 367, 910 367, 914 362" />
+              <path class="ln" d="M854 420 C 842 432, 838 440, 836 444" /><circle class="pp" cx="834" cy="446" r="8" />
+
+              <!-- front row, backs to us -->
+              <path class="pp" d="M166 640 C 166 600, 198 572, 250 572 C 302 572, 334 600, 334 640" />
+              <circle class="ink" cx="250" cy="528" r="40" />
+
+              <path class="pp" d="M420 640 C 420 600, 452 576, 500 576 C 548 576, 580 600, 580 640" />
+              <path class="ln" d="M548 594 C 570 560, 590 500, 594 470" /><circle class="pp" cx="594" cy="465" r="9" />
+              <circle class="pp" cx="461" cy="530" r="8" /><circle class="pp" cx="539" cy="530" r="8" />
+              <circle class="pp" cx="500" cy="526" r="39" />
+              <path class="ink" d="M462 524 C 458 482, 542 482, 538 524 C 520 510, 480 510, 462 524 Z" />
+
+              <path class="pp" d="M680 640 C 680 600, 712 578, 760 578 C 808 578, 840 600, 840 640" />
+              <path class="ln" d="M714 594 C 698 560, 692 504, 700 470" />
+              <path class="ln thick" d="M702 458 L718 436" />
+              <circle class="pp" cx="700" cy="464" r="9" />
+              <circle class="ink" cx="760" cy="530" r="38" />
+              <circle class="ink" cx="760" cy="484" r="16" />
+            </g>
+          </svg>
+
+          <p class="poster-corner poster-corner-r">You pick<br />the night<br />&amp; the group</p>
+        </div>
+
+        <p class="poster-date">Every Tuesday<sup>7pm</sup></p>
+
+        <p class="poster-pitch">
+          Coop brings run clubs, book clubs, supper clubs &amp; more to NYC restaurants,
+          bars and cafés — the same group, the same night, every week.
+        </p>
+
+        <p class="poster-reserve">Now signing up pilot venues <span>(&amp; clubs)</span></p>
+        <p class="poster-ctas">
+          <a href="join.html#venue">I run a venue →</a>
+          <span aria-hidden="true">/</span>
+          <a href="join.html#club">I run a club →</a>
+        </p>
+
+        <div class="poster-foot">
+          <span>Chelsea · Flatiron</span>
+          <span>Because every flock needs one.</span>
+          <span>East Village · LES</span>
+        </div>
+      </section>
+
+    </main>
+  </body>
+</html>

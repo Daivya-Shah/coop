@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coop — Because every flock needs one</title>
+    <meta
+      name="description"
+      content="Coop helps NYC restaurants, bars, and cafés turn quieter hours into recurring group business — and gives local clubs a regular home."
+    />
+    <meta name="theme-color" content="#ede3c9" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* preview-only extras */
+      .poster-art .part { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; }
+      .poster-art .sign { font: 800 30px var(--sans); fill: var(--ink); text-anchor: middle; letter-spacing: .02em; }
+      .poster-art .chalk { font: 400 20px var(--hand); fill: var(--paper); text-anchor: middle; }
+      .poster-art .chalk-l { text-anchor: start; }
+      .poster-art .chalk-ln { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .poster-art .chalk-dash { fill: none; stroke: var(--paper); stroke-width: 1.5; stroke-dasharray: 3 8; opacity: .45; }
+      .picker {
+        position: fixed; left: 50%; bottom: 16px; z-index: 300; transform: translateX(-50%);
+        display: flex; gap: 4px; align-items: center; padding: 6px;
+        background: var(--ink); color: var(--paper);
+        font: 700 12px var(--sans); letter-spacing: .05em; text-transform: uppercase;
+      }
+      .picker span { padding: 0 8px; opacity: .7; }
+      .picker a { padding: 8px 12px; }
+      .picker a[aria-current="page"] { background: var(--red); }
+      .picker a:hover { background: #333; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Shared SVG filters: marker texture for lettering, a slight wobble for line drawings -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="shape" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="grit" />
+        <feColorMatrix in="grit" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -14 10.4" result="specks" />
+        <feComposite in="shape" in2="specks" operator="in" />
+      </filter>
+      <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" />
+        <feDisplacementMap in="SourceGraphic" scale="3.2" />
+      </filter>
+    </svg>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <a href="index.html" class="logo" aria-label="Coop home">
+        <svg viewBox="0 0 236 112" aria-hidden="true">
+          <g class="marker-ink">
+            <path d="M50 36 C 42 26, 14 26, 11 52 C 9 78, 40 82, 50 70" />
+            <path transform="translate(62 2) rotate(-4 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(124 -1) rotate(5 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(186 1)" d="M12 30 C 12 56, 12 82, 13 106 M13 34 C 52 22, 58 74, 14 72" />
+          </g>
+        </svg>
+      </a>
+      <nav class="masthead-nav" aria-label="Pages">
+        <a href="how.html">How it works</a>
+        <a href="how.html#faq">FAQ</a>
+      </nav>
+      <a class="masthead-cta" href="join.html">Join the pilot</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ 01 · HERO — a folded flyer ============ -->
+      <section class="poster" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="visually-hidden">
+          Table for twenty, every Tuesday. Coop brings recurring local groups to NYC venues on their quiet nights.
+        </h1>
+
+        <svg class="poster-title" viewBox="0 0 709 262" aria-hidden="true">
+          <g class="marker-red">
+            <g transform="translate(20.0 20)"><path transform="translate(0.0 3.1) rotate(0.2 39.0 50) scale(1.046)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(91.6 2.7) rotate(-2.1 38.0 50) scale(1.020)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(179.1 -3.9) rotate(1.6 32.0 50) scale(0.953)" d="M11 5 C 10 36, 10 68, 11 97 M11 6 C 60 0, 64 44, 14 49 M14 49 C 70 46, 72 101, 11 96"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(250.1 2.5) rotate(-1.2 30.0 50) scale(0.975)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(318.6 -1.8) rotate(0.0 31.0 50) scale(1.035)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(432.8 -1.0) rotate(4.5 30.0 50) scale(1.050)" d="M58 5 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 97 M12 51 C 24 50, 35 49, 48 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(505.8 3.1) rotate(-4.4 40.0 50) scale(1.038)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(598.8 2.1) rotate(-3.5 35.0 50) scale(1.006)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(0.0 -2.9) rotate(4.6 39.0 50) scale(1.004)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(88.3 1.4) rotate(3.8 46.0 50) scale(0.981)" d="M4 5 C 10 36, 16 66, 23 96 C 30 74, 38 52, 46 30 C 52 52, 59 74, 66 96 C 73 66, 80 36, 88 4"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(188.6 4.4) rotate(-4.2 31.0 50) scale(0.997)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(260.4 -3.6) rotate(5.0 36.0 50) scale(1.031)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(344.6 4.2) rotate(3.1 39.0 50) scale(0.952)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(428.9 -4.5) rotate(-1.3 36.0 50) scale(1.025)" d="M4 5 C 14 20, 25 35, 36 50 C 47 35, 58 20, 69 4 M36 50 C 36 66, 36 82, 37 98"/></g>
+          </g>
+        </svg>
+
+        <div class="poster-middle">
+          <p class="poster-corner poster-corner-l">No fee<br />to list<br />your spot</p>
+
+          <!-- The table: one object per kind of club -->
+          <svg class="poster-art" viewBox="0 0 1000 640" role="img" aria-label="Looking down on a long shared table: pizza, noodles, bread and flowers in the middle, a chess board, a book, knitting and a notebook, with ten people reaching in from all sides.">
+<g filter="url(#wobble)"><rect class="pp" x="170" y="150" width="660" height="340" rx="26" />
+<rect class="ln" x="186" y="166" width="628" height="308" rx="18" />
+<rect class="pp" x="452" y="190" width="110" height="50" rx="10" /><path class="ln" d="M562 215 L590 215" /><circle class="ln" cx="596" cy="215" r="6" />
+<ellipse class="pp" cx="507" cy="215" rx="42" ry="17" /><path class="ln" d="M485 207 L493 223 M503 205 L511 223 M521 207 L529 223" />
+<path class="ln" d="M206 184 L230 208 M270 184 L248 208" /><circle class="pp" cx="238" cy="216" r="20" /><path class="ln" d="M222 206 C 232 214, 246 214, 256 206 M220 222 C 232 230, 246 230, 257 222 M236 197 C 230 208, 230 224, 238 236" />
+<rect class="pp" x="730" y="186" width="70" height="56" rx="3" /><path class="ln" d="M765 186 L765 242 M738 200 L758 200 M738 212 L756 212 M738 224 L758 224 M772 200 L792 200 M772 212 L788 212" />
+<path class="pp" d="M712 250 L752 210 L760 218 L720 258 L708 262 Z" />
+<circle class="pp" cx="345" cy="212" r="24" /><circle class="ln" cx="345" cy="212" r="15" />
+<circle class="pp" cx="655" cy="212" r="24" /><circle class="ln" cx="655" cy="212" r="15" />
+<rect class="pp" x="206" y="286" width="64" height="64" /><rect class="ink" x="206" y="286" width="16" height="16" /><rect class="ink" x="206" y="318" width="16" height="16" /><rect class="ink" x="222" y="302" width="16" height="16" /><rect class="ink" x="222" y="334" width="16" height="16" /><rect class="ink" x="238" y="286" width="16" height="16" /><rect class="ink" x="238" y="318" width="16" height="16" /><rect class="ink" x="254" y="302" width="16" height="16" /><rect class="ink" x="254" y="334" width="16" height="16" /><rect class="ln" x="206" y="286" width="64" height="64" />
+<circle class="pp" cx="230" cy="302" r="7" /><circle class="pp" cx="254" cy="334" r="7" />
+<circle class="pp" cx="372" cy="318" r="52" /><circle class="ln" cx="372" cy="318" r="43" /><path class="ln" d="M329 318 L415 318" /><path class="ln" d="M342 288 L402 348" /><path class="ln" d="M372 275 L372 361" /><path class="ln" d="M402 288 L342 348" /><circle class="ink" cx="352" cy="306" r="4.5" /><circle class="ink" cx="388" cy="296" r="4.5" /><circle class="ink" cx="396" cy="328" r="4.5" /><circle class="ink" cx="364" cy="340" r="4.5" /><circle class="ink" cx="346" cy="330" r="4.5" /><circle class="ink" cx="378" cy="314" r="4.5" />
+<circle class="pp" cx="505" cy="318" r="16" /><circle class="pp" cx="527" cy="318" r="10" /><circle class="pp" cx="512" cy="339" r="10" /><circle class="pp" cx="487" cy="331" r="10" /><circle class="pp" cx="487" cy="305" r="10" /><circle class="pp" cx="512" cy="297" r="10" /><circle class="ink" cx="505" cy="318" r="6" />
+<circle class="pp" cx="636" cy="318" r="42" /><circle class="ln" cx="636" cy="318" r="33" />
+<path class="ln" d="M612 312 C 620 302, 626 322, 634 310 C 642 300, 648 322, 656 310 M614 328 C 622 318, 628 338, 636 326 C 644 316, 650 336, 658 326" />
+<path class="ln thick" d="M650 270 L700 330 M664 266 L708 322" />
+<path class="pp" d="M738 290 L776 296 L814 290 L814 348 L776 354 L738 348 Z" /><path class="ln" d="M776 296 L776 354 M746 304 L768 307 M746 316 L768 319 M746 328 L768 331 M784 307 L806 304 M784 319 L806 316 M784 331 L806 328" />
+<circle class="pp" cx="300" cy="428" r="24" /><circle class="ln" cx="300" cy="428" r="15" />
+<rect class="pp" x="396" y="398" width="36" height="52" rx="4" transform="rotate(-18 414 424)" /><rect class="pp" x="406" y="400" width="36" height="52" rx="4" /><rect class="pp" x="416" y="402" width="36" height="52" rx="4" transform="rotate(16 434 428)" /><path class="ink" d="M434 418 L440 428 L434 438 L428 428 Z" />
+<circle class="pp" cx="540" cy="428" r="32" /><circle class="pp" cx="528" cy="420" r="11" /><circle class="pp" cx="551" cy="422" r="11" /><circle class="pp" cx="540" cy="440" r="11" /><path class="ln" d="M528 409 L530 403 M551 411 L554 405 M540 429 L542 423" />
+<rect class="pp" x="618" y="404" width="78" height="46" rx="4" transform="rotate(-6 657 427)" /><text class="bubble" x="657" y="436" transform="rotate(-6 657 427)" style="font-size:24px">¡hola!</text>
+<circle class="pp" cx="760" cy="428" r="24" /><circle class="ln" cx="760" cy="428" r="15" />
+<path class="ln" d="M234 118 Q 233 155, 252 192" /><circle class="pp" cx="252" cy="192" r="9" />
+<path class="ln" d="M326 118 Q 332 159, 318 200" /><circle class="pp" cx="318" cy="200" r="9" />
+<ellipse class="pp" cx="280" cy="96" rx="60" ry="28" /><circle class="ink" cx="280" cy="104" r="30" /><path class="part" d="M280 77 C 283 94, 278 110, 282 124" />
+<path class="ln" d="M374 114 Q 373 154, 392 194" /><circle class="pp" cx="392" cy="194" r="9" />
+<path class="ln" d="M466 114 Q 468 157, 450 200" /><circle class="pp" cx="450" cy="200" r="9" />
+<ellipse class="pp" cx="420" cy="92" rx="60" ry="28" /><circle class="ink" cx="440" cy="100" r="12" /><circle class="ink" cx="435" cy="113" r="12" /><circle class="ink" cx="423" cy="120" r="12" /><circle class="ink" cx="410" cy="117" r="12" /><circle class="ink" cx="401" cy="107" r="12" /><circle class="ink" cx="401" cy="93" r="12" /><circle class="ink" cx="410" cy="83" r="12" /><circle class="ink" cx="423" cy="80" r="12" /><circle class="ink" cx="435" cy="87" r="12" /><circle class="ink" cx="420" cy="100" r="14" />
+<path class="ln" d="M534 118 Q 531 159, 548 200" /><circle class="pp" cx="548" cy="200" r="9" />
+<path class="ln" d="M626 118 Q 629 156, 612 194" /><circle class="pp" cx="612" cy="194" r="9" />
+<ellipse class="pp" cx="580" cy="96" rx="60" ry="28" /><ellipse class="ink" cx="580" cy="128" rx="22" ry="14" /><circle class="pp" cx="580" cy="104" r="29" /><path class="ln" d="M580 75 L580 133 M554 92 C 572 100, 588 100, 606 92" /><circle class="ink" cx="580" cy="104" r="5" />
+<path class="ln" d="M674 114 Q 673 155, 692 196" /><circle class="pp" cx="692" cy="196" r="9" />
+<path class="ln" d="M766 114 Q 766 152, 746 190" /><circle class="pp" cx="746" cy="190" r="9" />
+<ellipse class="pp" cx="720" cy="92" rx="60" ry="28" /><circle class="ink" cx="720" cy="100" r="28" /><circle class="ink" cx="720" cy="70" r="12" />
+<path class="ln" d="M254 526 Q 253 489, 272 452" /><circle class="pp" cx="272" cy="452" r="9" />
+<path class="ln" d="M346 526 Q 347 486, 328 446" /><circle class="pp" cx="328" cy="446" r="9" />
+<ellipse class="pp" cx="300" cy="548" rx="60" ry="28" /><circle class="pp" cx="269" cy="540" r="7" /><circle class="pp" cx="331" cy="540" r="7" /><circle class="pp" cx="300" cy="540" r="30" /><path class="ln" d="M282 528 C 294 522, 306 522, 318 528 M280 540 C 294 534, 306 534, 320 540 M284 552 C 296 548, 306 548, 316 552" />
+<path class="ln" d="M414 522 Q 413 488, 432 454" /><circle class="pp" cx="432" cy="454" r="9" />
+<path class="ln" d="M506 522 Q 508 486, 490 450" /><circle class="pp" cx="490" cy="450" r="9" />
+<ellipse class="pp" cx="460" cy="544" rx="60" ry="28" /><circle class="ink" cx="460" cy="536" r="30" />
+<path class="ln" d="M574 526 Q 573 488, 592 450" /><circle class="pp" cx="592" cy="450" r="9" />
+<path class="ln" d="M666 526 Q 668 489, 650 452" /><circle class="pp" cx="650" cy="452" r="9" />
+<ellipse class="pp" cx="620" cy="548" rx="60" ry="28" /><circle class="ink" cx="620" cy="540" r="29" /><circle class="pp" cx="620" cy="540" r="17" /><circle class="ink" cx="620" cy="540" r="7" />
+<path class="ln" d="M724 522 Q 723 486, 742 450" /><circle class="pp" cx="742" cy="450" r="9" />
+<path class="ln" d="M816 522 Q 817 488, 798 454" /><circle class="pp" cx="798" cy="454" r="9" />
+<ellipse class="pp" cx="770" cy="544" rx="60" ry="28" /><circle class="ink" cx="770" cy="536" r="30" /><path class="part" d="M770 509 C 773 526, 768 542, 772 556" />
+<path class="ln" d="M132 278 Q 166 284, 200 290" /><circle class="pp" cx="200" cy="290" r="9" /><path class="ln" d="M132 362 Q 166 355, 200 348" /><circle class="pp" cx="200" cy="348" r="9" />
+<ellipse class="pp" cx="110" cy="320" rx="28" ry="60" /><circle class="ink" cx="118" cy="320" r="30" />
+<path class="ln" d="M868 278 Q 834 284, 800 290" /><circle class="pp" cx="800" cy="290" r="9" /><path class="ln" d="M868 362 Q 834 356, 800 350" /><circle class="pp" cx="800" cy="350" r="9" />
+<ellipse class="pp" cx="890" cy="320" rx="28" ry="60" /><circle class="pp" cx="882" cy="289" r="7" /><circle class="pp" cx="882" cy="351" r="7" /><circle class="pp" cx="882" cy="320" r="30" /><path class="ln" d="M864 308 C 876 302, 888 302, 900 308 M862 320 C 876 314, 888 314, 902 320 M866 332 C 878 328, 888 328, 898 332" />
+<path class="pp" d="M860 196 L884 258 L900 194 Z" /><ellipse class="pp" cx="880" cy="160" rx="106" ry="40" /><text class="bubble" x="880" y="152" style="font-size:24px">same time</text><text class="bubble" x="880" y="178" style="font-size:24px">next week?</text>
+<path class="pp" d="M120 196 L120 262 L146 194 Z" /><ellipse class="pp" cx="112" cy="166" rx="74" ry="32" /><text class="bubble" x="112" y="175">bonjour!</text></g></svg>
+
+          <p class="poster-corner poster-corner-r">You pick<br />the night<br />&amp; the group</p>
+        </div>
+
+        <p class="poster-date">Every Tuesday<sup>7pm</sup></p>
+
+        <p class="poster-pitch">
+          Coop brings run clubs, book clubs, supper clubs &amp; more to NYC restaurants,
+          bars and cafés — the same group, the same night, every week.
+        </p>
+
+        <p class="poster-reserve">Now signing up pilot venues <span>(&amp; clubs)</span></p>
+        <p class="poster-ctas">
+          <a href="join.html#venue">I run a venue →</a>
+          <span aria-hidden="true">/</span>
+          <a href="join.html#club">I run a club →</a>
+        </p>
+
+        <div class="poster-foot">
+          <span>Chelsea · Flatiron</span>
+          <span>Because every flock needs one.</span>
+          <span>East Village · LES</span>
+        </div>
+      </section>
+
+    </main>
+    <nav class="picker" aria-label="Compare pictures"><span>Picture</span><a href="index.html">Original</a><a href="preview-a.html" aria-current="page">A · From above</a><a href="preview-b.html">B · Storefront</a><a href="preview-c.html">C · The week</a></nav>
+  </body>
+</html>

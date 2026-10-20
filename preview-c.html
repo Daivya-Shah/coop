@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coop — Because every flock needs one</title>
+    <meta
+      name="description"
+      content="Coop helps NYC restaurants, bars, and cafés turn quieter hours into recurring group business — and gives local clubs a regular home."
+    />
+    <meta name="theme-color" content="#ede3c9" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* preview-only extras */
+      .poster-art .part { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; }
+      .poster-art .sign { font: 800 30px var(--sans); fill: var(--ink); text-anchor: middle; letter-spacing: .02em; }
+      .poster-art .chalk { font: 400 20px var(--hand); fill: var(--paper); text-anchor: middle; }
+      .poster-art .chalk-l { text-anchor: start; }
+      .poster-art .chalk-ln { fill: none; stroke: var(--paper); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .poster-art .chalk-dash { fill: none; stroke: var(--paper); stroke-width: 1.5; stroke-dasharray: 3 8; opacity: .45; }
+      .picker {
+        position: fixed; left: 50%; bottom: 16px; z-index: 300; transform: translateX(-50%);
+        display: flex; gap: 4px; align-items: center; padding: 6px;
+        background: var(--ink); color: var(--paper);
+        font: 700 12px var(--sans); letter-spacing: .05em; text-transform: uppercase;
+      }
+      .picker span { padding: 0 8px; opacity: .7; }
+      .picker a { padding: 8px 12px; }
+      .picker a[aria-current="page"] { background: var(--red); }
+      .picker a:hover { background: #333; }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Shared SVG filters: marker texture for lettering, a slight wobble for line drawings -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="shape" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="grit" />
+        <feColorMatrix in="grit" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -14 10.4" result="specks" />
+        <feComposite in="shape" in2="specks" operator="in" />
+      </filter>
+      <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" />
+        <feDisplacementMap in="SourceGraphic" scale="3.2" />
+      </filter>
+    </svg>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <a href="index.html" class="logo" aria-label="Coop home">
+        <svg viewBox="0 0 236 112" aria-hidden="true">
+          <g class="marker-ink">
+            <path d="M50 36 C 42 26, 14 26, 11 52 C 9 78, 40 82, 50 70" />
+            <path transform="translate(62 2) rotate(-4 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(124 -1) rotate(5 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(186 1)" d="M12 30 C 12 56, 12 82, 13 106 M13 34 C 52 22, 58 74, 14 72" />
+          </g>
+        </svg>
+      </a>
+      <nav class="masthead-nav" aria-label="Pages">
+        <a href="how.html">How it works</a>
+        <a href="how.html#faq">FAQ</a>
+      </nav>
+      <a class="masthead-cta" href="join.html">Join the pilot</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ 01 · HERO — a folded flyer ============ -->
+      <section class="poster" aria-labelledby="hero-title">
+        <h1 id="hero-title" class="visually-hidden">
+          Table for twenty, every Tuesday. Coop brings recurring local groups to NYC venues on their quiet nights.
+        </h1>
+
+        <svg class="poster-title" viewBox="0 0 709 262" aria-hidden="true">
+          <g class="marker-red">
+            <g transform="translate(20.0 20)"><path transform="translate(0.0 3.1) rotate(0.2 39.0 50) scale(1.046)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(91.6 2.7) rotate(-2.1 38.0 50) scale(1.020)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(179.1 -3.9) rotate(1.6 32.0 50) scale(0.953)" d="M11 5 C 10 36, 10 68, 11 97 M11 6 C 60 0, 64 44, 14 49 M14 49 C 70 46, 72 101, 11 96"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(250.1 2.5) rotate(-1.2 30.0 50) scale(0.975)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(318.6 -1.8) rotate(0.0 31.0 50) scale(1.035)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(432.8 -1.0) rotate(4.5 30.0 50) scale(1.050)" d="M58 5 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 97 M12 51 C 24 50, 35 49, 48 48"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(505.8 3.1) rotate(-4.4 40.0 50) scale(1.038)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/></g>
+            <g transform="translate(20.0 20)"><path transform="translate(598.8 2.1) rotate(-3.5 35.0 50) scale(1.006)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(0.0 -2.9) rotate(4.6 39.0 50) scale(1.004)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(88.3 1.4) rotate(3.8 46.0 50) scale(0.981)" d="M4 5 C 10 36, 16 66, 23 96 C 30 74, 38 52, 46 30 C 52 52, 59 74, 66 96 C 73 66, 80 36, 88 4"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(188.6 4.4) rotate(-4.2 31.0 50) scale(0.997)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(260.4 -3.6) rotate(5.0 36.0 50) scale(1.031)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(344.6 4.2) rotate(3.1 39.0 50) scale(0.952)" d="M4 9 C 26 6, 52 4, 76 5 M40 7 C 41 38, 41 70, 42 97"/></g>
+            <g transform="translate(103.2 142)"><path transform="translate(428.9 -4.5) rotate(-1.3 36.0 50) scale(1.025)" d="M4 5 C 14 20, 25 35, 36 50 C 47 35, 58 20, 69 4 M36 50 C 36 66, 36 82, 37 98"/></g>
+          </g>
+        </svg>
+
+        <div class="poster-middle">
+          <p class="poster-corner poster-corner-l">No fee<br />to list<br />your spot</p>
+
+          <!-- The table: one object per kind of club -->
+          <svg class="poster-art" viewBox="0 0 1000 640" role="img" aria-label="A server with a pie points at a chalkboard titled This week: Monday book club, Tuesday run club then pasta, Wednesday chess and noodles, Thursday Spanish table, Friday full house, Sunday supper club.">
+<g filter="url(#wobble)"><path class="ln" d="M40 600 L980 600" />
+<path class="ln" d="M230 566 L206 600 M610 566 L634 600" />
+<rect class="pp" x="128" y="34" width="584" height="536" rx="14" />
+<rect class="ink" x="146" y="52" width="548" height="500" rx="6" />
+<text class="chalk" x="420" y="116" style="font-size:50px">THIS WEEK</text>
+<path class="chalk-ln" d="M300 132 C 360 124, 480 124, 540 132" />
+<text class="chalk chalk-l" x="186" y="192" style="font-size:30px">MON</text>
+<text class="chalk chalk-l" x="276" y="192" style="font-size:32px">book club</text>
+<path class="chalk-dash" d="M186 208 L654 208" />
+<text class="chalk chalk-l" x="186" y="252" style="font-size:30px">TUE</text>
+<text class="chalk chalk-l" x="276" y="252" style="font-size:32px">run club, then pasta</text>
+<path class="chalk-dash" d="M186 268 L654 268" />
+<text class="chalk chalk-l" x="186" y="312" style="font-size:30px">WED</text>
+<text class="chalk chalk-l" x="276" y="312" style="font-size:32px">chess & noodles</text>
+<path class="chalk-dash" d="M186 328 L654 328" />
+<text class="chalk chalk-l" x="186" y="372" style="font-size:30px">THU</text>
+<text class="chalk chalk-l" x="276" y="372" style="font-size:32px">¡hola! spanish table</text>
+<path class="chalk-dash" d="M186 388 L654 388" />
+<text class="chalk chalk-l" x="186" y="432" style="font-size:30px">FRI</text>
+<text class="chalk chalk-l" x="276" y="432" style="font-size:32px">full house</text>
+<path class="chalk-dash" d="M186 448 L654 448" />
+<text class="chalk chalk-l" x="186" y="492" style="font-size:30px">SUN</text>
+<text class="chalk chalk-l" x="276" y="492" style="font-size:32px">supper club</text>
+<path class="chalk-dash" d="M186 508 L654 508" />
+<path class="chalk-ln" d="M618 176 L626 190 L642 192 L630 202 L634 218 L618 210 L604 218 L608 202 L596 192 L612 190 Z" />
+<path class="chalk-ln" d="M612 440 C 600 428, 600 416, 610 414 C 618 412, 622 420, 622 424 C 624 416, 632 412, 638 418 C 644 426, 632 436, 612 440 Z" />
+<path class="chalk-ln" d="M560 524 C 576 518, 600 518, 622 524" />
+<path class="ln" d="M792 470 L784 590 M832 470 L842 590" /><ellipse class="ink" cx="780" cy="594" rx="16" ry="7" /><ellipse class="ink" cx="848" cy="594" rx="16" ry="7" />
+<path class="pp" d="M760 476 C 756 334, 770 252, 812 252 C 854 252, 868 334, 864 476 Z" />
+<path class="pp" d="M772 330 L852 330 L858 486 L766 486 Z" /><path class="ln" d="M772 330 L796 278 M852 330 L828 278" /><rect class="pp" x="792" y="380" width="40" height="30" />
+<path class="ln" d="M764 292 C 744 300, 728 300, 716 298" /><circle class="pp" cx="712" cy="298" r="9" /><path class="ln" d="M704 297 L692 296" />
+<path class="ln" d="M858 284 C 890 254, 900 206, 896 158" /><circle class="pp" cx="896" cy="152" r="10" />
+<path class="ln" d="M872 92 C 866 80, 878 74, 872 62 M896 88 C 890 76, 902 70, 896 58 M920 92 C 914 80, 926 74, 920 62" />
+<path class="pp" d="M852 136 C 856 100, 940 100, 944 136 Z" /><path class="ln" d="M866 118 C 880 112, 916 112, 930 118" />
+<ellipse class="pp" cx="898" cy="140" rx="64" ry="12" />
+<circle class="pp" cx="812" cy="202" r="34" /><circle class="ink" cx="840" cy="168" r="13" />
+<path class="ink" d="M778 200 C 774 160, 850 158, 846 200 C 830 184, 796 182, 778 200 Z" />
+<path class="ln thick" d="M838 192 L856 164" />
+<circle class="dot" cx="802" cy="208" r="3.2" /><circle class="dot" cx="824" cy="208" r="3.2" /><path class="ln" d="M802 220 C 808 228, 818 228, 824 220" />
+<path class="ln" d="M70 540 C 56 496, 66 470, 80 456 M80 540 C 86 500, 104 484, 116 480 M74 540 C 70 510, 50 496, 38 494" />
+<path class="pp" d="M48 540 L106 540 L98 600 L56 600 Z" /></g></svg>
+
+          <p class="poster-corner poster-corner-r">You pick<br />the night<br />&amp; the group</p>
+        </div>
+
+        <p class="poster-date">Every Tuesday<sup>7pm</sup></p>
+
+        <p class="poster-pitch">
+          Coop brings run clubs, book clubs, supper clubs &amp; more to NYC restaurants,
+          bars and cafés — the same group, the same night, every week.
+        </p>
+
+        <p class="poster-reserve">Now signing up pilot venues <span>(&amp; clubs)</span></p>
+        <p class="poster-ctas">
+          <a href="join.html#venue">I run a venue →</a>
+          <span aria-hidden="true">/</span>
+          <a href="join.html#club">I run a club →</a>
+        </p>
+
+        <div class="poster-foot">
+          <span>Chelsea · Flatiron</span>
+          <span>Because every flock needs one.</span>
+          <span>East Village · LES</span>
+        </div>
+      </section>
+
+    </main>
+    <nav class="picker" aria-label="Compare pictures"><span>Picture</span><a href="index.html">Original</a><a href="preview-a.html">A · From above</a><a href="preview-b.html">B · Storefront</a><a href="preview-c.html" aria-current="page">C · The week</a></nav>
+  </body>
+</html>

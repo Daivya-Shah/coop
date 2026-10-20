@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join the pilot — Coop</title>
+    <meta
+      name="description"
+      content="Coop helps NYC restaurants, bars, and cafés turn quieter hours into recurring group business — and gives local clubs a regular home."
+    />
+    <meta name="theme-color" content="#ede3c9" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&family=Gochi+Hand&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- Shared SVG filters: marker texture for lettering, a slight wobble for line drawings -->
+    <svg class="defs" aria-hidden="true" focusable="false">
+      <filter id="marker" x="-5%" y="-5%" width="110%" height="110%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3" result="warp" />
+        <feDisplacementMap in="SourceGraphic" in2="warp" scale="5" result="shape" />
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="1" seed="9" result="grit" />
+        <feColorMatrix in="grit" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -14 10.4" result="specks" />
+        <feComposite in="shape" in2="specks" operator="in" />
+      </filter>
+      <filter id="wobble" x="-2%" y="-2%" width="104%" height="104%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" />
+        <feDisplacementMap in="SourceGraphic" scale="3.2" />
+      </filter>
+    </svg>
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <a href="index.html" class="logo" aria-label="Coop home">
+        <svg viewBox="0 0 236 112" aria-hidden="true">
+          <g class="marker-ink">
+            <path d="M50 36 C 42 26, 14 26, 11 52 C 9 78, 40 82, 50 70" />
+            <path transform="translate(62 2) rotate(-4 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(124 -1) rotate(5 30 52)" d="M30 28 C 12 28, 6 46, 7 56 C 8 72, 18 82, 31 81 C 46 80, 54 66, 53 52 C 52 38, 44 28, 30 28" />
+            <path transform="translate(186 1)" d="M12 30 C 12 56, 12 82, 13 106 M13 34 C 52 22, 58 74, 14 72" />
+          </g>
+        </svg>
+      </a>
+      <nav class="masthead-nav" aria-label="Pages">
+        <a href="how.html">How it works</a>
+        <a href="how.html#faq">FAQ</a>
+      </nav>
+      <a class="masthead-cta" href="join.html" aria-current="page">Join the pilot</a>
+    </header>
+
+    <main id="main">
+      <!-- ============ 10 · JOIN ============ -->
+      <section class="section join first" aria-labelledby="join-title">
+        <div class="label-rule"><span>Join the pilot</span><span>Two minutes. No account.</span></div>
+        <h1 id="join-title" class="visually-hidden">Pull up a chair</h1>
+        <div class="join-head">
+        <svg class="chair" viewBox="0 0 200 220" aria-hidden="true">
+          <path d="M52 112 L48 34 C 48 8, 132 8, 132 34 L128 112" />
+          <path d="M70 24 L72 108 M90 18 L90 108 M110 24 L108 108" />
+          <path class="pp" d="M34 112 L146 112 L154 128 L26 128 Z" />
+          <path d="M34 128 L26 210 M146 128 L154 210 M58 128 L62 192 M122 128 L118 192 M32 168 L148 168" />
+          <text x="150" y="40" transform="rotate(8 150 40)">saved</text>
+          <text x="150" y="64" transform="rotate(8 150 64)">you one</text>
+        </svg>
+        <svg class="marker-heading marker-heading-chair" viewBox="0 0 523 262" aria-hidden="true">
+          <g class="marker-red"><g transform="translate(21.9 20)"><path transform="translate(0.0 1.9) rotate(-3.4 32 50) scale(1.013)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 66 52, 13 54"/><path transform="translate(74.9 -2.8) rotate(-0.2 35 50) scale(1.029)" d="M10 4 C 9 40, 8 70, 18 86 C 28 100, 50 100, 58 84 C 64 70, 62 36, 62 3"/><path transform="translate(156.9 0.1) rotate(3.1 30 50) scale(1.001)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/><path transform="translate(226.9 -5.0) rotate(-2.6 30 50) scale(0.987)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/><path transform="translate(336.2 -4.3) rotate(0.9 35 50) scale(1.029)" d="M10 4 C 9 40, 8 70, 18 86 C 28 100, 50 100, 58 84 C 64 70, 62 36, 62 3"/><path transform="translate(418.2 -2.7) rotate(-2.7 32 50) scale(0.954)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 66 52, 13 54"/></g><g transform="translate(20.0 142)"><path transform="translate(0.0 2.4) rotate(5.0 38 50) scale(1.038)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/><path transform="translate(128.9 -4.7) rotate(1.2 34 50) scale(0.983)" d="M62 16 C 52 2, 14 0, 8 42 C 4 80, 30 100, 50 94 C 58 92, 62 86, 64 82"/><path transform="translate(205.7 -3.8) rotate(-0.0 35 50) scale(1.045)" d="M10 4 C 10 36, 10 66, 11 97 M60 3 C 60 36, 60 66, 61 96 M11 50 C 28 49, 44 49, 60 48"/><path transform="translate(288.9 -3.5) rotate(-1.3 38 50) scale(1.032)" d="M5 97 C 16 64, 26 34, 37 5 C 48 36, 60 66, 71 97 M19 63 C 32 62, 45 61, 57 60"/><path transform="translate(377.3 4.3) rotate(-3.8 13 50) scale(0.995)" d="M13 4 C 13 36, 13 66, 14 97"/><path transform="translate(413.1 -1.6) rotate(0.5 35 50) scale(0.998)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/></g></g>
+        </svg>
+        </div>
+
+        <div class="forms">
+          <!-- Set data-endpoint to a form service URL (e.g. Formspree) to receive submissions. -->
+          <form class="intake" id="venue" data-endpoint="" novalidate>
+            <p class="intake-kicker">Form A</p>
+            <h3>I run a venue</h3>
+            <label class="field"><span>Venue name</span><input name="venue" required autocomplete="organization" /></label>
+            <label class="field"><span>Your name</span><input name="name" required autocomplete="name" /></label>
+            <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+            <label class="field"><span>Neighborhood</span>
+              <select name="area">
+                <option>Chelsea</option><option>Flatiron</option><option>East Village</option><option>Lower East Side</option><option>Somewhere else</option>
+              </select>
+            </label>
+            <fieldset class="field">
+              <legend>Your quiet nights</legend>
+              <div class="boxes">
+                <label><input type="checkbox" name="nights" value="Mon" /><span>Mon</span></label>
+                <label><input type="checkbox" name="nights" value="Tue" /><span>Tue</span></label>
+                <label><input type="checkbox" name="nights" value="Wed" /><span>Wed</span></label>
+                <label><input type="checkbox" name="nights" value="Thu" /><span>Thu</span></label>
+                <label><input type="checkbox" name="nights" value="Fri" /><span>Fri</span></label>
+                <label><input type="checkbox" name="nights" value="Sat" /><span>Sat</span></label>
+                <label><input type="checkbox" name="nights" value="Sun" /><span>Sun</span></label>
+              </div>
+            </fieldset>
+            <label class="field"><span>Group size you could host</span>
+              <select name="capacity"><option>10–20</option><option>20–30</option><option>30–40</option><option>40+</option></select>
+            </label>
+            <button class="btn-ink" type="submit">Send it →</button>
+            <p class="intake-fine">Sending this isn’t a booking. We’ll only use it to talk to you about the pilot.</p>
+            <p class="intake-done" hidden></p>
+          </form>
+
+          <form class="intake" id="club" data-endpoint="" novalidate>
+            <p class="intake-kicker">Form B</p>
+            <h3>I run a club</h3>
+            <label class="field"><span>Club name</span><input name="club" required /></label>
+            <label class="field"><span>Your name</span><input name="name" required autocomplete="name" /></label>
+            <label class="field"><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+            <label class="field"><span>Instagram or link</span><input name="link" placeholder="@yourclub" /></label>
+            <label class="field"><span>What do you do?</span>
+              <select name="type">
+                <option>Run club</option><option>Book club</option><option>Craft night</option><option>Game night</option><option>Language exchange</option><option>Supper club</option><option>Writing group</option><option>Wellness group</option><option>Something else</option>
+              </select>
+            </label>
+            <label class="field"><span>How many usually show up?</span>
+              <select name="turnout"><option>Under 10</option><option>10–20</option><option>20–35</option><option>35+</option></select>
+            </label>
+            <label class="field"><span>How often?</span>
+              <select name="cadence"><option>Weekly</option><option>Every other week</option><option>Monthly</option></select>
+            </label>
+            <button class="btn-ink" type="submit">Send it →</button>
+            <p class="intake-fine">Free for clubs. You can turn down any match.</p>
+            <p class="intake-done" hidden></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="footer-sign" aria-hidden="true">
+        <svg viewBox="0 0 1556 140"><g class="marker-red"><g transform="translate(20.0 20)"><path transform="translate(0.0 1.3) rotate(0.7 31 50) scale(1.032)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/><path transform="translate(74.0 1.5) rotate(-2.2 37 50) scale(1.039)" d="M4 4 C 14 34, 26 66, 37 97 C 48 66, 60 34, 70 3"/><path transform="translate(160.9 -3.1) rotate(4.1 31 50) scale(1.015)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/><path transform="translate(233.8 0.0) rotate(1.2 35 50) scale(1.047)" d="M11 97 C 10 66, 10 36, 11 5 C 64 0, 68 50, 14 52 M30 53 C 42 68, 54 83, 66 97"/><path transform="translate(317.1 -0.5) rotate(0.3 36 50) scale(1.044)" d="M4 5 C 14 20, 25 35, 36 50 C 47 35, 58 20, 69 4 M36 50 C 36 66, 36 82, 37 98"/><path transform="translate(442.3 -2.0) rotate(1.4 30 50) scale(0.981)" d="M58 5 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 97 M12 51 C 24 50, 35 49, 48 48"/><path transform="translate(511.1 -4.5) rotate(-0.0 30 50) scale(1.011)" d="M11 4 C 10 36, 10 66, 12 95 C 28 95, 44 94, 58 93"/><path transform="translate(581.8 -0.7) rotate(2.4 40 50) scale(1.035)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/><path transform="translate(674.5 0.6) rotate(4.3 34 50) scale(1.018)" d="M62 16 C 52 2, 14 0, 8 42 C 4 80, 30 100, 50 94 C 58 92, 62 86, 64 82"/><path transform="translate(753.8 -4.4) rotate(-3.8 33 50) scale(1.048)" d="M11 4 C 11 36, 11 66, 12 97 M60 5 C 44 22, 28 38, 13 56 M28 42 C 40 60, 52 78, 63 96"/><path transform="translate(872.9 -2.9) rotate(-2.2 36 50) scale(1.040)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/><path transform="translate(957.8 -3.8) rotate(2.5 31 50) scale(0.982)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/><path transform="translate(1028.7 -2.3) rotate(-2.6 31 50) scale(0.951)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/><path transform="translate(1097.6 -2.0) rotate(0.2 35 50) scale(0.989)" d="M11 4 C 10 36, 10 66, 11 97 M11 5 C 76 0, 80 100, 11 96"/><path transform="translate(1176.9 -3.9) rotate(-3.1 31 50) scale(0.953)" d="M56 14 C 46 2, 12 2, 10 24 C 8 44, 54 46, 54 70 C 54 94, 18 100, 6 84"/><path transform="translate(1286.0 2.5) rotate(3.7 40 50) scale(1.006)" d="M42 5 C 14 4, 5 34, 6 56 C 8 84, 26 98, 43 96 C 66 94, 77 68, 75 46 C 73 20, 62 6, 42 5"/><path transform="translate(1376.5 -3.5) rotate(-3.8 36 50) scale(0.962)" d="M10 97 C 10 66, 10 36, 11 4 C 28 34, 45 66, 62 96 C 62 64, 62 34, 63 3"/><path transform="translate(1455.7 -4.4) rotate(-1.8 31 50) scale(0.978)" d="M58 6 C 42 5, 26 6, 12 7 C 11 38, 11 68, 12 95 C 28 95, 44 94, 60 93 M12 50 C 24 49, 36 48, 50 48"/></g></g></svg>
+      </div>
+      <div class="footer-bottom">
+        <span>Coop · New York City</span>
+        <nav aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="how.html">How it works</a>
+          <a href="how.html#faq">FAQ</a>
+          <a href="join.html">Join the pilot</a>
+        </nav>
+        <span>© 2026 Coop</span>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
