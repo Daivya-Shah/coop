@@ -6,18 +6,17 @@ Coop helps NYC restaurants, bars, and cafés turn their quiet nights into recurr
 
 ## The site
 
-A plain HTML/CSS site with no build step. Open `index.html` in a browser.
+A single-page sketchbook in plain HTML/CSS/JS, with no build step. Open `index.html` in a browser.
 
-| File | Page |
+| File | What it is |
 |---|---|
-| `index.html` | Home: the "Table for Twenty" flyer |
-| `how.html` | How it works, pricing and FAQ |
-| `join.html` | Pilot sign-up forms for venues and clubs |
+| `index.html` | The page: a hello card, the sketch grid, and pop-up panels (the idea, how it works, venues, clubs, pricing, FAQ, sign-up) |
 | `styles.css` | All styles |
-| `script.js` | Form handling |
-| `preview-a/b/c.html` | Alternative home-page drawings, for comparison |
+| `script.js` | New York clock, panels, sketch lightbox, sign-up forms |
+| `sketches/*.svg` | The pen sketches (light grey ink; the page inverts them to black) |
+| `sketches/sketch.py` | The script that draws them: `python sketches/sketch.py sketches` |
 | `_backup-*`, `_draft-v0` | Earlier versions |
 
 ## Forms
 
-The sign-up forms on `join.html` don't send anywhere yet. To receive submissions, create a form with a service such as Formspree and put its URL in the `data-endpoint=""` attribute on each `<form class="intake">`.
+The sign-up forms don't send anywhere yet. To receive submissions, create a form with a service such as Formspree and put its URL in the `data-endpoint=""` attribute on each `<form class="intake">` in `index.html`.
