@@ -103,6 +103,10 @@ GLYPHS = {
     '.': (18, "M9 92 L9 95"),
     '/': (40, "M36 2 L4 98"),
     '-': (40, "M6 54 L34 52"),
+    ',': (18, "M9 90 L5 104"),
+    '(': (30, "M24 0 C 4 30, 4 70, 24 100"),
+    ')': (30, "M6 0 C 26 30, 26 70, 6 100"),
+    '#': (60, "M20 10 L14 92 M44 10 L38 92 M6 36 L56 36 M4 66 L54 66"),
     '=': (50, "M6 40 L44 40 M6 64 L44 64"),
     '+': (52, "M26 28 L26 76 M4 52 L48 52"),
     '!': (22, "M11 4 L11 70 M11 92 L11 95"),
@@ -1079,6 +1083,400 @@ def sheet_receipt():
     return sh
 
 
+# ---------------------------------------------------------------------------
+# batch 3: venue objects and Coop devices
+# ---------------------------------------------------------------------------
+def poly3d(sh, cam, pts, closed=False, **kw):
+    pp = [cam.P(p) for p in pts]
+    if closed:
+        sh.poly(pp, **kw)
+    else:
+        sh.line(pp, **kw)
+    return pp
+
+
+def pin(sh, px, py, k=1.0):
+    sh.line(bez((px, py), (px - 34 * k, py - 40 * k), (px - 30 * k, py - 80 * k), (px, py - 80 * k)) +
+            bez((px, py - 80 * k), (px + 30 * k, py - 80 * k), (px + 34 * k, py - 40 * k), (px, py))[1:], width=2.5)
+    sh.poly(ellipse(px, py - 56 * k, 10 * k, 10 * k, n=10), width=2.0, passes=1)
+
+
+def sheet_espresso():
+    sh = Sheet(509)
+    cam = Cam(-32, 16, 3.3, 500, 780, D=900)
+    box(sh, cam, -60, -35, 0, 120, 70, 72, shade=0.4, spacing=7)
+    box(sh, cam, -62, -37, 72, 124, 74, 6, shade=0.4, spacing=4)
+    box(sh, cam, -55, -62, 0, 110, 27, 8, shade=0.4, spacing=4)
+    for x in range(-48, 50, 9):
+        sh.line([cam.P((x, -60, 8.1)), cam.P((x, -37, 8.1))], width=1.6, passes=1)
+    for gx in (-28, 28):
+        cylinder(sh, cam, gx, -45, 34, 10, 8, shade=False)
+        cylinder(sh, cam, gx, -45, 26, 9, 6, shade=False)
+        box(sh, cam, gx - 2, -100, 26, 4, 46, 5, shade=2, width=2.4)
+        poly3d(sh, cam, circle3d(cam, gx, -35.2, 56, 8, plane='xz')[:-1], closed=True, width=2.2)
+        sh.line([cam.P((gx, -35.3, 56)), cam.P((gx + 5, -35.3, 61))], width=1.8, passes=1)
+    for bx in (-8, 0, 8):
+        poly3d(sh, cam, circle3d(cam, bx, -35.2, 44, 2.6, plane='xz')[:-1], closed=True, width=1.8, passes=1)
+    poly3d(sh, cam, [(62, -20, 55), (72, -26, 52), (78, -34, 40), (80, -40, 20)], width=2.6)
+    for cx, cy in ((-35, 5), (-12, 12), (15, 0)):
+        cylinder(sh, cam, cx, cy, 78, 7, 9, shade=False)
+    side = Cam(90, 0, 1.5, 930, 860, D=10000)
+    box(sh, side, -60, -35, 0, 120, 70, 72, shade=2, width=2.2)
+    box(sh, side, -62, -37, 72, 124, 74, 6, shade=2, width=2.0)
+    box(sh, side, -55, -62, 0, 110, 27, 8, shade=2, width=2.0)
+    box(sh, side, -2, -100, 26, 4, 46, 5, shade=2, width=2.0)
+    sh.text('SIDE', 905, 680, size=20)
+    sh.text('ESPRESSO', 70, 110, size=38, rot=-0.02)
+    sh.text('FOR THE 8:15 RUSH', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('2 GROUPS', 120, 560, size=22, rot=-0.03)
+    sh.arrow(bez((230, 575), (280, 600), (320, 620), (352, 650)), head=10)
+    sh.text('STEAM', 760, 470, size=22)
+    sh.arrow(bez((790, 490), (770, 540), (760, 580), (745, 610)), head=10)
+    sh.text('CUPS STAY WARM', 560, 240, size=20, rot=0.03)
+    sh.arrow(bez((600, 260), (580, 300), (560, 330), (540, 360)), head=10)
+    return sh
+
+
+def sheet_clicker():
+    sh = Sheet(521)
+    cx, cy = 420, 540
+    sh.poly(ellipse(cx, cy, 170, 170, n=60))
+    sh.poly(ellipse(cx, cy, 150, 150, n=60), width=2.0, passes=1)
+    win = rrect(cx - 114, cy - 62, 228, 96, 10)
+    sh.poly(win)
+    for k in (1, 2):
+        sh.line([(cx - 114 + k * 76, cy - 62), (cx - 114 + k * 76, cy + 34)], width=2.0, passes=1)
+    for k, dgt in enumerate('018'):
+        sh.text(dgt, cx - 76 + k * 76, cy + 16, size=64, anchor='middle', width=3.0)
+    sh.poly(rrect(cx - 32, cy - 250, 64, 62, 8))
+    sh.line([(cx - 18, cy - 188), (cx - 18, cy - 168)], width=2.4)
+    sh.line([(cx + 18, cy - 188), (cx + 18, cy - 168)], width=2.4)
+    sh.hatch([(cx + 8, cy - 248), (cx + 30, cy - 248), (cx + 30, cy - 192), (cx + 8, cy - 192)], angle=80, spacing=4.5)
+    sh.poly(ellipse(cx + 196, cy - 40, 22, 22, n=16))
+    sh.line([(cx + 168, cy - 48), (cx + 174, cy - 48)], width=2.2)
+    sh.line([(cx + 168, cy - 32), (cx + 174, cy - 32)], width=2.2)
+    sh.poly(ellipse(cx, cy + 236, 60, 52, n=30))
+    sh.line([(cx - 22, cy + 168), (cx - 22, cy + 186)], width=2.4)
+    sh.line([(cx + 22, cy + 168), (cx + 22, cy + 186)], width=2.4)
+    sh.hatch([(cx + 112, cy - 92), (cx + 150, cy - 30), (cx + 150, cy + 40), (cx + 112, cy + 100)], angle=70, spacing=6)
+    # small 3/4 view
+    ox, oy = 880, 420
+    sh.poly(ellipse(ox, oy, 70, 80, n=36))
+    sh.line(ellipse(ox + 24, oy - 10, 70, 80, a0=-1.2, a1=1.6, n=20), width=2.2)
+    sh.line([(ox - 10, oy - 79), (ox + 14, oy - 89)], width=2.0)
+    sh.line([(ox + 2, oy + 79), (ox + 26, oy + 69)], width=2.0)
+    sh.poly(rrect(ox - 34, oy - 30, 68, 34, 5), width=2.0)
+    sh.poly([(ox - 12, oy - 112), (ox + 14, oy - 118), (ox + 18, oy - 84), (ox - 8, oy - 78)], width=2.2)
+    sh.hatch(ellipse(ox + 44, oy, 22, 60, n=14)[:-1], angle=70, spacing=5)
+    sh.text('HEADCOUNT', 70, 110, size=38, rot=-0.02)
+    sh.text('CLICK PER ARRIVAL', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('18 OF 20 RSVP', 640, 690, size=24, rot=0.03)
+    sh.arrow(bez((660, 670), (620, 640), (580, 600), (540, 560)))
+    sh.text('RESET', 700, 250, size=22)
+    sh.arrow(bez((720, 270), (690, 340), (660, 420), (632, 480)), head=10)
+    return sh
+
+
+def sheet_beacon():
+    sh = Sheet(533)
+    cam = Cam(-26, 22, 3.6, 320, 620, D=600)
+    A, B, C, D_ = (-45, -18, 0), (45, -18, 0), (45, 6, 40), (-45, 6, 40)
+    E, F, G, H = (45, 18, 40), (-45, 18, 40), (45, 18, 0), (-45, 18, 0)
+    faces = [((0, -40, 24), [A, B, C, D_]), ((0, 0, 1), [D_, C, E, F]), ((1, 0, 0), [B, G, E, C]), ((-1, 0, 0), [A, D_, F, H])]
+    for n, pts in faces:
+        if cam.visible(n):
+            pp = [cam.P(p) for p in pts]
+            sh.poly(pp)
+            if n[0] == 1:
+                sh.hatch(pp, angle=62, spacing=5.5)
+    lerp = lambda p, q, t: tuple(p[i] + (q[i] - p[i]) * t for i in range(3))
+    def face_pt(u, v):
+        return lerp(lerp(A, B, u), lerp(D_, C, u), v)
+    scr = [face_pt(0.08, 0.18), face_pt(0.92, 0.18), face_pt(0.92, 0.86), face_pt(0.08, 0.86)]
+    sh.poly([cam.P(p) for p in scr], width=2.3)
+    a, b = cam.P(face_pt(0.16, 0.62)), cam.P(face_pt(0.84, 0.62))
+    ang = math.atan2(b[1] - a[1], b[0] - a[0])
+    sh.text('BOOK CLUB', a[0], a[1], size=26, rot=ang, width=2.2)
+    a2 = cam.P(face_pt(0.16, 0.34))
+    sh.text('TUE 7PM  18', a2[0], a2[1], size=18, rot=ang, width=1.8)
+    cylinder(sh, cam, 30, 12, 40, 4, 3, shade=False)
+    poly3d(sh, cam, circle3d(cam, -30, 12, 40.1, 2)[:-1], closed=True, width=2.2, passes=1)
+    # exploded layers
+    for k, label in enumerate(('E-INK', 'BOARD', 'BATTERY', 'SHELL')):
+        x0, y0 = 600 + k * 34, 300 + k * 110
+        sh.poly([(x0, y0), (x0 + 200, y0 - 40), (x0 + 240, y0), (x0 + 40, y0 + 40)], width=2.2)
+        sh.text(label, x0 + 250, y0 + 14, size=18)
+        if k:
+            dashed(sh, [(x0 - 34 + 20, y0 - 110 + 20), (x0 + 20, y0 + 20)], on=8, off=7, width=1.6)
+    sh.hatch([(668, 520), (868, 480), (908, 520), (708, 560)], angle=20, spacing=6)
+    sh.text('SMART RESERVED SIGN?', 70, 110, size=34, rot=-0.02)
+    sh.text("SHOWS TONIGHT'S GROUP", 74, 156, size=20, rot=-0.02, width=1.8)
+    sh.text('CONCEPT', 74, 196, size=18, rot=-0.02, width=1.6)
+    sh.text('USB-C', 120, 820, size=20)
+    sh.arrow(bez((180, 800), (190, 740), (200, 700), (205, 665)), head=10)
+    return sh
+
+
+def sheet_printer():
+    sh = Sheet(547)
+    cam = Cam(-30, 24, 3.4, 460, 760, D=800)
+    box(sh, cam, -40, -45, 0, 80, 90, 40, shade=0.4, spacing=6)
+    sh.line([cam.P((-30, -10, 40.2)), cam.P((30, -10, 40.2))], width=2.4)
+    path = [(-10, 40), (-10, 58), (-12, 74), (-17, 88), (-25, 97), (-34, 100)]
+    left = poly3d(sh, cam, [(-27, y, z) for y, z in path], width=2.3)
+    right = poly3d(sh, cam, [(27, y, z) for y, z in path], width=2.3)
+    sh.line([left[-1], right[-1]], width=2.3)
+    for i in range(1, 5):
+        y, z = path[i]
+        sh.line([cam.P((-20, y - 0.5, z)), cam.P((12 - (i % 2) * 10, y - 0.5, z))], width=1.6, passes=1)
+    for bx in (12, 24):
+        poly3d(sh, cam, circle3d(cam, bx, -35, 40.2, 3.5)[:-1], closed=True, width=2.0, passes=1)
+    bk = cam.P((40, 30, 8))
+    sh.line(bez(bk, (bk[0] + 80, bk[1] + 20), (bk[0] + 60, bk[1] + 120), (bk[0] + 200, bk[1] + 110)), width=2.2)
+    sh.text('TAB PRINTER', 70, 110, size=38, rot=-0.02)
+    sh.text('ONE CHECK PER GROUP', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('GROUP #12', 700, 250, size=24, rot=0.03)
+    sh.arrow(bez((720, 270), (640, 300), (540, 380), (470, 440)))
+    sh.text('NO POS NEEDED', 650, 860, size=22)
+    return sh
+
+
+def sheet_record():
+    sh = Sheet(559)
+    cam = Cam(-28, 32, 3.0, 520, 640, D=800)
+    box(sh, cam, -70, -55, 0, 140, 110, 14, shade=0.4, spacing=6)
+    cylinder(sh, cam, -15, 0, 14, 46, 4, shade=False)
+    for rr in (42, 34, 26):
+        poly3d(sh, cam, circle3d(cam, -15, 0, 18.2, rr)[:-1], closed=True, width=1.7, passes=1)
+    lab = [cam.P(p) for p in circle3d(cam, -15, 0, 18.3, 12, n=18)[:-1]]
+    sh.poly(lab, width=2.0)
+    sh.hatch(lab, angle=40, spacing=4.5)
+    cylinder(sh, cam, -15, 0, 18, 1.5, 4, shade=False)
+    cylinder(sh, cam, 50, 35, 14, 8, 6, shade=False)
+    poly3d(sh, cam, [(50, 35, 22), (49, -5, 22), (32, -28, 21)], width=2.8)
+    box(sh, cam, 26, -36, 18, 9, 7, 3, shade=2, width=2.0)
+    for kx in (40, 56):
+        poly3d(sh, cam, circle3d(cam, kx, -55.2, 7, 3.5, plane='xz')[:-1], closed=True, width=2.0, passes=1)
+    sh.text('VINYL NIGHT?', 70, 110, size=38, rot=-0.02)
+    sh.text('LOW, UNDER THE TALK', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('33 / 45', 760, 820, size=24)
+    sh.arrow(bez((790, 800), (760, 760), (720, 740), (680, 730)), head=10)
+    sh.text('BRING YOUR OWN RECORD', 600, 230, size=20, rot=0.02)
+    return sh
+
+
+def stool(sh, cam, x, y):
+    cylinder(sh, cam, x, y, 74, 17, 4, shade=False)
+    feet = []
+    for dx, dy in ((-1, -1), (1, -1), (1, 1), (-1, 1)):
+        top = (x + dx * 11, y + dy * 11, 74)
+        bot = (x + dx * 19, y + dy * 19, 0)
+        sh.line([cam.P(top), cam.P(bot)], width=2.4)
+        feet.append((x + dx * (11 + 8 * (1 - 26 / 74)), y + dy * (11 + 8 * (1 - 26 / 74)), 26))
+    sh.poly([cam.P(p) for p in feet], width=2.0, passes=1)
+
+
+def sheet_stools():
+    sh = Sheet(571)
+    cam = Cam(-35, 15, 3.4, 330, 860, D=900)
+    for i in range(3):
+        stool(sh, cam, i * 55, i * 8)
+    ex = Cam(0, 0, 3.0, 900, 860, D=10000)
+    stool(sh, ex, 0, 0)
+    sh.dim((1010, 860), (1010, 860 - 78 * 3.0), '75 CM', size=18)
+    sh.text('BAR SEATING', 70, 110, size=38, rot=-0.02)
+    sh.text('X8 ALONG THE WINDOW', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('FRONT', 860, 560, size=20)
+    sh.text('FOOTREST!', 120, 560, size=22, rot=-0.04)
+    sh.arrow(bez((230, 580), (270, 620), (290, 680), (300, 730)), head=10)
+    return sh
+
+
+def sheet_booth():
+    sh = Sheet(583)
+    cam = Cam(-34, 24, 2.4, 560, 760, D=1100)
+    box(sh, cam, -110, -10, 0, 220, 50, 40, shade=0.4, spacing=6)
+    box(sh, cam, -110, 40, 40, 220, 12, 55, shade=0.4, spacing=6)
+    box(sh, cam, -160, -100, 0, 50, 140, 40, shade=0.4, spacing=6)
+    box(sh, cam, -172, -100, 40, 12, 152, 55, shade=0.4, spacing=6)
+    for x in range(-90, 110, 30):
+        sh.line([cam.P((x, 39.8, 46)), cam.P((x, 39.8, 90))], width=1.7, passes=1)
+    box(sh, cam, -60, -85, 72, 130, 62, 4, shade=0.4, spacing=4)
+    box(sh, cam, 1, -58, 3, 8, 8, 69, shade=0.3, spacing=4, width=2.2)
+    box(sh, cam, -20, -74, 0, 48, 40, 3, shade=0.4, spacing=4, width=2.2)
+    win = [(-100, 52, 110), (100, 52, 110), (100, 52, 175), (-100, 52, 175)]
+    poly3d(sh, cam, win, closed=True, width=2.2)
+    sh.line([cam.P((0, 52, 110)), cam.P((0, 52, 175))], width=1.9, passes=1)
+    for x, y in ((-30, -60), (30, -70)):
+        poly3d(sh, cam, circle3d(cam, x, y, 76.2, 10)[:-1], closed=True, width=1.9, passes=1)
+    sh.text('BOOTH FOR 6', 70, 110, size=38, rot=-0.02)
+    sh.text('THE CORNER NOBODY BOOKS ON A TUESDAY', 74, 160, size=20, rot=-0.02, width=1.8)
+    sh.text('WINDOW SEAT', 780, 260, size=22)
+    sh.arrow(bez((800, 280), (760, 300), (720, 320), (690, 350)), head=10)
+    sh.text('TUFTED?', 860, 520, size=22, rot=0.04)
+    return sh
+
+
+def sheet_menu():
+    sh = Sheet(593)
+    cam = Cam(0, 14, 3.4, 340, 700, D=700)
+    L = [(0, 0, 0), (-55, 28, 0), (-55, 28, 82), (0, 0, 82)]
+    R = [(0, 0, 0), (55, 28, 0), (55, 28, 82), (0, 0, 82)]
+    lp = poly3d(sh, cam, L, closed=True)
+    rp = poly3d(sh, cam, R, closed=True)
+    sh.hatch(rp, angle=70, spacing=7, width=1.6)
+    a, b = cam.P((-48, 24, 60)), cam.P((-8, 4, 60))
+    ang = math.atan2(b[1] - a[1], b[0] - a[0])
+    sh.text('TUE', a[0] + 6, a[1], size=30, rot=ang, width=2.4)
+    for k in range(3):
+        p, q = cam.P((-46, 23.5, 40 - k * 10)), cam.P((-12, 6, 40 - k * 10))
+        sh.line([p, ((p[0] + q[0]) / 2, (p[1] + q[1]) / 2 + 3), q], width=1.6, passes=1)
+    # flat version
+    x0, y0, w, h = 600, 380, 200, 300
+    sh.poly([(x0, y0), (x0 + w, y0), (x0 + w, y0 + h), (x0, y0 + h)])
+    sh.poly([(x0 + w, y0), (x0 + 2 * w - 20, y0), (x0 + 2 * w - 20, y0 + h), (x0 + w, y0 + h)])
+    dashed(sh, [(x0 + w, y0 - 20), (x0 + w, y0 + h + 20)], on=10, off=8, width=1.6)
+    sh.text('TUESDAY', x0 + 30, y0 + 70, size=26)
+    sh.text('$25 PP', x0 + 30, y0 + 120, size=22, width=1.9)
+    sh.text('FAMILY', x0 + 30, y0 + 210, size=20, width=1.8)
+    sh.text('STYLE', x0 + 30, y0 + 240, size=20, width=1.8)
+    for k in range(5):
+        y = y0 + 50 + k * 48
+        sh.line([(x0 + w + 24 + i * 8, y + 4 * math.sin(i)) for i in range(16)], width=1.6, passes=1)
+        sh.poly(ellipse(x0 + 2 * w - 44, y, 4, 4, n=8), width=1.8, passes=1)
+    sh.text('SET MENU', 70, 110, size=38, rot=-0.02)
+    sh.text('PRINTED FRESH EACH WEEK', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('FOLD', 760, 760, size=22)
+    sh.arrow([(790, 740), (802, 700)], head=10)
+    return sh
+
+
+def sheet_shelf():
+    sh = Sheet(607)
+    cam = Cam(-25, 10, 2.6, 470, 860, D=900)
+    box(sh, cam, -80, 0, 0, 160, 30, 180, shade=0.4, spacing=7)
+    for z in (58, 118):
+        box(sh, cam, -78, 1, z, 156, 28, 3, shade=2, width=2.0)
+    rnd = sh.r
+    for z0 in (3, 61, 121):
+        x = -76
+        while x < 70:
+            w, hgt = rnd.uniform(5, 10), rnd.uniform(30, 48)
+            if rnd.random() < 0.12:
+                x += 10
+                continue
+            box(sh, cam, x, 4, z0, w, 22, min(hgt, 54), shade=0.6 if rnd.random() < 0.18 else 2, spacing=3.5, width=1.9)
+            x += w + 0.6
+    cylinder(sh, cam, 45, 15, 180, 10, 14, shade=False)
+    top = cam.P((45, 15, 194))
+    for dx, dy in ((-40, -60), (10, -90), (50, -50), (-10, -110), (30, -120)):
+        sh.line(bez(top, (top[0] + dx * 0.3, top[1] + dy * 0.6), (top[0] + dx * 0.8, top[1] + dy * 0.9), (top[0] + dx, top[1] + dy)), width=2.0, passes=1)
+    sh.text('BOOK CLUB PICKS', 70, 110, size=38, rot=-0.02)
+    sh.text('BORROW ONE, BRING ONE', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text("THIS MONTH'S", 800, 420, size=20)
+    sh.arrow(bez((820, 440), (780, 480), (740, 500), (700, 520)), head=10)
+    return sh
+
+
+def sheet_nametags():
+    sh = Sheet(619)
+    names = [('SAM', -0.06, 230, 330), ('PRIYA', 0.05, 640, 300), ('JO', 0.02, 300, 650), ('DEV', -0.04, 700, 640)]
+    for name, a, cx, cy in names:
+        tag = rotate(rrect(cx - 160, cy - 100, 320, 200, 16), cx, cy, a)
+        sh.poly(tag)
+        band = rotate([(cx - 160, cy - 40), (cx + 160, cy - 40)], cx, cy, a)
+        sh.line(band, width=2.0)
+        p = rotate([(cx, cy - 66)], cx, cy, a)[0]
+        sh.text('HELLO', p[0], p[1], size=24, rot=a, anchor='middle', width=2.2)
+        p = rotate([(cx, cy - 46)], cx, cy, a)[0]
+        sh.text('MY NAME IS', p[0], p[1], size=13, rot=a, anchor='middle', width=1.5)
+        p = rotate([(cx, cy + 50)], cx, cy, a)[0]
+        sh.text(name, p[0], p[1], size=56, rot=a, anchor='middle', width=3.2)
+    dashed(sh, rotate([(870, 700), (842, 740)], 700, 640, -0.04), on=6, off=5, width=1.6)
+    pen = rotate(rrect(860, 200, 46, 300, 18), 883, 350, 0.5)
+    sh.poly(pen)
+    sh.poly(rotate(rrect(860, 200, 46, 90, 18), 883, 350, 0.5), width=2.0)
+    sh.hatch(rotate([(864, 210), (902, 210), (902, 286), (864, 286)], 883, 350, 0.5), angle=10, spacing=5)
+    sh.text('NAME TAGS', 70, 110, size=38, rot=-0.02)
+    sh.text('FIRST NIGHT ONLY', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('PEEL', 900, 830, size=20)
+    return sh
+
+
+def sheet_map():
+    sh = Sheet(631)
+    cx, cy, a = 560, 560, -0.5
+    R = lambda pts: rotate(pts, cx, cy, a)
+    fx0, fy0, fx1, fy1 = 130, 210, 1040, 900
+    frame = [(fx0, fy0), (fx1, fy0), (fx1, fy1), (fx0, fy1)]
+    sh.poly(frame, width=2.2)
+
+    def clipped(seg, **kw):
+        (x0, y0), (x1, y1) = seg
+        t0, t1, dx, dy = 0.0, 1.0, x1 - x0, y1 - y0
+        for pq, qq in ((-dx, x0 - fx0), (dx, fx1 - x0), (-dy, y0 - fy0), (dy, fy1 - y0)):
+            if pq == 0:
+                if qq < 0:
+                    return
+                continue
+            t = qq / pq
+            if pq < 0:
+                t0 = max(t0, t)
+            else:
+                t1 = min(t1, t)
+        if t0 < t1:
+            sh.line([(x0 + dx * t0, y0 + dy * t0), (x0 + dx * t1, y0 + dy * t1)], **kw)
+
+    for k in range(-6, 7):
+        clipped(R([(cx + k * 80, cy - 800), (cx + k * 80, cy + 800)]), width=1.6, passes=1)
+    for k in range(-11, 12):
+        clipped(R([(cx - 700, cy + k * 52), (cx + 700, cy + k * 52)]), width=1.3, passes=1)
+    clipped(R([(cx - 380, cy - 800), (cx + 260, cy + 800)]), width=2.6)
+    sh.text('BROADWAY', *R([(cx + 40, cy + 120)])[0], size=16, rot=a + 1.17, width=1.6)
+    for k in range(3):
+        sh.line([(60 + k * 22 + 8 * math.sin(t / 30), t) for t in range(210, 900, 8)], width=1.5, passes=1)
+    sh.text('HUDSON', 52, 640, size=16, rot=-math.pi / 2, width=1.6)
+    zones = [((470, 400), 'CHELSEA / FLATIRON', (300, 290)), ((740, 720), 'EAST VILLAGE / LES', (560, 880))]
+    for (zx, zy), label, (tx, ty) in zones:
+        pts = ellipse(zx, zy, 200, 120, rot=a, n=60)
+        dashed(sh, pts, on=14, off=10, width=2.2)
+        for dx, dy in ((-60, 10), (20, -30), (70, 30), (-10, 50)):
+            pin(sh, zx + dx, zy + dy, k=0.45)
+        sh.text(label, tx, ty, size=22)
+    sh.poly([(990, 110), (1006, 160), (990, 150), (974, 160)], width=2.2)
+    sh.text('N', 982, 98, size=22)
+    sh.text('PILOT ZONES', 70, 110, size=38, rot=-0.02)
+    sh.text('START SMALL, WALKABLE', 74, 160, size=22, rot=-0.02, width=1.9)
+    return sh
+
+
+def sheet_bikes():
+    sh = Sheet(643)
+    cam = Cam(-30, 12, 2.6, 520, 820, D=1200)
+    sh.line([cam.P((-170, -60, 0)), cam.P((170, -60, 0))], width=2.2)
+    sh.line([cam.P((-170, 60, 0)), cam.P((170, 60, 0))], width=1.8, passes=1)
+    for x in (-90, -30, 30, 90):
+        hoop = [(x, -20, 0), (x, -20, 55)] + [(x, 20 * math.cos(t), 55 + 20 * math.sin(t)) for t in [math.pi - i * math.pi / 10 for i in range(11)]] + [(x, 20, 55), (x, 20, 0)]
+        poly3d(sh, cam, hoop, width=2.6)
+    for bx in (-22, 98):
+        for wy in (-48, 48):
+            poly3d(sh, cam, circle3d(cam, bx, wy, 33, 33, plane='yz', n=32)[:-1], closed=True, width=2.3)
+            poly3d(sh, cam, circle3d(cam, bx, wy, 33, 4, plane='yz', n=10)[:-1], closed=True, width=1.8, passes=1)
+        rear, crank, front, seat, head = (bx, 48, 33), (bx, 5, 30), (bx, -48, 33), (bx, 18, 82), (bx, -30, 85)
+        poly3d(sh, cam, [rear, crank, seat, rear], width=2.4)
+        poly3d(sh, cam, [crank, head, seat], width=2.4)
+        poly3d(sh, cam, [head, front], width=2.4)
+        poly3d(sh, cam, [(bx - 12, -34, 96), (bx + 12, -34, 96)], width=2.6)
+        poly3d(sh, cam, [head, (bx, -34, 96)], width=2.2)
+        poly3d(sh, cam, [(bx, 10, 86), (bx, 28, 86)], width=3.2)
+        poly3d(sh, cam, circle3d(cam, bx, 5, 30, 7, plane='yz', n=12)[:-1], closed=True, width=1.8, passes=1)
+    sh.text('BIKE RACK OUT FRONT', 70, 110, size=36, rot=-0.02)
+    sh.text('4 HOOPS = 8 BIKES', 74, 160, size=22, rot=-0.02, width=1.9)
+    sh.text('ASK THE CITY?', 760, 320, size=22, rot=0.03)
+    sh.arrow(bez((790, 340), (760, 400), (720, 450), (690, 490)), head=10)
+    return sh
+
+
 SHEETS = {
     'table-for-twenty': sheet_table,
     'bistro-chair': sheet_chair,
@@ -1098,6 +1496,18 @@ SHEETS = {
     'logo-ideas': sheet_logo,
     'no-app-needed': sheet_phone,
     'the-math': sheet_receipt,
+    'espresso-machine': sheet_espresso,
+    'headcount-clicker': sheet_clicker,
+    'smart-reserved-sign': sheet_beacon,
+    'tab-printer': sheet_printer,
+    'record-player': sheet_record,
+    'bar-stools': sheet_stools,
+    'corner-booth': sheet_booth,
+    'set-menu': sheet_menu,
+    'bookshelf': sheet_shelf,
+    'name-tags': sheet_nametags,
+    'pilot-map': sheet_map,
+    'bike-rack': sheet_bikes,
 }
 
 if __name__ == '__main__':
