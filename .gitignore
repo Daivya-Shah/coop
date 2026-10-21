@@ -21,3 +21,6 @@ npm-debug.log*
 
 # Playwright MCP screenshots and traces
 .playwright-mcp/
+
+# Impeccable engine binary (19 MB); restore with: npx impeccable install
+.claude/skills/impeccable/scripts/bin/

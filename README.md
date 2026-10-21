@@ -31,8 +31,8 @@ Coop/
 │   └── explorations/         Hero / landing experiments that weren't used
 ├── .mcp.json                 MCP servers: Figma, 21st.dev, Playwright, Motion
 ├── .claude/
-│   ├── skills/               /motion + Emil Kowalski's design/animation skills
-│   └── agents/               motion-reviewer (Motion+ performance audits)
+│   ├── skills/               /motion, Emil Kowalski's skills, /impeccable
+│   └── agents/               motion-reviewer, impeccable-* (design review helpers)
 ├── .env                      Secrets (git-ignored). See .env.example
 └── .env.example              Template for .env
 ```
@@ -44,7 +44,9 @@ Everything Claude Code uses lives in this folder. Open Claude Code **in the Coop
 - **playwright**: drives Chrome to open, click and screenshot the site. Output goes to `.playwright-mcp/` (git-ignored).
 - **motion**: searches the official Motion (Framer Motion) docs and examples. Free, no account.
 
-Skills (type `/name` in Claude Code): `/motion`, plus Emil Kowalski's `/emil-design-eng`, `/animate`, `/review-animations`, `/improve-animations`, `/find-animation-opportunities`, `/animation-performance`, `/animation-vocabulary`, `/apple-design`, `/pick-ui-library`, `/prototype`, `/mobile-native`, `/break-ui` (MIT, from github.com/emilkowalski/skills).
+Skills (type `/name` in Claude Code): `/motion`, plus Emil Kowalski's `/emil-design-eng`, `/animate`, `/review-animations`, `/improve-animations`, `/find-animation-opportunities`, `/animation-performance`, `/animation-vocabulary`, `/apple-design`, `/pick-ui-library`, `/prototype`, `/mobile-native`, `/break-ui` (MIT, from github.com/emilkowalski/skills), and `/impeccable` (Paul Bakaus's design skill pack, Apache-2.0).
+
+**Impeccable** also installs a design checker that runs automatically after Claude edits UI files (hooks in `.claude/settings.local.json`). Its 19 MB program is git-ignored; on a new computer run `npx impeccable@4.6.0 install -y --providers=claude --scope=project`. Check the site any time with `npx impeccable detect out/` after a build.
 
 **Components follow Emil's picks:** Base UI for the join dialog and the tabs, Sonner for the confirmation toast, Motion for scroll reveals, clsx for class names.
 
