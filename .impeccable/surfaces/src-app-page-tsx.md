@@ -15,16 +15,18 @@ Constraints: landing is exactly one screen (desktop); everything else scrolls on
 
 ## Direction contract
 
-THESIS: Coop as a sketchbook someone keeps about their neighborhood: a hello card and a stack of numbered drawings, not a startup hero over a row of cards.
+THESIS: Coop as a sketchbook left open on a grey table: Carl Hauser's hello card and rounded cards, rearranged so the four story drawings are a real pile of pages you can flick, and every other drawing is drawn in front of you. Not a hero over a row of feature cards.
 
-OWN-WORLD: white ground, #f5f5f5 rounded tiles (20px) holding pen sketches, ink #121212 type in Inter at tight tracking, one ink colour per step (#3E7396, #C4572B, #7B7A2C, #B8232F), yolk #FFC300 only for selection, toasts and the chosen state; plus-icon menu; tiny grey meta labels (No. / caption) on tiles; live New York clock.
+OWN-WORLD: #e6e6e6 table, #f5f5f5 rounded cards (24px), white paper tiles (16px) holding pen sketches, ink #121212 Inter at tight tracking, one ink per part of the story (venue #3E7396, clubs #C4572B, match #7B7A2C, regulars #B8232F), yolk #FFC300 for what answers the visitor and for the closing card, #2e2e2e footer card; plus-icon menu; tiny grey "No. NN" tile labels; live New York clock.
 
-STORY: the visitor sees an empty bar, clubs with nowhere to go, the match, the regulars; understands both sides approve; opens the form for their side.
+STORY: the visitor flicks through venue, clubs, match, regulars; on the scrolling page sees how a club and a venue meet (cards, overlap, same time next week), each side's problem and answer, the sourced numbers, the first neighborhoods; opens the form for their side.
 
-FIRST VIEWPORT: top row: COOP wordmark left, plus-icon menu centre (How it works, For venues, For clubs, A few numbers, Questions, Say hi), venue/club links right. Middle: tagline (60px) and intro left with 1-4 step tabs; flip-through sketch right at up to 760px square. Bottom row: "Starting small, right here in NYC." left; live "New York EDT 7:42:10 PM" clock right.
+FIRST VIEWPORT: left, the hello card: wordmark, plus menu, venue/club links; tagline at up to 84px; intro; "Starting small, right here in NYC." and the clock at the foot. Right, on the bare table: the pile of four sketch pages, numbered tabs 1-4 and a one-line caption.
 
-FORM: Carl Hauser hello card + tile grid (user-pinned, position 1). seed: none (unavailable)
+FORM: Carl Hauser hello card + tile grid (user-pinned, position 1; the roll was run and set aside because a user-pinned direction beats it). seed:1d83436c5b198c93
 
-Signature interaction and motion: the landing page-turn between the four sketches (CSS, blur-bridged crossfade); on /how/ each sketch inks in once with a left-to-right clip-path reveal as it enters view. Nothing else moves except press feedback.
+Sketch map (each drawing appears once): landing pile = step1-4; how it works = intro-cards, who-gets-along, weekly-calendar (match green); venues = corner-booth, floor-plan (venue blue); clubs = group-chat, reserved-card (club orange); first flock = pilot-map (regulars red); join panel = name-tags.
+
+Signature interaction and motion: the story pile (adapted from the 21st.dev Motion "Card stack": drag with momentum or tap to send the top page to the back, tabs to jump, auto-turn that pauses on hover, focus and hidden tab); on the scrolling page each sketch below the fold draws itself stroke by stroke and then its colour washes in (the 21st.dev "Line Draw SVG" technique, in CSS). Beyond that: a 60ms first-load stagger, press feedback, small hover nudges on fine pointers only.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

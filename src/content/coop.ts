@@ -5,11 +5,12 @@ export const TAGLINE = "Because every flock needs one.";
 export const HERO_INTRO =
   "Coop brings NYC clubs and neighborhood spots together. Clubs find somewhere to keep coming back to, and restaurants, bars and cafés get a few more familiar faces on nights they could use a crowd.";
 
+/** The four story drawings. They live only on the landing, as a pile of sketchbook pages. */
 export const STEPS = [
-  { color: "#3E7396", label: "1, the venue", alt: "1, the venue: a bar with four empty stools and an empty table on a slow night." },
-  { color: "#C4572B", label: "2, the clubs", alt: "2, the clubs: knit, book, art, run, chess and talk, with nowhere regular to meet." },
-  { color: "#7B7A2C", label: "3, the match", alt: "3, the match: the Coop house with the egg, right area, right size, right night." },
-  { color: "#B8232F", label: "4, the regulars", alt: "4, the regulars: the long table with lamps lit, one chair saved for you." },
+  { color: "#3E7396", name: "The venue", label: "1, the venue", alt: "1, the venue: a bar with four empty stools and an empty table on a slow night." },
+  { color: "#C4572B", name: "The clubs", label: "2, the clubs", alt: "2, the clubs: knit, book, art, run, chess and talk, with nowhere regular to meet." },
+  { color: "#7B7A2C", name: "The match", label: "3, the match", alt: "3, the match: the Coop house with the egg, right area, right size, right night." },
+  { color: "#B8232F", name: "The regulars", label: "4, the regulars", alt: "4, the regulars: the long table with lamps lit, one chair saved for you." },
 ];
 
 /** The plus-icon menu. Anchors point into the scrolling page. */
@@ -32,20 +33,20 @@ export const MERRIER = {
 
 export const HOW = [
   {
-    sketch: "name-tags",
-    caption: "Hello, my name is",
+    sketch: "intro-cards",
+    caption: "A card from each side",
     title: "Tell us a little about yourself.",
     body: "Have a club looking for somewhere to meet? Or a space that could use a little more company? We’d love to hear about it.",
   },
   {
-    sketch: "pilot-map",
-    caption: "The right neighborhood",
+    sketch: "who-gets-along",
+    caption: "Where they overlap",
     title: "We’ll see who might get along.",
     body: "We look for places and groups that make sense together. The right neighborhood, the right night, the right kind of crowd. Nothing gets booked until everyone’s happy with the plan.",
   },
   {
     sketch: "weekly-calendar",
-    caption: "Their night, every week",
+    caption: "Same time next week",
     title: "Make yourself at home.",
     body: "The first get-together is just the beginning. Hopefully, before long, it’s the spot everyone knows to show up to.",
   },
@@ -82,7 +83,7 @@ export const VENUES = {
   lead: "For the places that make a neighborhood: restaurants, bars and cafés.",
   tiles: [
     { sketch: "corner-booth", caption: "The corner nobody books" },
-    { sketch: "floor-plan", caption: "A back room, empty" },
+    { sketch: "floor-plan", caption: "The empty back room" },
   ],
   body: [
     "Maybe Mondays are a little slow. Maybe there’s a back room that doesn’t get used much. Or maybe you’d just love to see a few more familiar faces coming through the door.",
@@ -102,8 +103,8 @@ export const CLUBS = {
   title: "Your people deserve a place.",
   lead: "For the people who keep showing up: clubs, communities and little gatherings.",
   tiles: [
-    { sketch: "club-kit", caption: "What each club brings" },
-    { sketch: "no-app-needed", caption: "Members just get a text" },
+    { sketch: "group-chat", caption: "Where are we meeting this week?" },
+    { sketch: "reserved-card", caption: "A table that knows your name" },
   ],
   body: [
     "You’ve already done the lovely part. You’ve brought people together. Finding somewhere to fit everyone shouldn’t be the hard part.",
@@ -121,6 +122,7 @@ export const CLUBS = {
 
 export const FIRST_FLOCK = {
   title: "Our first flock is coming together.",
+  sketch: { sketch: "pilot-map", caption: "Starting small, and walkable" },
   body: [
     "We’re starting Coop with a handful of clubs and neighborhood spots around New York City.",
     "It’s early days, which means we’re getting to know people, figuring out what works, and doing our best to make some really lovely introductions. No big commitments just to say hello.",

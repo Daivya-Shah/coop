@@ -8,19 +8,17 @@ import { CLOSE, CLUBS, FIRST_FLOCK, HOW, MERRIER, NUMBERS, PRIVACY, TAGLINE, VEN
 
 export const metadata: Metadata = { title: "How it works — Coop" };
 
-const sketch = (name: string) => `/img/sketches/${name}.svg`;
-
 /** Tiles are numbered in reading order, like the IDs on Carl Hauser's sketches. */
 const no = (k: number) => String(k).padStart(2, "0");
 
 function Side({ id, side, data, first }: { id: string; side: "venue" | "club"; data: typeof VENUES; first: number }) {
   return (
-    <article id={id} className={`side ${side}`} aria-labelledby={`${id}-title`}>
+    <article id={id} className={`card side ${side}`} aria-labelledby={`${id}-title`}>
       <h2 id={`${id}-title`}>{data.title}</h2>
       <p className="lead">{data.lead}</p>
-      <div className="side-tiles">
+      <div className="pair">
         {data.tiles.map((t, k) => (
-          <Tile key={t.sketch} src={sketch(t.sketch)} caption={t.caption} n={no(first + k)} />
+          <Tile key={t.sketch} sketch={t.sketch} caption={t.caption} n={no(first + k)} />
         ))}
       </div>
       {data.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
@@ -28,7 +26,7 @@ function Side({ id, side, data, first }: { id: string; side: "venue" | "club"; d
       <ul className="ticks">
         {data.rules.map((r) => <li key={r}>{r}</li>)}
       </ul>
-      <JoinButton side={side} className={side === "venue" ? "pill" : "pill ghost"}>{data.cta}</JoinButton>
+      <JoinButton side={side} className="pill">{data.cta}</JoinButton>
     </article>
   );
 }
@@ -36,25 +34,21 @@ function Side({ id, side, data, first }: { id: string; side: "venue" | "club"; d
 export default function How() {
   return (
     <>
-      <TopBar />
-      <main className="story">
-        <section className="merrier" aria-labelledby="merrier-title">
-          <div className="merrier-copy">
-            <h1 id="merrier-title">{MERRIER.title}</h1>
+      <div className="card bar"><TopBar /></div>
+      <main className="sheet">
+        <section className="card merrier" aria-labelledby="merrier-title">
+          <h1 id="merrier-title">{MERRIER.title}</h1>
+          <div className="merrier-body">
             {MERRIER.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
-          </div>
-          <div className="merrier-tiles">
-            <Tile src="/img/landing/step2.svg" caption="Nowhere regular to meet" n="01" big alt="Clubs, knit, book, art, run, chess and talk, with nowhere regular to meet." />
-            <Tile src="/img/landing/step1.svg" caption="Empty on slow nights" n="02" alt="A bar with four empty stools and an empty table on a slow night." />
           </div>
         </section>
 
-        <section id="how" className="how" aria-labelledby="how-title">
+        <section id="how" className="card how" aria-labelledby="how-title">
           <h2 id="how-title">Here’s how it works.</h2>
           <ol className="how-steps">
             {HOW.map((s, k) => (
               <li key={s.sketch}>
-                <Tile src={sketch(s.sketch)} caption={s.caption} n={no(3 + k)} />
+                <Tile sketch={s.sketch} caption={s.caption} n={no(1 + k)} tall={k === 0} />
                 <h3>{s.title}</h3>
                 <p>{s.body}</p>
               </li>
@@ -62,8 +56,12 @@ export default function How() {
           </ol>
         </section>
 
-        <section id="numbers" className="numbers" aria-labelledby="numbers-title">
-          <h2 id="numbers-title">{NUMBERS.title}</h2>
+        <section id="numbers" className="card numbers" aria-labelledby="numbers-title">
+          <div className="numbers-head">
+            <h2 id="numbers-title">{NUMBERS.title}</h2>
+            <p>{NUMBERS.outro}</p>
+            <p className="fine">{NUMBERS.note}</p>
+          </div>
           <ul>
             {NUMBERS.items.map((n) => (
               <li key={n.figure}>
@@ -72,17 +70,15 @@ export default function How() {
               </li>
             ))}
           </ul>
-          <p className="numbers-outro">{NUMBERS.outro}</p>
-          <p className="fine">{NUMBERS.note}</p>
         </section>
 
-        <section className="sides" aria-label="For venues and for clubs">
-          <Side id="venues" side="venue" data={VENUES} first={6} />
-          <Side id="clubs" side="club" data={CLUBS} first={8} />
-        </section>
+        <div className="sides">
+          <Side id="venues" side="venue" data={VENUES} first={4} />
+          <Side id="clubs" side="club" data={CLUBS} first={6} />
+        </div>
 
-        <section id="flock" className="flock" aria-labelledby="flock-title">
-          <Tile src="/img/landing/step4.svg" caption="One chair saved for you" n="10" big alt="The long table with lamps lit, one chair saved for you." />
+        <section id="flock" className="card flock" aria-labelledby="flock-title">
+          <Tile sketch={FIRST_FLOCK.sketch.sketch} caption={FIRST_FLOCK.sketch.caption} n="08" />
           <div className="flock-copy">
             <h2 id="flock-title">{FIRST_FLOCK.title}</h2>
             {FIRST_FLOCK.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
@@ -90,12 +86,12 @@ export default function How() {
           </div>
         </section>
 
-        <section id="questions" className="questions" aria-labelledby="questions-title">
+        <section id="questions" className="card questions" aria-labelledby="questions-title">
           <h2 id="questions-title">A few good questions.</h2>
           <Faq />
         </section>
 
-        <section className="closing" aria-labelledby="close-title">
+        <section className="card closing" aria-labelledby="close-title">
           <h2 id="close-title">{CLOSE.title}</h2>
           <p>{CLOSE.body}</p>
           <div className="close-actions">
@@ -105,7 +101,7 @@ export default function How() {
         </section>
       </main>
 
-      <footer className="site-foot">
+      <footer className="card site-foot">
         <div>
           <p className="foot-tag"><b>coop.</b> {TAGLINE}</p>
           <p>{CLOSE.footer}</p>

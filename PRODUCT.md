@@ -32,9 +32,10 @@ A founder-assisted matchmaker, not a booking marketplace. Coop sources and vets 
 ## Capabilities and Constraints
 
 - Venues are the paying customers. Clubs join free: no membership fee. Venue food-and-drink minimums may apply, are the venue's, and are always explained before anything is agreed.
-- Fees, the only public wording allowed: no fee to join the pilot; the first completed matched event has no Coop fee; after that, a small percentage for completed club nights, agreed together in advance. Never publish a number, percentage, subscription price, cap, calculator or pricing example.
+- Fees, the only public wording allowed (except the approved brief wording below): no fee to join the pilot; the first completed matched event has no Coop fee; after that, a small percentage for completed club nights, agreed together in advance. Never publish a number, percentage, subscription price, cap, calculator or pricing example.
 - Venues control nights, capacity, activities, group approval and spending expectations. Nothing is booked without both sides' approval.
 - Never promise guaranteed revenue, attendance, a full room, an immediate match, or a response deadline.
+- Approved long-form wording from the founder's launch brief (October 2026), usable verbatim: the FAQ answers (including "Any cancellation or shortfall terms will be clear in advance too." and the venue-cost answer), and the venue form's "ability to host a four-week trial" question.
 - Thank-you after a form: "Thanks for saying hi. We're reviewing our first NYC pilot matches and will reach out if we see a fit."
 - Stack: existing Next.js 15 static-export app (React, TypeScript, Tailwind), Motion, Base UI, Sonner.
 - Undecided: contact email, domain, form endpoint (Formspree planned), privacy policy text (needs review).

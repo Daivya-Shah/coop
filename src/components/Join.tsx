@@ -37,7 +37,7 @@ export function JoinProvider({ children }: { children: React.ReactNode }) {
             <Dialog.Close className="close" aria-label="Close"><Plus /></Dialog.Close>
             <div className="panel-body">
               <div>
-                <Dialog.Title className="panel-title">Join the Pilot</Dialog.Title>
+                <Dialog.Title className="panel-title">Join the pilot</Dialog.Title>
                 <Dialog.Description className="lede">Two minutes. No account.</Dialog.Description>
                 <Tabs.Root value={side} onValueChange={(v) => setSide(v as Side)}>
                   <Tabs.List className="switch" aria-label="Which side are you on?">

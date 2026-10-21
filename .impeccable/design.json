@@ -1,0 +1,410 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-21T19:59:35+00:00",
+  "title": "Design System: Coop",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Pen Ink",
+        "canonical": "oklch(18.2% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "yolk": {
+        "role": "secondary",
+        "displayName": "Egg Yolk",
+        "canonical": "oklch(84.8% 0.174 86.1)",
+        "tonalRamp": [
+          "#130900",
+          "#302200",
+          "#513c02",
+          "#75590f",
+          "#9e7a1c",
+          "#cb9d1d",
+          "#f7c238",
+          "#ffedc6"
+        ]
+      },
+      "venue": {
+        "role": "tertiary",
+        "displayName": "Harbor Blue",
+        "canonical": "oklch(53.4% 0.079 239.5)",
+        "tonalRamp": [
+          "#000d1b",
+          "#01273d",
+          "#094465",
+          "#2e6385",
+          "#5287ab",
+          "#76acd1",
+          "#9bd2f9",
+          "#e0f1fe"
+        ]
+      },
+      "club": {
+        "role": "tertiary",
+        "displayName": "Brick Orange",
+        "canonical": "oklch(58.8% 0.151 41.0)",
+        "tonalRamp": [
+          "#210000",
+          "#421200",
+          "#6d2504",
+          "#9a3c12",
+          "#c85b2f",
+          "#f28055",
+          "#feb89e",
+          "#fee9e2"
+        ]
+      },
+      "match": {
+        "role": "tertiary",
+        "displayName": "Olive Moss",
+        "canonical": "oklch(56.4% 0.100 108.5)",
+        "tonalRamp": [
+          "#0d0c00",
+          "#272600",
+          "#444200",
+          "#63610b",
+          "#858538",
+          "#aaaa5d",
+          "#d0d082",
+          "#f4f4a5"
+        ]
+      },
+      "regulars": {
+        "role": "tertiary",
+        "displayName": "Lamp Red",
+        "canonical": "oklch(51.0% 0.183 23.2)",
+        "tonalRamp": [
+          "#210000",
+          "#4c0007",
+          "#7c0115",
+          "#ad1426",
+          "#d84549",
+          "#fb7572",
+          "#ffb4b0",
+          "#ffe8e7"
+        ]
+      },
+      "page": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "tile": {
+        "role": "neutral",
+        "displayName": "Tile Grey",
+        "canonical": "oklch(97.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "chip": {
+        "role": "neutral",
+        "displayName": "Chip Grey",
+        "canonical": "oklch(95.8% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Pencil Grey",
+        "canonical": "oklch(42.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "meta": {
+        "role": "neutral",
+        "displayName": "Caption Grey",
+        "canonical": "oklch(51.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(91.3% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The story page's opening line only."
+      },
+      "display-tagline": {
+        "displayName": "Display Tagline",
+        "purpose": "The landing tagline; 42px under 640px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Story section titles."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Join panel first line."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Step and rule-list titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Story paragraphs in Pencil Grey, max 62ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Plus menu and FAQ triggers; buttons and chips use 600 at 14-15px."
+      },
+      "meta": {
+        "displayName": "Meta",
+        "purpose": "Tile captions and numbers, field labels, sources, fine print."
+      }
+    },
+    "shadows": [
+      {
+        "name": "panel-float",
+        "value": "0 30px 80px -40px rgba(0, 0, 0, .35), 0 0 0 1px rgba(0, 0, 0, .04)",
+        "purpose": "Join panel only; the one floating surface."
+      },
+      {
+        "name": "ghost-ring",
+        "value": "inset 0 0 0 2px var(--ink)",
+        "purpose": "Ghost pill outline; yolk on hover."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entrances, presses, hover nudges, panel open."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Things that slide or reveal: tab indicators, tile ink-in."
+      },
+      {
+        "name": "press",
+        "value": "transform 160ms ease-out to scale(0.97)",
+        "purpose": "Every pressable element."
+      },
+      {
+        "name": "rise",
+        "value": "700ms ease-out, translateY(12px) plus fade, 55ms stagger",
+        "purpose": "First-load entrance on the landing."
+      },
+      {
+        "name": "page-turn",
+        "value": "out 200ms; in 500ms opacity / 650ms transform after 60ms, 2px blur bridge",
+        "purpose": "Landing flip-through between step drawings."
+      },
+      {
+        "name": "ink-in",
+        "value": "clip-path inset(0 100% 0 0) to inset(0), 1100ms ease-in-out",
+        "purpose": "Each tile's drawing, once, on entering view."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "keep fades, drop movement",
+        "purpose": "prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "menu-wrap",
+        "value": "1080px"
+      },
+      {
+        "name": "panel-stack",
+        "value": "980px"
+      },
+      {
+        "name": "single-column",
+        "value": "860px"
+      },
+      {
+        "name": "phone",
+        "value": "640px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The main call to action: ink pill that turns yolk under the pointer.",
+      "html": "<button class=\"ds-pill\">Find your people a place</button>",
+      "css": ".ds-pill { font-family: var(--font, Inter, system-ui, sans-serif); display: inline-block; padding: 13px 22px; border: 0; border-radius: 999px; background: var(--ink, #121212); color: #fff; font-weight: 600; font-size: 15px; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), background-color 200ms ease, color 200ms ease; } .ds-pill:hover { background: var(--yolk, #ffc300); color: var(--ink, #121212); } .ds-pill:focus-visible { outline: 2px solid var(--ink, #121212); outline-offset: 3px; } .ds-pill:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Ghost Pill",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "The second of a venue/club pair: inset ink ring that turns yolk on hover.",
+      "html": "<button class=\"ds-pill-ghost\">Bring a club to your venue</button>",
+      "css": ".ds-pill-ghost { font-family: var(--font, Inter, system-ui, sans-serif); display: inline-block; padding: 13px 22px; border: 0; border-radius: 999px; background: transparent; color: var(--ink, #121212); box-shadow: inset 0 0 0 2px var(--ink, #121212); font-weight: 600; font-size: 15px; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms ease; } .ds-pill-ghost:hover { box-shadow: inset 0 0 0 2px var(--yolk, #ffc300); } .ds-pill-ghost:focus-visible { outline: 2px solid var(--ink, #121212); outline-offset: 3px; } .ds-pill-ghost:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Step Tabs",
+      "kind": "custom",
+      "refersTo": "step-tab",
+      "description": "Numbered 46px circles; the active one sits on a dot in its step's ink.",
+      "html": "<div class=\"ds-tabs\"><button class=\"ds-tab ds-tab-on\" style=\"--c:#3e7396\">1</button><button class=\"ds-tab\">2</button><button class=\"ds-tab\">3</button><button class=\"ds-tab\">4</button></div>",
+      "css": ".ds-tabs { display: flex; gap: 8px; } .ds-tab { font-family: var(--font, Inter, system-ui, sans-serif); width: 46px; height: 46px; padding: 0; border: 0; border-radius: 50%; background: var(--chip, #f1f1f1); color: var(--ink, #121212); font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; cursor: pointer; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), background-color 200ms ease, color 200ms ease; } .ds-tab:not(.ds-tab-on):hover { background: #e6e6e6; } .ds-tab-on { background: var(--c); color: #fff; } .ds-tab:focus-visible { outline: 2px solid var(--ink, #121212); outline-offset: 3px; } .ds-tab:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Chip",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Form multi-select chips; checked turns yolk.",
+      "html": "<div class=\"ds-chips\"><label><input type=\"checkbox\" checked><span>Mon</span></label><label><input type=\"checkbox\"><span>Tue</span></label><label><input type=\"checkbox\"><span>Wed</span></label></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 6px; } .ds-chips label { position: relative; cursor: pointer; } .ds-chips input { position: absolute; opacity: 0; width: 1px; height: 1px; } .ds-chips span { font-family: var(--font, Inter, system-ui, sans-serif); display: inline-block; padding: 7px 13px; border-radius: 999px; background: var(--chip, #f1f1f1); color: var(--ink, #121212); font-weight: 600; font-size: 14px; transition: transform 160ms cubic-bezier(0.23,1,0.32,1), background-color 150ms ease; } .ds-chips input:checked + span { background: var(--yolk, #ffc300); } .ds-chips input:focus-visible + span { outline: 2px solid var(--ink, #121212); outline-offset: 2px; } .ds-chips label:active span { transform: scale(0.97); }"
+    },
+    {
+      "name": "Underline Field",
+      "kind": "input",
+      "refersTo": "input-underline",
+      "description": "Boxless input: grey label above, ink underline that turns yolk on focus.",
+      "html": "<label class=\"ds-field\"><span>Venue name</span><input placeholder=\"The Corner Booth\"></label>",
+      "css": ".ds-field { display: block; font-family: var(--font, Inter, system-ui, sans-serif); } .ds-field span { display: block; margin-bottom: 4px; color: var(--meta, #666666); font-size: 13px; } .ds-field input { width: 100%; padding: 8px 0; border: 0; border-bottom: 1.5px solid var(--ink, #121212); border-radius: 0; background: transparent; color: var(--ink, #121212); font-family: inherit; font-weight: 500; font-size: 17px; transition: border-color 150ms ease; } .ds-field input::placeholder { color: #8a8a8a; } .ds-field input:focus { outline: none; border-bottom-color: var(--yolk, #ffc300); } .ds-field input[aria-invalid=\"true\"] { border-bottom-color: var(--regulars, #b8232f); }"
+    },
+    {
+      "name": "Plus Menu",
+      "kind": "nav",
+      "refersTo": "label",
+      "description": "Top-bar menu: each item led by the plus glyph, which turns on hover.",
+      "html": "<nav class=\"ds-plus-menu\"><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>How it works</a><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>For venues</a><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>For clubs</a><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>A few numbers</a><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>Questions</a><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg>Say hi</a></nav>",
+      "css": ".ds-plus-menu { font-family: var(--font, Inter, system-ui, sans-serif); display: grid; grid-template-columns: repeat(2, max-content); grid-template-rows: repeat(3, auto); grid-auto-flow: column; gap: 6px 30px; } .ds-plus-menu a { display: inline-flex; align-items: center; gap: 10px; padding: 2px 0; color: var(--ink, #121212); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; text-decoration: none; transition: transform 160ms cubic-bezier(0.23,1,0.32,1); } .ds-plus-menu svg { width: 22px; height: 22px; flex: none; fill: var(--ink, #121212); transition: transform 250ms cubic-bezier(0.23,1,0.32,1); } .ds-plus-menu a:hover svg { transform: rotate(90deg); } .ds-plus-menu a:focus-visible { outline: 2px solid var(--ink, #121212); outline-offset: 3px; border-radius: 4px; } .ds-plus-menu a:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Sketch Tile",
+      "kind": "card",
+      "refersTo": "sketch-tile",
+      "description": "Signature: a pen sketch on a rounded grey tile with caption and number on top.",
+      "html": "<figure class=\"ds-tile\"><figcaption class=\"ds-tile-meta\"><span>Empty on slow nights</span><span>No. 02</span></figcaption><svg viewBox=\"0 0 120 90\" fill=\"none\" stroke=\"#3e7396\" stroke-width=\"2\" stroke-linecap=\"round\"><path d=\"M10 70h100M24 70V40h60v30M30 40V30M54 40V28M78 40V30\"/><circle cx=\"96\" cy=\"26\" r=\"9\"/><path d=\"M96 20v6l4 3\"/></svg></figure>",
+      "css": ".ds-tile { position: relative; margin: 0; overflow: hidden; border-radius: 20px; background: var(--tile, #f5f5f5); aspect-ratio: 1100 / 950; width: 320px; } .ds-tile svg { position: absolute; inset: 42px 22px 18px; width: calc(100% - 44px); height: calc(100% - 60px); transition: transform 400ms cubic-bezier(0.23,1,0.32,1); } .ds-tile-meta { font-family: var(--font, Inter, system-ui, sans-serif); position: absolute; inset: 13px 15px auto; display: flex; justify-content: space-between; gap: 12px; color: var(--meta, #666666); font-size: 12px; font-variant-numeric: tabular-nums; } .ds-tile:hover svg { transform: scale(1.03) rotate(-0.4deg); }"
+    },
+    {
+      "name": "FAQ Row",
+      "kind": "custom",
+      "refersTo": "label",
+      "description": "Hairline-divided question whose plus turns to a cross when open.",
+      "html": "<div class=\"ds-faq\"><button class=\"ds-faq-trigger\">Do clubs pay anything?<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"12\"/><path d=\"M12 6.5v11M6.5 12h11\" stroke=\"#f5f5f5\" stroke-width=\"2.6\" stroke-linecap=\"round\"/></svg></button></div>",
+      "css": ".ds-faq { border-top: 1px solid var(--line, #e2e2e2); border-bottom: 1px solid var(--line, #e2e2e2); } .ds-faq-trigger { font-family: var(--font, Inter, system-ui, sans-serif); width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; border: 0; background: none; color: var(--ink, #121212); font-weight: 600; font-size: 19px; letter-spacing: -0.01em; text-align: left; cursor: pointer; } .ds-faq-trigger svg { width: 22px; height: 22px; flex: none; fill: var(--ink, #121212); transition: transform 250ms cubic-bezier(0.23,1,0.32,1); } .ds-faq-trigger:hover svg { transform: rotate(90deg); } .ds-faq-trigger:focus-visible { outline: 2px solid var(--ink, #121212); outline-offset: 3px; border-radius: 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Neighborhood Sketchbook",
+    "overview": "Coop is a sketchbook someone keeps about their neighborhood: a hello card on top, then a stack of numbered pen drawings on pale grey tiles. The page is plain white and the type is near-black Inter set tight, so the drawings carry all of the warmth. Colour belongs to the sketches (one ink per step of the story) and to a single yolk yellow that answers the visitor whenever they touch something.\n\nDensity is low and calm. One screen on the landing; on the story page, generous gaps between sections and tight 8px gutters between tiles, so drawings read as a set laid on a table. Structure comes from hairlines and tiles, not boxes and shadows.\n\nMotion is small and deliberate: a blur-bridged page turn between drawings, an ink-in reveal as a sketch enters view, a 55ms first-load stagger, press feedback, and hover nudges on fine pointers only. Nothing else moves.",
+    "keyCharacteristics": [
+      "White page, #f5f5f5 rounded tiles holding hand-drawn pen sketches.",
+      "Near-black Inter at tight negative tracking for every heading.",
+      "One ink colour per story step; yolk only as the answering colour.",
+      "Plus-in-a-circle icon as the system's one glyph: menu bullets, accordion toggles, close button.",
+      "Tiny grey tabular meta labels (caption + \"No. 01\") on every tile.",
+      "Hairline rules (#e2e2e2) instead of cards for lists, stats and FAQ."
+    ],
+    "rules": [
+      {
+        "name": "The One Ink Per Step Rule",
+        "body": "Each of the four story steps owns one ink, used for its drawing and for that side's accents (the sliding step dot, tick bullets). Never mix step inks inside one drawing or swap them between steps.",
+        "section": "colors"
+      },
+      {
+        "name": "The Yolk Answers Rule",
+        "body": "Yolk appears only as a response: hover, selection, focus, the chosen state, a toast. It is never a resting fill for a section, a heading, or decoration (the wordmark egg is the one fixed instance).",
+        "section": "colors"
+      },
+      {
+        "name": "The Tight Ink Rule",
+        "body": "Every heading is 600-700 with negative tracking (-0.02em to -0.045em) and line-height at or under 1.2; balance-wrapped. Body text is never tracked.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Count Rule",
+        "body": "Anything that counts (tile numbers, step tabs, the clock, statistic figures) uses tabular numerals.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Stays Flat Rule",
+        "body": "Tiles, lists and sections never carry a shadow. Only an overlay that sits above the page (the join panel) may float.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** put every sketch on a Tile Grey tile with its caption and tabular \"No.\" number, numbered in reading order.",
+      "**Do** keep each story step in its own ink (venue, club, match, regulars) and let that side's accents inherit it.",
+      "**Do** use Egg Yolk only as a response: hover, focus, selected, toast.",
+      "**Do** set headings in Inter 600-700 with negative tracking; keep body regular in Pencil Grey under 62ch.",
+      "**Do** separate list rows, statistics and FAQ items with 1px hairlines rather than cards.",
+      "**Do** use the two custom curves for motion (ease-out for entrances and presses, in-out for things that slide or reveal), gate hover effects to fine pointers, and keep fades but drop movement under reduced motion."
+    ],
+    "donts": [
+      "**Don't** add shadows to tiles, sections or buttons; only the join panel floats.",
+      "**Don't** use Egg Yolk as a section background or heading colour.",
+      "**Don't** box the form inputs; they stay underlines.",
+      "**Don't** introduce a second icon glyph or icon font; the plus-in-a-circle carries menu, accordion and close.",
+      "**Don't** animate anything beyond the page turn, the ink-in, the first-load stagger, press feedback and fine-pointer hover nudges."
+    ]
+  }
+}
