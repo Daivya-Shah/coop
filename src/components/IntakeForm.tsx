@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { toast } from "sonner";
 
 // Form service URLs (e.g. Formspree). Left empty, submissions stay in the browser.
 const ENDPOINTS = {
@@ -9,9 +9,10 @@ const ENDPOINTS = {
   club: process.env.NEXT_PUBLIC_FORM_CLUB ?? "",
 };
 
-function IntakeForm({ side, note, children }: { side: "venue" | "club"; note: string; children: React.ReactNode }) {
+type Props = { side: "venue" | "club"; note: string; onSent: () => void; children: React.ReactNode };
+
+function IntakeForm({ side, note, onSent, children }: Props) {
   const [busy, setBusy] = useState(false);
-  const [done, setDone] = useState("");
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -36,45 +37,22 @@ function IntakeForm({ side, note, children }: { side: "venue" | "club"; note: st
         console.warn("Coop intake form has no endpoint; submission was not sent.", Object.fromEntries(data));
       }
       const name = String(data.get("name")).trim().split(" ")[0];
-      setDone(`Thanks, ${name}, got it. We'll be in touch about the pilot.`);
+      toast(`Thanks, ${name}, got it. We'll be in touch about the pilot.`);
       form.reset();
+      onSent();
     } catch {
-      setDone("Something went wrong sending that. Please try again in a minute.");
+      toast("Something went wrong sending that. Please try again in a minute.");
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <motion.form
-      className="intake"
-      id={`form-${side}`}
-      role="tabpanel"
-      aria-labelledby={`tab-${side}`}
-      noValidate
-      onSubmit={submit}
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: [0.2, 0.7, 0.2, 1] }}
-    >
+    <form className="intake" noValidate onSubmit={submit}>
       {children}
       <button className="pill" type="submit" disabled={busy}>Send it</button>
       <p className="small">{note}</p>
-      <AnimatePresence>
-        {done && (
-          <motion.p
-            className="done"
-            role="status"
-            initial={{ opacity: 0, y: 6, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", stiffness: 420, damping: 30 }}
-          >
-            {done}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </motion.form>
+    </form>
   );
 }
 
@@ -88,9 +66,9 @@ function Select({ name, options }: { name: string; options: string[] }) {
 
 const NIGHTS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-export function VenueForm() {
+export function VenueForm({ onSent }: { onSent: () => void }) {
   return (
-    <IntakeForm side="venue" note="Sending this isn't a booking. We'll only use it to talk to you about the pilot.">
+    <IntakeForm side="venue" onSent={onSent} note="Sending this isn't a booking. We'll only use it to talk to you about the pilot.">
       <Field label="Venue name"><input name="venue" required autoComplete="organization" /></Field>
       <Field label="Your name"><input name="name" required autoComplete="name" /></Field>
       <Field label="Email"><input name="email" type="email" required autoComplete="email" /></Field>
@@ -112,9 +90,9 @@ export function VenueForm() {
   );
 }
 
-export function ClubForm() {
+export function ClubForm({ onSent }: { onSent: () => void }) {
   return (
-    <IntakeForm side="club" note="Free for clubs. You can turn down any match.">
+    <IntakeForm side="club" onSent={onSent} note="Free for clubs. You can turn down any match.">
       <Field label="Club name"><input name="club" required /></Field>
       <Field label="Your name"><input name="name" required autoComplete="name" /></Field>
       <Field label="Email"><input name="email" type="email" required autoComplete="email" /></Field>

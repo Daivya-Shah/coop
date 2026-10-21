@@ -45,7 +45,7 @@ export default function How() {
 
         <section className="how-steps3" aria-label="Three steps">
           {STEPS.map((s, k) => (
-            <Reveal as="article" key={s.n} delay={0.1 * k}>
+            <Reveal as="article" key={s.n} delay={0.06 * k}>
               <Tile src={s.sketch} caption={s.caption} n={s.n} />
               <h2><b>{s.n}</b> {s.title}</h2>
               <p>{s.body}</p>
@@ -75,7 +75,7 @@ export default function How() {
             <JoinButton side="venue" className="pill">Let’s bring some people in →</JoinButton>
           </Reveal>
 
-          <Reveal as="article" className="side club" delay={0.12}>
+          <Reveal as="article" className="side club" delay={0.06}>
             <p className="kicker">Clubs, communities &amp; little gatherings</p>
             <h2>Your people deserve a place.</h2>
             <div className="side-tiles">

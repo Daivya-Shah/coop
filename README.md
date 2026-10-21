@@ -31,7 +31,7 @@ Coop/
 │   └── explorations/         Hero / landing experiments that weren't used
 ├── .mcp.json                 MCP servers: Figma, 21st.dev, Playwright, Motion
 ├── .claude/
-│   ├── skills/               Motion's /motion skill + Emil Kowalski's design/animation skills
+│   ├── skills/               /motion, Emil Kowalski's design/animation skills, /ui-ux-pro-max
 │   └── agents/               motion-reviewer (Motion+ performance audits)
 ├── .env                      Secrets (git-ignored). See .env.example
 └── .env.example              Template for .env
@@ -44,7 +44,9 @@ Everything Claude Code uses lives in this folder. Open Claude Code **in the Coop
 - **playwright**: drives Chrome to open, click and screenshot the site. Output goes to `.playwright-mcp/` (git-ignored).
 - **motion**: searches the official Motion (Framer Motion) docs and examples. Free, no account.
 
-Skills (type `/name` in Claude Code): `/motion`, plus Emil Kowalski's `/emil-design-eng`, `/animate`, `/review-animations`, `/improve-animations`, `/find-animation-opportunities`, `/animation-performance`, `/animation-vocabulary`, `/apple-design`, `/pick-ui-library`, `/prototype`, `/mobile-native`, `/break-ui` (MIT, from github.com/emilkowalski/skills).
+Skills (type `/name` in Claude Code): `/motion`, plus Emil Kowalski's `/emil-design-eng`, `/animate`, `/review-animations`, `/improve-animations`, `/find-animation-opportunities`, `/animation-performance`, `/animation-vocabulary`, `/apple-design`, `/pick-ui-library`, `/prototype`, `/mobile-native`, `/break-ui` (MIT, from github.com/emilkowalski/skills), and `/ui-ux-pro-max` (design styles, palettes and font pairings, installed with `npx uipro-cli init --ai claude`).
+
+**Components follow Emil's picks:** Base UI for the join dialog and the tabs, Sonner for the confirmation toast, Motion for scroll reveals, clsx for class names.
 
 ## Running it
 

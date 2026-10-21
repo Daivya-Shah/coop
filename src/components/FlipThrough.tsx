@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion, type Variants } from "motion/react";
+import { useEffect, useState } from "react";
+import { Tabs } from "@base-ui/react/tabs";
+import { useReducedMotion } from "motion/react";
+import clsx from "clsx";
 import { Plus } from "./Plus";
 
 const STEPS = [
@@ -14,103 +16,84 @@ const STEPS = [
 
 const EVERY = 4200;
 
-const intro: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  shown: (k: number) => ({ opacity: 1, y: 0, transition: { delay: 0.08 * k, duration: 0.6, ease: [0.2, 0.7, 0.2, 1] } }),
-};
-
-const page: Variants = {
-  on: { opacity: 1, y: 0, rotate: 0, scale: 1, transition: { type: "spring", stiffness: 140, damping: 20, mass: 0.9 } },
-  // the page being left lifts away; the next one settles in from just below
-  before: { opacity: 0, y: -14, rotate: 0.6, scale: 0.99, transition: { duration: 0.35, ease: "easeIn" } },
-  after: { opacity: 0, y: 16, rotate: -0.8, scale: 0.985, transition: { duration: 0.35, ease: "easeIn" } },
-};
-
 export function FlipThrough() {
   const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [tick, setTick] = useState(0); // bumps on every manual change, restarting the timer
   const still = useReducedMotion();
-  const timer = useRef<ReturnType<typeof setInterval>>(undefined);
 
-  const restart = useCallback(() => {
-    clearInterval(timer.current);
-    if (!still && !paused) timer.current = setInterval(() => setI((k) => (k + 1) % STEPS.length), EVERY);
-  }, [still, paused]);
-
+  // Pause while the tab is in the background, like Sonner pauses its timers.
   useEffect(() => {
-    restart();
-    return () => clearInterval(timer.current);
-  }, [restart]);
+    const onVis = () => setHidden(document.hidden);
+    document.addEventListener("visibilitychange", onVis);
+    return () => document.removeEventListener("visibilitychange", onVis);
+  }, []);
+
+  const playing = !still && !hovered && !focused && !hidden;
+  useEffect(() => {
+    if (!playing) return;
+    const t = setInterval(() => setI((k) => (k + 1) % STEPS.length), EVERY);
+    return () => clearInterval(t);
+  }, [playing, tick]);
 
   const show = (k: number) => {
     setI((k + STEPS.length) % STEPS.length);
-    restart();
+    setTick((t) => t + 1);
   };
-
-  const m = still ? { initial: false as const } : { initial: "hidden", animate: "shown", variants: intro };
 
   return (
     <main className="flip">
       <div className="flip-copy">
-        <motion.h1 className="tagline" custom={0} {...m}>Because every flock needs one.</motion.h1>
-        <motion.p className="intro" custom={1} {...m}>
+        <h1 className="tagline rise" style={{ "--i": 0 } as React.CSSProperties}>Because every flock needs one.</h1>
+        <p className="intro rise" style={{ "--i": 1 } as React.CSSProperties}>
           We match social clubs with restaurants, bars and cafés that have empty seats on their slow nights. The club
           gets a table it can count on. The venue gets regulars.
-        </motion.p>
-        <motion.div className="flip-tabs" role="tablist" aria-label="How Coop works, in four steps" custom={2} {...m}>
-          {STEPS.map((s, k) => (
-            <motion.button
-              key={s.label}
-              role="tab"
-              aria-selected={k === i}
-              aria-label={s.label}
-              onClick={() => show(k)}
-              whileHover={still ? undefined : { y: -2 }}
-              whileTap={still ? undefined : { scale: 0.92 }}
-            >
-              {k === i && (
-                <motion.span
-                  className="dot"
-                  layoutId="flip-dot"
-                  initial={false}
-                  animate={{ backgroundColor: s.color }}
-                  transition={still ? { duration: 0 } : { type: "spring", stiffness: 420, damping: 32 }}
-                />
-              )}
-              <span>{k + 1}</span>
-            </motion.button>
-          ))}
-        </motion.div>
-        <motion.div custom={3} {...m}>
+        </p>
+        <Tabs.Root value={i} onValueChange={(v) => show(v as number)}>
+          <Tabs.List
+            className="flip-tabs rise"
+            style={{ "--i": 2, "--c": STEPS[i].color } as React.CSSProperties}
+            aria-label="How Coop works, in four steps"
+            onFocus={(e) => setFocused(e.target.matches(":focus-visible"))}
+            onBlur={() => setFocused(false)}
+          >
+            {STEPS.map((s, k) => (
+              <Tabs.Tab key={s.label} value={k} aria-label={s.label} aria-controls="flip-stage">
+                {k + 1}
+              </Tabs.Tab>
+            ))}
+            <Tabs.Indicator className="flip-dot" />
+          </Tabs.List>
+        </Tabs.Root>
+        <div className="rise" style={{ "--i": 3 } as React.CSSProperties}>
           <Link className="plus-link" href="/how/"><Plus />How it works</Link>
-        </motion.div>
+        </div>
       </div>
 
-      <motion.figure
-        className="flip-stage"
+      <figure
+        className="flip-stage rise"
+        id="flip-stage"
         aria-live="polite"
+        style={{ "--i": 2 } as React.CSSProperties}
         onClick={() => show(i + 1)}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        initial={still ? false : { opacity: 0, scale: 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.15, ease: [0.2, 0.7, 0.2, 1] }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
         {STEPS.map((s, k) => (
-          <motion.img
+          <img
             key={s.label}
+            className={clsx(k === i ? "on" : k < i ? "before" : "after")}
             src={`/img/landing/step${k + 1}.svg`}
             width={900}
             height={900}
             alt={k === i ? s.alt : ""}
             aria-hidden={k !== i}
-            variants={page}
-            initial={false}
-            animate={k === i ? "on" : k < i ? "before" : "after"}
-            transition={still ? { duration: 0 } : undefined}
+            fetchPriority={k === 0 ? "high" : "low"}
           />
         ))}
-      </motion.figure>
+      </figure>
     </main>
   );
 }
