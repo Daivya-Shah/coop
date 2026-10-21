@@ -1,19 +1,3 @@
-﻿// ---------- New York clock ----------
-(() => {
-  const clock = document.getElementById('clock');
-  const tz = document.getElementById('tz');
-  const time = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', second: '2-digit' });
-  const zone = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', timeZoneName: 'short' });
-
-  function tick() {
-    const now = new Date();
-    clock.textContent = time.format(now);
-    tz.textContent = zone.formatToParts(now).find((p) => p.type === 'timeZoneName').value;
-  }
-  tick();
-  setInterval(tick, 1000);
-})();
-
 // ---------- Panels: [data-open="name"] opens #p-name ----------
 const panels = {};
 document.querySelectorAll('dialog.panel').forEach((d) => {
@@ -61,35 +45,6 @@ tabs.forEach((tab, i) => {
     selectSide(tabs[(i + 1) % tabs.length].id.slice(4), true);
   });
 });
-
-// ---------- Lightbox for the sketches ----------
-(() => {
-  const box = document.getElementById('lightbox');
-  const img = document.getElementById('lb-img');
-  const title = document.getElementById('lb-title');
-  const id = document.getElementById('lb-id');
-  const tiles = [...document.querySelectorAll('.tile')];
-  let current = 0;
-
-  function show(i) {
-    current = (i + tiles.length) % tiles.length;
-    const t = tiles[current];
-    img.src = t.dataset.src;
-    img.alt = t.querySelector('img').alt;
-    title.textContent = t.dataset.title;
-    id.textContent = t.dataset.id;
-  }
-
-  tiles.forEach((t, i) => t.addEventListener('click', () => { show(i); box.showModal(); }));
-  document.getElementById('lb-prev').addEventListener('click', () => show(current - 1));
-  document.getElementById('lb-next').addEventListener('click', () => show(current + 1));
-  box.addEventListener('click', (e) => { if (e.target === box) box.close(); });
-  box.querySelector('[data-close]').addEventListener('click', () => box.close());
-  box.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') show(current - 1);
-    if (e.key === 'ArrowRight') show(current + 1);
-  });
-})();
 
 // ---------- Intake forms ----------
 // With no data-endpoint set, submissions stay in the browser (nothing is sent).

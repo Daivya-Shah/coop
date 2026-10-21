@@ -655,3 +655,71 @@ body { overflow-x: clip; }
   .hello-words { grid-template-columns: 1fr; }
   .four-steps img { max-height: none; }
 }
+
+/* ==========================================================================
+   One screen: landing card only, How it works in a panel
+   ========================================================================== */
+.page { margin-block: clamp(12px, 2.5vw, 32px); }
+.hello-words { align-items: center; }
+.hello-top .plus-nav { grid-template-rows: none; grid-auto-flow: column; }
+.plus-nav button { font-size: 18px; }
+
+.how .panel-card { padding: clamp(24px, 3vw, 44px); }
+.how h2 { margin-bottom: clamp(18px, 2.4vw, 30px); }
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2.4vw, 36px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.how-steps li { display: grid; gap: 6px; align-content: start; padding-top: 12px; border-top: 3px solid currentColor; }
+.how-steps .n { font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.how-steps b { font-size: clamp(19px, 1.6vw, 23px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+.how-steps p { margin: 0; color: var(--soft); font-size: 15px; line-height: 1.4; }
+.how-steps .s1 { color: #3e7396; } .how-steps .s2 { color: #c4572b; }
+.how-steps .s3 { color: #7b7a2c; } .how-steps .s4 { color: #b8232f; }
+
+.how-sides {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(16px, 2.4vw, 28px);
+  margin-top: clamp(22px, 3vw, 36px);
+}
+.how-sides section { background: var(--page); border-radius: 16px; padding: clamp(18px, 2vw, 26px); }
+.how-sides h3 { margin: 0; font-size: clamp(22px, 2vw, 28px); font-weight: 600; letter-spacing: -0.03em; }
+.how-sides .ticks { margin: 12px 0 18px; }
+.how-sides .ticks li { padding: 7px 0 7px 26px; font-size: 15px; border-color: rgba(18, 18, 18, .1); }
+.how-sides .ticks li::before { top: 13px; width: 9px; height: 9px; }
+.how-sides .pill { margin-top: 0; }
+.pill.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 2px var(--ink); }
+.pill.ghost:hover { background: var(--yolk); box-shadow: none; }
+
+@media (max-width: 900px) {
+  .how-steps { grid-template-columns: 1fr 1fr; }
+  .how-sides { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) { .how-steps { grid-template-columns: 1fr; } }
+
+.panel:focus, .panel:focus-visible { outline: none; }
+
+/* white blends into the grey as a soft-edged rectangle, not an oval */
+.hello::before, .end::before {
+  inset: -48px -64px;
+  background: #fdfcf9;
+  -webkit-mask:
+    linear-gradient(to right, transparent, #000 64px, #000 calc(100% - 64px), transparent),
+    linear-gradient(to bottom, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  -webkit-mask-composite: source-in;
+  mask:
+    linear-gradient(to right, transparent, #000 64px, #000 calc(100% - 64px), transparent),
+    linear-gradient(to bottom, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  mask-composite: intersect;
+}
+
+/* For now: all white, no grey and no blend */
+:root { --page: #ffffff; --card: #ffffff; }
+html, body { background: #ffffff; }
+.hello::before, .end::before { display: none; }
+.panel::backdrop { background: rgba(255, 255, 255, .85); }
