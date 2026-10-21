@@ -1659,6 +1659,183 @@ def sheet_bikes():
     return sh
 
 
+# ---------------------------------------------------------------------------
+# combined scenes: one bigger drawing per chapter
+# ---------------------------------------------------------------------------
+def lamp(sh, cam, x, y, z, kind='dome'):
+    """Pendant lamp hanging at 3D point (x, y, z); cord runs to the top edge."""
+    cx, cy = cam.P((x, y, z))
+    sh.line([(cx, 215), (cx, cy - 34)], width=2.0)
+    if kind == 'dome':
+        sh.line(bez((cx - 46, cy), (cx - 44, cy - 50), (cx + 44, cy - 50), (cx + 46, cy)))
+        sh.poly(ellipse(cx, cy, 46, 9, n=24), width=2.2)
+        sh.marker(bez((cx - 46, cy), (cx - 44, cy - 50), (cx + 44, cy - 50), (cx + 46, cy)), 'dusk')
+    else:
+        sh.poly([(cx - 10, cy - 34), (cx + 10, cy - 34), (cx + 40, cy), (cx - 40, cy)])
+        sh.marker([(cx - 10, cy - 34), (cx + 10, cy - 34), (cx + 40, cy), (cx - 40, cy)], 'dusk')
+    for dx in (-28, 0, 28):
+        dashed(sh, [(cx + dx * 0.4, cy + 14), (cx + dx, cy + 74)], on=8, off=8, width=1.6)
+
+
+def sheet_slow_night():
+    sh = Sheet(701)
+    cam = Cam(-30, 17, 2.05, 560, 760, D=1500)
+    # the bar
+    sh.color = 'dusk'
+    box(sh, cam, -240, -10, 0, 230, 45, 96, shade=0.4, spacing=7)
+    box(sh, cam, -246, -16, 96, 242, 58, 6, shade=0.4, spacing=4)
+    sh.color = None
+    # espresso machine + cups on the bar
+    box(sh, cam, -225, 0, 102, 54, 30, 34, shade=0.4, spacing=5)
+    for gx in (-210, -186):
+        cylinder(sh, cam, gx, -4, 112, 5, 6, shade=False)
+    for cx in (-120, -100):
+        cylinder(sh, cam, cx, 10, 102, 6, 9, shade=False)
+    # empty stools
+    for x in (-215, -160, -105, -50):
+        stool(sh, cam, x, -55)
+    # an empty table for four
+    sh.color = 'yolk'
+    box(sh, cam, 120, -120, 72, 100, 76, 5, shade=0.4, spacing=5)
+    sh.color = None
+    box(sh, cam, 166, -86, 0, 8, 8, 72, shade=0.3, spacing=4, width=2.2)
+    box(sh, cam, 146, -106, 0, 48, 48, 3, shade=0.4, spacing=4, width=2.0)
+    # pendant lamps
+    lamp(sh, cam, -170, -10, 190, 'dome')
+    lamp(sh, cam, -70, -10, 190, 'cone')
+    lamp(sh, cam, 170, -82, 175, 'dome')
+    # wall clock
+    sh.poly(ellipse(960, 200, 46, 46, n=28))
+    sh.line([(960, 200), (960, 168)], width=2.4)
+    sh.line([(960, 200), (982, 214)], width=2.4)
+    for a in range(0, 360, 30):
+        r = math.radians(a)
+        sh.line([(960 + 38 * math.cos(r), 200 + 38 * math.sin(r)), (960 + 42 * math.cos(r), 200 + 42 * math.sin(r))], width=1.6, passes=1)
+    # notes
+    sh.text('SLOW NIGHT', 60, 120, size=44, rot=-0.02, width=2.8)
+    sh.text('EVERYTHING READY. NOBODY HERE.', 64, 170, size=20, rot=-0.02, width=1.8)
+    sh.text('4 STOOLS, 0 SITTING', 90, 900, size=24, rot=-0.02)
+    sh.arrow(bez((250, 875), (280, 850), (300, 825), (310, 790)), head=10)
+    sh.text('NOT ONE TABLE TAKEN', 600, 935, size=24, rot=0.02)
+    sh.arrow(bez((930, 905), (950, 860), (950, 820), (935, 780)), head=10)
+    sh.text('LIGHTS ON ANYWAY', 480, 200, size=22, rot=0.02)
+    return sh
+
+
+def mini_store(sh, x, y, k=1.0):
+    """A small flat storefront, bottom-left at (x, y)."""
+    w, h = 220 * k, 200 * k
+    sh.poly([(x, y), (x + w, y), (x + w, y - h), (x, y - h)])
+    sh.marker([(x, y), (x + w, y), (x + w, y - h), (x, y - h)], 'dusk', opacity=0.5)
+    aw = y - h + 46 * k
+    xs = [x - 12 * k + i * (w + 24 * k) / 6 for i in range(7)]
+    for i, (a, b) in enumerate(zip(xs, xs[1:])):
+        q = [(a, y - h + 12 * k), (b, y - h + 12 * k), (b, aw), (a, aw)]
+        if i % 2 == 0:
+            sh.marker(q, 'yolk', angle=80, spacing=8)
+        sh.line([(a, y - h + 12 * k), (a, aw)], width=1.8, passes=1)
+    sh.poly([(xs[0], y - h + 12 * k), (xs[-1], y - h + 12 * k), (xs[-1], aw), (xs[0], aw)], width=2.3)
+    sh.poly([(x + 20 * k, y - 20 * k), (x + 130 * k, y - 20 * k), (x + 130 * k, aw + 24 * k), (x + 20 * k, aw + 24 * k)], width=2.2)
+    sh.poly([(x + 150 * k, y), (x + 200 * k, y), (x + 200 * k, aw + 24 * k), (x + 150 * k, aw + 24 * k)], width=2.2)
+    for i in range(4):
+        cx = x + 42 * k + i * 26 * k
+        sh.poly(ellipse(cx, y - 70 * k, 9 * k, 9 * k, n=10), width=1.8, passes=1)
+
+
+def sheet_the_match():
+    sh = Sheet(733)
+    # the club: yarn, books, a pawn
+    yx, yy = 190, 560
+    sh.poly(ellipse(yx, yy, 62, 62, n=36))
+    sh.marker(ellipse(yx, yy, 58, 58, n=24)[:-1], 'yolk')
+    for k in range(5):
+        sh.line(ellipse(yx, yy, 58, 18 + k * 9, rot=0.5 + k * 0.45, a0=0.2, a1=2.9, n=18), width=1.8, passes=1)
+    sh.line([(yx - 30, yy - 110), (yx + 30, yy + 10)], width=2.6)
+    sh.line([(yx + 46, yy - 116), (yx - 6, yy + 6)], width=2.6)
+    cam = Cam(-22, 30, 1.9, 150, 720, D=900)
+    for i in range(3):
+        sh.color = 'dusk' if i % 2 else 'yolk'
+        box(sh, cam, -34, -24, i * 10, 68, 48, 10, shade=0.3, spacing=4.5)
+        sh.color = None
+    pawn(sh, 300, 720, k=0.62, shade=True)
+    sh.text('THE CLUB', 120, 830, size=28)
+    # coop in the middle
+    hx, hy = 550, 520
+    sh.poly([(hx - 100, hy + 90), (hx - 100, hy - 20), (hx, hy - 110), (hx + 100, hy - 20), (hx + 100, hy + 90)])
+    sh.marker([(hx - 100, hy + 90), (hx - 100, hy - 20), (hx, hy - 110), (hx + 100, hy - 20), (hx + 100, hy + 90)], 'dusk', opacity=0.5)
+    sh.poly(egg(hx, hy + 22, 0.6)[:-1], width=2.4)
+    sh.marker(ellipse(hx, hy + 36, 22, 22, n=14)[:-1], 'yolk', opacity=0.95)
+    sh.text('COOP', hx, hy + 150, size=32, anchor='middle', width=2.4)
+    # the venue
+    mini_store(sh, 790, 700, k=1.0)
+    sh.text('THE VENUE', 820, 830, size=28)
+    # links
+    sh.arrow(bez((270, 470), (330, 360), (400, 360), (440, 420)))
+    sh.arrow(bez((660, 420), (700, 360), (770, 360), (830, 450)))
+    sh.text('YES', 310, 330, size=26, rot=-0.08)
+    sh.text('YES', 720, 330, size=26, rot=0.08)
+    # the checks
+    checks = ['RIGHT AREA', 'RIGHT SIZE', 'RIGHT NIGHT']
+    for i, t in enumerate(checks):
+        x = 150 + i * 290
+        sh.poly([(x, 880), (x + 26, 880), (x + 26, 906), (x, 906)], width=2.2)
+        sh.line([(x + 4, 893), (x + 11, 902), (x + 30, 872)], width=2.8)
+        sh.text(t, x + 40, 904, size=22)
+    sh.text('THE MATCH', 60, 120, size=44, rot=-0.02, width=2.8)
+    sh.text('BOTH SIDES SAY YES FIRST', 64, 170, size=20, rot=-0.02, width=1.8)
+    return sh
+
+
+def sheet_the_regulars():
+    sh = Sheet(757)
+    cam = Cam(-26, 27, 1.9, 540, 600, D=1100)
+    # chairs along the far side
+    for x in (-150, -70, 10, 90, 170):
+        for px in (x - 18, x + 15):
+            box(sh, cam, px, 60, 77, 3, 3, 16, shade=2, width=2.1)
+        box(sh, cam, x - 18, 60, 88, 36, 3, 8, spacing=5)
+    # the table
+    sh.color = 'dusk'
+    box(sh, cam, -210, -45, 72, 420, 90, 6, spacing=6)
+    sh.color = None
+    for lx, ly in ((-205, -40), (199, -40), (-205, 34), (199, 34)):
+        box(sh, cam, lx, ly, 0, 6, 6, 72, shade=0.2, spacing=5, width=2.3)
+    # the club's things, taking over the table
+    # reserved tent card
+    A, B, C, D_ = (-60, -20, 78), (0, -20, 78), (0, -8, 104), (-60, -8, 104)
+    sh.poly([cam.P(p) for p in (A, B, C, D_)])
+    sh.marker([cam.P(p) for p in (A, B, C, D_)], 'yolk')
+    sh.line([cam.P(B), cam.P((0, 4, 78)), cam.P(C)], width=2.2)
+    a, b = cam.P((-54, -16, 88)), cam.P((-6, -16, 88))
+    sh.text('RESERVED', a[0] + 2, a[1], size=12, rot=math.atan2(b[1] - a[1], b[0] - a[0]), width=1.6)
+    # yarn ball
+    yx, yy = cam.P((-150, 0, 86))
+    sh.poly(ellipse(yx, yy, 22, 22, n=18), width=2.3)
+    sh.marker(ellipse(yx, yy, 20, 20, n=14)[:-1], 'yolk')
+    sh.line(ellipse(yx, yy, 20, 8, rot=0.5, a0=0.2, a1=2.9, n=10), width=1.7, passes=1)
+    sh.line(bez((yx + 20, yy + 6), (yx + 60, yy + 20), (yx + 70, yy + 40), (yx + 110, yy + 36)), width=1.7, passes=1)
+    # books
+    for i in range(2):
+        sh.color = 'yolk'
+        box(sh, cam, 40, -24, 78 + i * 6, 40, 28, 6, shade=0.3, spacing=4)
+        sh.color = None
+    # mugs and plates
+    for x, y in ((-100, 20), (120, 18), (160, -20)):
+        cylinder(sh, cam, x, y, 78, 7, 9, shade=False)
+    for x in (-180, -20, 100, 180):
+        sh.poly([cam.P(p) for p in circle3d(cam, x, -30, 78.5, 11)[:-1]], width=2.0, passes=1)
+    # the chair pulled out
+    chair(sh, cam, 235, -110, back=-1)
+    # notes
+    sh.text('TABLE FOR 20', 60, 120, size=44, rot=-0.02, width=2.8)
+    sh.text('SAME TABLE, SAME CLUB, EVERY WEEK', 64, 170, size=20, rot=-0.02, width=1.8)
+    sh.text('THEIR STUFF, THEIR TABLE', 120, 330, size=22, rot=-0.03)
+    sh.arrow(bez((240, 345), (280, 380), (300, 420), (318, 470)), head=10)
+    sh.text('SAVED FOR YOU', 560, 880, size=24, rot=-0.02)
+    sh.arrow(bez((780, 860), (810, 850), (830, 830), (845, 805)), head=10)
+    return sh
+
+
 # Copy changes inside the sketches (the drawings themselves are untouched).
 REWRITES_BASE = {
     'table-for-twenty':    {'+1 EVERY TUE': 'SAVED FOR YOU'},
@@ -1711,6 +1888,9 @@ SHEETS = {
     'name-tags': sheet_nametags,
     'pilot-map': sheet_map,
     'bike-rack': sheet_bikes,
+    'slow-night': sheet_slow_night,
+    'the-match-scene': sheet_the_match,
+    'the-regulars': sheet_the_regulars,
 }
 
 if __name__ == '__main__':

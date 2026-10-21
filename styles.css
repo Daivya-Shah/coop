@@ -536,63 +536,67 @@ a { color: inherit; }
 
 
 /* ==========================================================================
-   THE STORY: four chapters, each a heading card + its sketches
+   THE STORY: four open chapters, no boxes
    ========================================================================== */
 
-.story, .chapter { display: grid; gap: var(--gap); }
+.story { display: grid; gap: clamp(56px, 8vw, 120px); padding: clamp(40px, 6vw, 80px) 0 clamp(24px, 4vw, 48px); }
+.chapter { display: grid; gap: clamp(16px, 2vw, 28px); scroll-margin-top: 24px; }
 
 .chapter-head {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.4fr);
   align-items: baseline;
   gap: 8px clamp(20px, 3vw, 48px);
-  padding-block: clamp(22px, 2.6vw, 32px);
-  scroll-margin-top: 16px;
+  padding: 0 clamp(4px, 1vw, 12px) clamp(14px, 1.6vw, 20px);
+  border-bottom: 1.5px solid var(--ink);
 }
-.ch-num {
-  font-size: clamp(40px, 4.4vw, 60px);
-  font-weight: 600;
-  letter-spacing: -0.05em;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-.chapter-head h2 {
-  font-size: clamp(28px, 2.8vw, 38px);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-}
-.chapter-head p {
-  max-width: 560px;
-  font-size: clamp(17px, 1.4vw, 20px);
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  color: var(--soft);
-  text-wrap: pretty;
-}
+.ch-num { font-size: clamp(40px, 4.4vw, 60px); font-weight: 600; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.chapter-head h2 { font-size: clamp(28px, 2.8vw, 38px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
+.chapter-head p { max-width: 560px; font-size: clamp(17px, 1.4vw, 20px); font-weight: 500; line-height: 1.3; color: var(--soft); text-wrap: pretty; }
 
-/* captions replace the template's dates */
-.meta { color: var(--ink); }
-.meta > span:first-child { font-weight: 500; }
-.meta b { color: var(--meta); margin-left: 12px; }
+.ch-body { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: clamp(16px, 3vw, 48px); align-items: center; }
+.ch-body.flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); }
+.ch-body.flip .scene { order: 2; }
+.ch-side { display: grid; gap: clamp(16px, 2.4vw, 36px); }
+
+/* open, boxless sketches */
+.story .tile {
+  position: static;
+  display: grid;
+  gap: 6px;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  cursor: zoom-in;
+  text-align: left;
+}
+.story .tile img {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1100 / 950;
+  object-fit: contain;
+  transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.story .tile:hover img { transform: scale(1.025) rotate(-0.4deg); }
+.cap { font-size: 15px; font-weight: 500; color: var(--ink); padding-left: 4px; }
+.cap b { color: var(--meta); font-weight: 500; margin-right: 8px; font-variant-numeric: tabular-nums; }
 
 /* story index in the hello card */
 .intro-wrap { display: grid; gap: 22px; }
 .story-index { display: flex; flex-wrap: wrap; gap: 8px; }
-.story-index a {
-  padding: 8px 14px;
-  border-radius: 999px;
-  background: var(--page);
-  font-weight: 600;
-  font-size: 14px;
-  text-decoration: none;
-  transition: background .2s;
-}
+.story-index a { padding: 8px 14px; border-radius: 999px; background: var(--page); font-weight: 600; font-size: 14px; text-decoration: none; transition: background .2s; }
 .story-index a b { color: var(--meta); font-weight: 600; margin-right: 4px; }
 .story-index a:hover { background: var(--yolk); }
 
-@media (max-width: 980px) {
+@media (max-width: 860px) {
   .chapter-head { grid-template-columns: auto minmax(0, 1fr); }
   .chapter-head p { grid-column: 1 / -1; }
+  .ch-body, .ch-body.flip { grid-template-columns: 1fr; }
+  .ch-body.flip .scene { order: 0; }
+  .ch-side { grid-template-columns: 1fr 1fr; }
 }
+@media (max-width: 520px) { .ch-side { grid-template-columns: 1fr; } }
