@@ -2,21 +2,53 @@
 
 *Because every flock needs one.*
 
-Coop helps NYC restaurants, bars, and cafés turn their quiet nights into recurring group business, and gives local clubs (run clubs, book clubs, supper clubs and more) a regular place to meet.
+Coop matches NYC social clubs (knit, book, run, chess, art, language…) with restaurants, bars and cafés that have empty seats on their slow nights. The club gets a table it can count on. The venue gets regulars.
 
-## The site
+## Folder layout
 
-A single-page sketchbook in plain HTML/CSS/JS, with no build step. Open `index.html` in a browser.
+```
+Coop/
+├── index.html            Landing page: flip-through of the four steps
+├── how.html              How it works: three steps + For venues / For clubs
+├── assets/
+│   ├── css/styles.css    All styles
+│   ├── js/script.js      Panels, join forms, flip-through
+│   └── img/
+│       ├── brand/        COOP wordmark (dark + light)
+│       ├── landing/      step1–4.svg, the flip-through sketches
+│       └── sketches/     Sketches used on the How it works page
+├── tools/sketch-engine/  Python scripts that draw every sketch (see below)
+├── archive/
+│   ├── backups/          Every saved version of the site (v1 → v14), each self-contained
+│   ├── sketch-sets/      All sketch sets: grey, color, coral, classico, mono, story, v2
+│   └── explorations/     Hero / landing experiments that weren't used
+├── .mcp.json             MCP servers for this project (21st.dev); reads the key from the environment
+├── .env                  Secrets (git-ignored). See .env.example
+└── .env.example          Template for .env
+```
 
-| File | What it is |
-|---|---|
-| `index.html` | The page: a hello card, the sketch grid, and pop-up panels (the idea, how it works, venues, clubs, pricing, FAQ, sign-up) |
-| `styles.css` | All styles |
-| `script.js` | New York clock, panels, sketch lightbox, sign-up forms |
-| `sketches/*.svg` | The pen sketches (light grey ink; the page inverts them to black) |
-| `sketches/sketch.py` | The script that draws them: `python sketches/sketch.py sketches` |
-| `_backup-*`, `_draft-v0` | Earlier versions |
+## Running it
+
+Plain HTML, CSS and JS with no build step. Open `index.html` in a browser.
+
+## Redrawing sketches
+
+```
+cd tools/sketch-engine
+python landing_steps.py ../../assets/img/landing      # the four flip-through sketches
+python sketch.py OUT_DIR --color --ink=#3E7396 NAME     # any single sketch in one colour
+```
+
+`sketch.py` is the pen engine (wobbly doubled lines, hatching, marker fills, handwriting). The other scripts build on it.
+
+## Secrets
+
+Keys live in `.env` (never committed). Claude Code reads `API_KEY_21ST` from your Windows user environment, so after changing a key in `.env`, also run:
+
+```
+[Environment]::SetEnvironmentVariable('API_KEY_21ST', '<new key>', 'User')
+```
 
 ## Forms
 
-The sign-up forms don't send anywhere yet. To receive submissions, create a form with a service such as Formspree and put its URL in the `data-endpoint=""` attribute on each `<form class="intake">` in `index.html`.
+The venue and club sign-up forms don't send anywhere yet. To receive submissions, create a form with a service such as Formspree and put its URL in the `data-endpoint=""` attribute on each `<form class="intake">`.
