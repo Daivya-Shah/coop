@@ -24,3 +24,6 @@ npm-debug.log*
 
 # Impeccable engine binary (19 MB); restore with: npx impeccable install
 .claude/skills/impeccable/scripts/bin/
+
+# Impeccable review captures
+.impeccable/review/

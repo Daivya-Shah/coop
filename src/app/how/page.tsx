@@ -1,107 +1,118 @@
 import type { Metadata } from "next";
+import { Clock } from "@/components/Clock";
+import { Faq } from "@/components/Faq";
 import { JoinButton } from "@/components/Join";
-import { Reveal } from "@/components/Reveal";
 import { Tile } from "@/components/Tile";
 import { TopBar } from "@/components/TopBar";
+import { CLOSE, CLUBS, FIRST_FLOCK, HOW, MERRIER, NUMBERS, PRIVACY, TAGLINE, VENUES } from "@/content/coop";
 
 export const metadata: Metadata = { title: "How it works — Coop" };
 
-const STEPS = [
-  {
-    n: "01",
-    sketch: "name-tags",
-    caption: "Hello, my name is",
-    title: "Tell us a little about yourself.",
-    body: "Have a club looking for somewhere to meet? Or a space that could use a little more company? We’d love to hear about it.",
-  },
-  {
-    n: "02",
-    sketch: "pilot-map",
-    caption: "The right neighborhood",
-    title: "We’ll see who might get along.",
-    body: "We look for places and groups that make sense together: the right neighborhood, the right night, the right kind of crowd. Nothing gets booked until everyone’s happy with the plan.",
-  },
-  {
-    n: "03",
-    sketch: "weekly-calendar",
-    caption: "Their night, every week",
-    title: "Make yourself at home.",
-    body: "The first get-together is just the beginning. Hopefully, before long, it’s the spot everyone knows to show up to.",
-  },
-];
+const sketch = (name: string) => `/img/sketches/${name}.svg`;
+
+/** Tiles are numbered in reading order, like the IDs on Carl Hauser's sketches. */
+const no = (k: number) => String(k).padStart(2, "0");
+
+function Side({ id, side, data, first }: { id: string; side: "venue" | "club"; data: typeof VENUES; first: number }) {
+  return (
+    <article id={id} className={`side ${side}`} aria-labelledby={`${id}-title`}>
+      <h2 id={`${id}-title`}>{data.title}</h2>
+      <p className="lead">{data.lead}</p>
+      <div className="side-tiles">
+        {data.tiles.map((t, k) => (
+          <Tile key={t.sketch} src={sketch(t.sketch)} caption={t.caption} n={no(first + k)} />
+        ))}
+      </div>
+      {data.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
+      <h3>{data.rulesTitle}</h3>
+      <ul className="ticks">
+        {data.rules.map((r) => <li key={r}>{r}</li>)}
+      </ul>
+      <JoinButton side={side} className={side === "venue" ? "pill" : "pill ghost"}>{data.cta}</JoinButton>
+    </article>
+  );
+}
 
 export default function How() {
   return (
     <>
-      <TopBar page="how" />
-      <main className="how-main">
-        <Reveal as="section" className="how-intro">
-          <h1>Here’s how it works.</h1>
-          <p>
-            New York is full of little groups of people who make time for each other, and lovely neighborhood spots
-            that could use a few more people on a quiet night. We thought, why not introduce them?
-          </p>
-        </Reveal>
+      <TopBar />
+      <main className="story">
+        <section className="merrier" aria-labelledby="merrier-title">
+          <div className="merrier-copy">
+            <h1 id="merrier-title">{MERRIER.title}</h1>
+            {MERRIER.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
+          </div>
+          <div className="merrier-tiles">
+            <Tile src="/img/landing/step2.svg" caption="Nowhere regular to meet" n="01" big alt="Clubs, knit, book, art, run, chess and talk, with nowhere regular to meet." />
+            <Tile src="/img/landing/step1.svg" caption="Empty on slow nights" n="02" alt="A bar with four empty stools and an empty table on a slow night." />
+          </div>
+        </section>
 
-        <section className="how-steps3" aria-label="Three steps">
-          {STEPS.map((s, k) => (
-            <Reveal as="article" key={s.n} delay={0.06 * k}>
-              <Tile src={s.sketch} caption={s.caption} n={s.n} />
-              <h2><b>{s.n}</b> {s.title}</h2>
-              <p>{s.body}</p>
-            </Reveal>
-          ))}
+        <section id="how" className="how" aria-labelledby="how-title">
+          <h2 id="how-title">Here’s how it works.</h2>
+          <ol className="how-steps">
+            {HOW.map((s, k) => (
+              <li key={s.sketch}>
+                <Tile src={sketch(s.sketch)} caption={s.caption} n={no(3 + k)} />
+                <h3>{s.title}</h3>
+                <p>{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="numbers" className="numbers" aria-labelledby="numbers-title">
+          <h2 id="numbers-title">{NUMBERS.title}</h2>
+          <ul>
+            {NUMBERS.items.map((n) => (
+              <li key={n.figure}>
+                <p><strong>{n.figure}</strong> {n.text}</p>
+                <a href={n.href} target="_blank" rel="noopener noreferrer">{n.source}</a>
+              </li>
+            ))}
+          </ul>
+          <p className="numbers-outro">{NUMBERS.outro}</p>
+          <p className="fine">{NUMBERS.note}</p>
         </section>
 
         <section className="sides" aria-label="For venues and for clubs">
-          <Reveal as="article" className="side venue">
-            <p className="kicker">Restaurants, bars &amp; cafés</p>
-            <h2>Got a quiet night? We’ve got some ideas.</h2>
-            <div className="side-tiles">
-              <Tile src="corner-booth" caption="The corner nobody books" n="V.1" />
-              <Tile src="floor-plan" caption="A back room, empty" n="V.2" />
-            </div>
-            <p>
-              Maybe Mondays are a little slow. Maybe there’s a back room that doesn’t get used much. We find local clubs
-              looking for somewhere to meet regularly and introduce them to places like yours.
-            </p>
-            <h3>Your space. Your rules.</h3>
-            <ul className="ticks">
-              <li>You decide which nights work and how many people you’re comfortable hosting.</li>
-              <li>You set any spending expectations, and you always have the final say before anything is booked.</li>
-              <li>No fee to join the pilot, and your first completed matched event is free of any Coop fee.</li>
-              <li>After that, a small percentage for completed club nights, agreed together in advance.</li>
-            </ul>
-            <JoinButton side="venue" className="pill">Let’s bring some people in →</JoinButton>
-          </Reveal>
-
-          <Reveal as="article" className="side club" delay={0.06}>
-            <p className="kicker">Clubs, communities &amp; little gatherings</p>
-            <h2>Your people deserve a place.</h2>
-            <div className="side-tiles">
-              <Tile src="club-kit" caption="What each club brings" n="C.1" />
-              <Tile src="no-app-needed" caption="Members just get a text" n="C.2" />
-            </div>
-            <p>
-              Maybe your book club keeps hopping between cafés, or your run club needs somewhere to wind down. Tell us
-              what you’re looking for and we’ll help you find a neighborhood spot you can come back to again and again.
-            </p>
-            <h3>No membership fee.</h3>
-            <ul className="ticks">
-              <li>Coop is free for clubs to join.</li>
-              <li>No venue-hunting every week. Just a place for your people.</li>
-              <li>Some places may have a minimum food or drink spend; you’ll know the details before agreeing to anything.</li>
-              <li>Weekly, every other week or monthly: whatever works for your group.</li>
-            </ul>
-            <JoinButton side="club" className="pill ghost">Let’s find your spot →</JoinButton>
-          </Reveal>
+          <Side id="venues" side="venue" data={VENUES} first={6} />
+          <Side id="clubs" side="club" data={CLUBS} first={8} />
         </section>
 
-        <Reveal as="section" className="how-end">
-          <p className="tagline">Because every flock needs one.</p>
-          <p>We’re starting small, right here in NYC. Come be part of it.</p>
-        </Reveal>
+        <section id="flock" className="flock" aria-labelledby="flock-title">
+          <Tile src="/img/landing/step4.svg" caption="One chair saved for you" n="10" big alt="The long table with lamps lit, one chair saved for you." />
+          <div className="flock-copy">
+            <h2 id="flock-title">{FIRST_FLOCK.title}</h2>
+            {FIRST_FLOCK.body.map((p) => <p key={p.slice(0, 24)}>{p}</p>)}
+            <JoinButton side="club" className="pill">{FIRST_FLOCK.cta}</JoinButton>
+          </div>
+        </section>
+
+        <section id="questions" className="questions" aria-labelledby="questions-title">
+          <h2 id="questions-title">A few good questions.</h2>
+          <Faq />
+        </section>
+
+        <section className="closing" aria-labelledby="close-title">
+          <h2 id="close-title">{CLOSE.title}</h2>
+          <p>{CLOSE.body}</p>
+          <div className="close-actions">
+            <JoinButton side="club" className="pill">Find your people a place</JoinButton>
+            <JoinButton side="venue" className="pill ghost">Bring a club to your venue</JoinButton>
+          </div>
+        </section>
       </main>
+
+      <footer className="site-foot">
+        <div>
+          <p className="foot-tag"><b>coop.</b> {TAGLINE}</p>
+          <p>{CLOSE.footer}</p>
+        </div>
+        <p className="fine">{PRIVACY}</p>
+        <Clock />
+      </footer>
     </>
   );
 }

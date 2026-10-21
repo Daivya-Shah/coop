@@ -1,20 +1,22 @@
 import Link from "next/link";
+import { MENU } from "@/content/coop";
 import { JoinButton } from "./Join";
 import { Plus } from "./Plus";
 
-export function TopBar({ page }: { page: "landing" | "how" }) {
+/** Carl Hauser's hello-card top row: wordmark, plus-icon menu, and the two ways in. */
+export function TopBar() {
   return (
-    <header className={page === "landing" ? "topbar landing" : "topbar"}>
-      <Link className="brand" href="/">
-        <img src="/img/brand/wordmark.svg" alt="Coop" width={990} height={340} />
+    <header className="topbar">
+      <Link className="brand" href="/" aria-label="Coop, home">
+        <img src="/img/brand/wordmark.svg" alt="" width={990} height={340} />
       </Link>
-      {page === "how" && (
-        <Link className="plus-link on" href="/how/" aria-current="page">
-          <Plus />
-          How it works
-        </Link>
-      )}
-      <nav className="side-links" aria-label="Join">
+      <nav className="plus-menu" aria-label="Coop">
+        {MENU.map((m) => (
+          <Link key={m.href} href={m.href}><Plus />{m.label}</Link>
+        ))}
+        <JoinButton side="club"><Plus />Say hi</JoinButton>
+      </nav>
+      <nav className="side-links" aria-label="Join the pilot">
         <JoinButton side="venue">I run a venue</JoinButton>
         <JoinButton side="club">I run a club</JoinButton>
       </nav>

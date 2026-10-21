@@ -10,16 +10,20 @@ Coop matches NYC social clubs (knit, book, run, chess, art, language…) with re
 Coop/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx          Landing page: flip-through of the four steps
-│   │   ├── how/page.tsx      How it works: three steps + For venues / For clubs
+│   │   ├── page.tsx          Landing: one screen, Carl Hauser-style hello card + flip-through
+│   │   ├── how/page.tsx      The scrolling page: story, how it works, numbers, venues, clubs, FAQ
 │   │   ├── layout.tsx        Font, metadata, join panel available everywhere
 │   │   ├── globals.css       All styles
 │   │   └── icon.svg          Favicon (the egg)
+│   ├── content/coop.ts       Every word on the site (edit copy here)
 │   └── components/
 │       ├── FlipThrough.tsx   The four sketches, the 1-2-3-4 buttons, auto-advance
 │       ├── Join.tsx          Join panel (dialog) + JoinButton + venue/club switch
 │       ├── IntakeForm.tsx    Venue and club sign-up forms
-│       ├── TopBar.tsx, Tile.tsx, Reveal.tsx, Plus.tsx
+│       ├── TopBar.tsx        Wordmark, plus-icon menu, venue/club links
+│       ├── Clock.tsx         Live New York clock
+│       ├── Faq.tsx           Questions (Base UI Accordion)
+│       ├── Tile.tsx, Plus.tsx
 ├── public/img/
 │   ├── brand/                COOP wordmark (dark + light)
 │   ├── landing/              step1–4.svg, the flip-through sketches
@@ -29,6 +33,8 @@ Coop/
 │   ├── backups/              Every saved version of the site (v1 → v15), each self-contained
 │   ├── sketch-sets/          All sketch sets: grey, color, coral, classico, mono, story, v2
 │   └── explorations/         Hero / landing experiments that weren't used
+├── PRODUCT.md                Product truth for Impeccable (users, facts, fee wording)
+├── .impeccable/              Impeccable surface brief (design direction)
 ├── .mcp.json                 MCP servers: Figma, 21st.dev, Playwright, Motion
 ├── .claude/
 │   ├── skills/               /motion, Emil Kowalski's skills, /impeccable
