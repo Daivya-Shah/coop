@@ -1,4 +1,4 @@
-# Coop
+﻿# Coop
 
 *Because every flock needs one.*
 
@@ -22,10 +22,11 @@ Coop/
 │   ├── backups/          Every saved version of the site (v1 → v14), each self-contained
 │   ├── sketch-sets/      All sketch sets: grey, color, coral, classico, mono, story, v2
 │   └── explorations/     Hero / landing experiments that weren't used
-├── .mcp.json             MCP servers for this project (21st.dev); reads the key from the environment
 ├── .env                  Secrets (git-ignored). See .env.example
 └── .env.example          Template for .env
 ```
+
+MCP servers (Figma, 21st.dev, Playwright) are registered in your Claude Code user config, not in this folder.
 
 ## Running it
 
