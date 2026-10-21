@@ -10,3 +10,11 @@
 .DS_Store
 Thumbs.db
 __pycache__/
+
+# Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
