@@ -27,10 +27,9 @@
       <!-- ============ HELLO CARD ============ -->
       <header class="card hello">
         <div class="hello-top">
-          <h1>Hi, we're Coop <span class="wave" aria-hidden="true">👋</span></h1>
+          <h1 class="brand"><img src="hero/wordmark.svg" alt="Coop" width="990" height="340" /></h1>
 
           <nav class="plus-nav" aria-label="About Coop">
-            <button data-open="idea"><svg><use href="#plus" /></svg>The Idea</button>
             <button data-open="how"><svg><use href="#plus" /></svg>How It Works</button>
             <button data-open="venues"><svg><use href="#plus" /></svg>For Venues</button>
             <button data-open="clubs"><svg><use href="#plus" /></svg>For Clubs</button>
@@ -45,23 +44,23 @@
           </nav>
         </div>
 
-        <div class="hello-bottom">
-          <div class="intro-wrap">
+        <figure class="four-steps">
+          <img src="hero/four-steps.svg" width="2000" height="1060"
+            alt="How Coop works in four steps: 1, a venue empty on a slow night; 2, clubs (knit, book, art, chess, run, language) with nowhere regular to meet; 3, Coop matches them on area, size and night, and both say yes; 4, the club fills a long table every week." />
+        </figure>
+
+        <div class="hello-words">
+          <p class="tagline">Because every flock needs one.</p>
+          <div class="hello-words-side">
             <p class="intro">
               We match social clubs with restaurants, bars and cafés that have empty seats on their
               slow nights. The club gets a table it can count on. The venue gets regulars.
             </p>
-            <nav class="story-index" aria-label="The story">
-              <a href="#venue-story"><b>01</b> The venue</a>
-              <a href="#clubs-story"><b>02</b> The clubs</a>
-              <a href="#match-story"><b>03</b> The match</a>
-              <a href="#regulars-story"><b>04</b> The regulars</a>
-            </nav>
+            <p class="clock" aria-label="Time in New York">
+              <span>New York <span id="tz">ET</span></span>
+              <time id="clock">--:--:--</time>
+            </p>
           </div>
-          <p class="clock" aria-label="Time in New York">
-            <span>New York <span id="tz">ET</span></span>
-            <time id="clock">--:--:--</time>
-          </p>
         </div>
       </header>
 

@@ -189,6 +189,8 @@ class Sheet:
 
     def line(self, pts, width=2.7, passes=2, wobble=1.7, over=9, closed=False, partial=True):
         r = self.r
+        if CLEAN:   # one confident stroke instead of a doubled sketch line
+            passes, wobble, over = 1, wobble * 0.55, over * 0.45
         pts = list(pts)
         if len(pts) < 2:
             return
@@ -222,6 +224,8 @@ class Sheet:
 
     def hatch(self, poly, angle=40, spacing=7.0, width=1.9, zigzag=True, inset=0.35):
         r = self.r
+        if CLEAN:
+            spacing, width = spacing * 1.6, width * 0.8
         a = math.radians(angle)
         d = (math.cos(a), math.sin(a))
         n = (-d[1], d[0])
@@ -1855,6 +1859,7 @@ REWRITES_BASE = {
 }
 REWRITES = {}
 CURRENT_SHEET = None
+CLEAN = False     # clean-ink mode for small, busy compositions
 NO_TEXT = False   # testing aid: drop all handwriting to compare drawings alone
 
 SHEETS = {
