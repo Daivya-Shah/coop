@@ -29,11 +29,22 @@ Coop/
 │   ├── backups/              Every saved version of the site (v1 → v15), each self-contained
 │   ├── sketch-sets/          All sketch sets: grey, color, coral, classico, mono, story, v2
 │   └── explorations/         Hero / landing experiments that weren't used
+├── .mcp.json                 MCP servers: Figma, 21st.dev, Playwright, Motion
+├── .claude/
+│   ├── skills/               Motion's /motion skill + Emil Kowalski's design/animation skills
+│   └── agents/               motion-reviewer (Motion+ performance audits)
 ├── .env                      Secrets (git-ignored). See .env.example
 └── .env.example              Template for .env
 ```
 
-MCP servers (Figma, 21st.dev, Playwright) are registered in your Claude Code user config, not in this folder.
+Everything Claude Code uses lives in this folder. Open Claude Code **in the Coop folder** and approve the servers once when asked:
+
+- **figma**: read Figma designs into code, push pages into Figma. Signs in with your Figma account.
+- **21st**: search and add 21st.dev components (`/ui ...`). Reads `API_KEY_21ST` from your environment.
+- **playwright**: drives Chrome to open, click and screenshot the site. Output goes to `.playwright-mcp/` (git-ignored).
+- **motion**: searches the official Motion (Framer Motion) docs and examples. Free, no account.
+
+Skills (type `/name` in Claude Code): `/motion`, plus Emil Kowalski's `/emil-design-eng`, `/animate`, `/review-animations`, `/improve-animations`, `/find-animation-opportunities`, `/animation-performance`, `/animation-vocabulary`, `/apple-design`, `/pick-ui-library`, `/prototype`, `/mobile-native`, `/break-ui` (MIT, from github.com/emilkowalski/skills).
 
 ## Running it
 
