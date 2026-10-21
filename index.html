@@ -27,7 +27,7 @@
       <!-- ============ HELLO CARD ============ -->
       <header class="card hello">
         <div class="hello-top">
-          <h1>Hello <span class="wave" aria-hidden="true">👋</span></h1>
+          <h1>Hi, we're Coop <span class="wave" aria-hidden="true">👋</span></h1>
 
           <nav class="plus-nav" aria-label="About Coop">
             <button data-open="idea"><svg><use href="#plus" /></svg>The Idea</button>
@@ -46,10 +46,18 @@
         </div>
 
         <div class="hello-bottom">
-          <p class="intro">
-            This is Coop. Napkin sketches and ideas for filling quiet nights at NYC restaurants,
-            bars and cafés with the run clubs, book clubs and supper clubs that need a regular table.
-          </p>
+          <div class="intro-wrap">
+            <p class="intro">
+              We match social clubs with restaurants, bars and cafés that have empty seats on their
+              slow nights. The club gets a table it can count on. The venue gets regulars.
+            </p>
+            <nav class="story-index" aria-label="The story">
+              <a href="#venue-story"><b>01</b> The venue</a>
+              <a href="#clubs-story"><b>02</b> The clubs</a>
+              <a href="#match-story"><b>03</b> The match</a>
+              <a href="#regulars-story"><b>04</b> The regulars</a>
+            </nav>
+          </div>
           <p class="clock" aria-label="Time in New York">
             <span>New York <span id="tz">ET</span></span>
             <time id="clock">--:--:--</time>
@@ -57,137 +65,175 @@
         </div>
       </header>
 
-      <!-- ============ SKETCH GRID ============ -->
-      <main class="grid" aria-label="Sketchbook">
-        <button class="tile big" data-src="sketches-mono/table-for-twenty.svg" data-title="Table for twenty" data-id="030">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>030</b></span></span>
-          <img src="sketches-mono/table-for-twenty.svg" alt="A long table set for twenty, with a pulled-out chair labelled plus one every Tuesday" />
-          <span class="new">new</span>
-        </button>
-        <button class="tile" data-src="sketches-mono/tuesday-calendar.svg" data-title="Every Tuesday" data-id="029">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>029</b></span></span>
-          <img src="sketches-mono/tuesday-calendar.svg" alt="A calendar with every Tuesday circled: same time next week" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/headcount-clicker.svg" data-title="Headcount" data-id="028">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>028</b></span></span>
-          <img src="sketches-mono/headcount-clicker.svg" alt="A tally counter reading 18: click per arrival, 18 of 20 RSVP" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/storefront.svg" data-title="Quiet Tuesday? Not anymore" data-id="027">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>027</b></span></span>
-          <img src="sketches-mono/storefront.svg" alt="A café front with a striped awning and a book club visible through the window" loading="lazy" />
-        </button>
-        <button class="tile big" data-src="sketches-mono/supper-club.svg" data-title="Supper club" data-id="026">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>026</b></span></span>
-          <img src="sketches-mono/supper-club.svg" alt="Pizza with a slice gone, a steaming noodle bowl, sourdough and a plate: family style" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/set-menu.svg" data-title="Set menu" data-id="025">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>025</b></span></span>
-          <img src="sketches-mono/set-menu.svg" alt="A folded Tuesday set menu: $25 per person, family style" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/espresso-machine.svg" data-title="Espresso for the 8:15 rush" data-id="024">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>024</b></span></span>
-          <img src="sketches-mono/espresso-machine.svg" alt="A two-group espresso machine with cups warming on top" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/club-kit.svg" data-title="What each club brings" data-id="023">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>023</b></span></span>
-          <img src="sketches-mono/club-kit.svg" alt="A sneaker, a stack of books, yarn and needles, a chess pawn, a notebook and pen" loading="lazy" />
-        </button>
-        <button class="tile big" data-src="sketches-mono/corner-booth.svg" data-title="Booth for six" data-id="022">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>022</b></span></span>
-          <img src="sketches-mono/corner-booth.svg" alt="A corner booth for six by the window: the corner nobody books on a Tuesday" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/bar-stools.svg" data-title="Bar seating" data-id="021">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>021</b></span></span>
-          <img src="sketches-mono/bar-stools.svg" alt="Three bar stools and a front view: eight along the window" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/bistro-chair.svg" data-title="Bistro chair" data-id="020">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>020</b></span></span>
-          <img src="sketches-mono/bistro-chair.svg" alt="A bistro chair in three views: the one we save for you" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/floor-plan.svg" data-title="The back room" data-id="019">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>019</b></span></span>
-          <img src="sketches-mono/floor-plan.svg" alt="A venue floor plan with a back room table for twenty, quiet Tuesday 6 to 10" loading="lazy" />
-        </button>
-        <button class="tile big" data-src="sketches-mono/no-app-needed.svg" data-title="No app needed" data-id="018">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>018</b></span></span>
-          <img src="sketches-mono/no-app-needed.svg" alt="Two phones: a text saying book club tonight 7pm, I'm in, and an RSVP screen showing 18 going" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/smart-reserved-sign.svg" data-title="Smart reserved sign?" data-id="017">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>017</b></span></span>
-          <img src="sketches-mono/smart-reserved-sign.svg" alt="A concept table sign whose screen shows book club, Tuesday 7pm, with an exploded view" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/reserved-card.svg" data-title="The only sign we need" data-id="016">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>016</b></span></span>
-          <img src="sketches-mono/reserved-card.svg" alt="A folded RESERVED table card and its flat pattern" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/pilot-map.svg" data-title="Pilot zones" data-id="015">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>015</b></span></span>
-          <img src="sketches-mono/pilot-map.svg" alt="A Manhattan street map with the Chelsea / Flatiron and East Village / LES pilot zones circled" loading="lazy" />
-        </button>
-        <button class="tile big" data-src="sketches-mono/bookshelf.svg" data-title="Book club picks" data-id="014">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>014</b></span></span>
-          <img src="sketches-mono/bookshelf.svg" alt="A bookshelf of colourful books: borrow one, bring one" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/name-tags.svg" data-title="Name tags" data-id="013">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>013</b></span></span>
-          <img src="sketches-mono/name-tags.svg" alt="Hello my name is stickers for Sam, Priya, Jo and Dev: first night only" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/record-player.svg" data-title="Vinyl night?" data-id="012">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>012</b></span></span>
-          <img src="sketches-mono/record-player.svg" alt="A record player: low, under the talk" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/run-route.svg" data-title="Run club route" data-id="011">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>011</b></span></span>
-          <img src="sketches-mono/run-route.svg" alt="A 5K route map that ends at the venue: then dinner" loading="lazy" />
-        </button>
-        <button class="tile big" data-src="sketches-mono/the-math.svg" data-title="The math (example)" data-id="010">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>010</b></span></span>
-          <img src="sketches-mono/the-math.svg" alt="An example receipt: 25 people at $20 for four Tuesdays, a 10% fee, not a forecast" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/tab-printer.svg" data-title="Tab printer" data-id="009">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>009</b></span></span>
-          <img src="sketches-mono/tab-printer.svg" alt="A receipt printer: one check per group, no POS needed" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/a-boards.svg" data-title="One board per night" data-id="008">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>008</b></span></span>
-          <img src="sketches-mono/a-boards.svg" alt="Three sidewalk boards: Monday book club, Tuesday run club, Sunday supper" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/game-night.svg" data-title="Game night" data-id="007">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>007</b></span></span>
-          <img src="sketches-mono/game-night.svg" alt="A chess board with pawns: six boards, twelve people" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/language-night.svg" data-title="Language night" data-id="006">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>006</b></span></span>
-          <img src="sketches-mono/language-night.svg" alt="A round table with hello in six languages" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/pendant-lamps.svg" data-title="Over the table" data-id="005">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>005</b></span></span>
-          <img src="sketches-mono/pendant-lamps.svg" alt="Three pendant lamps: dome, cone and globe" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/post-run-coffee.svg" data-title="Post-run coffee" data-id="004">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>004</b></span></span>
-          <img src="sketches-mono/post-run-coffee.svg" alt="A coffee cup on a saucer and pastries: post-run, Saturday 8:15am" loading="lazy" />
-        </button>
-        <button class="tile wide" data-src="sketches-mono/bike-rack.svg" data-title="Bike rack out front" data-id="003">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>003</b></span></span>
-          <img src="sketches-mono/bike-rack.svg" alt="Four bike hoops with two bikes: four hoops, eight bikes" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/chair-stack.svg" data-title="Stacks x6" data-id="002">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>002</b></span></span>
-          <img src="sketches-mono/chair-stack.svg" alt="A stack of chairs, out on Tuesdays" loading="lazy" />
-        </button>
-        <button class="tile" data-src="sketches-mono/logo-ideas.svg" data-title="Logo?" data-id="001">
-          <span class="meta"><span>2026/10/20</span><span>ID <b>001</b></span></span>
-          <img src="sketches-mono/logo-ideas.svg" alt="Logo ideas: an egg with its yolk, an egg inside a coop, and the word COOP" loading="lazy" />
-        </button>
+      <main class="story">
+      <!-- ============ THE STORY, IN FOUR CHAPTERS ============ -->
+      <section class="chapter" id="venue-story" aria-labelledby="ch-venue">
+        <header class="card chapter-head">
+          <span class="ch-num">01</span>
+          <h2 id="ch-venue">The venue</h2>
+          <p>Great restaurants, bars and cafés. On their slow nights, half the seats sit empty.</p>
+        </header>
+        <div class="grid">
+          <button class="tile big" data-src="sketches-mono/storefront.svg" data-title="Great spot, quiet night" data-id="01.1">
+            <span class="meta"><span>Great spot, quiet night</span><span><b>01.1</b></span></span>
+            <img src="sketches-mono/storefront.svg" alt="A café front with a striped awning: quiet night? not anymore" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/corner-booth.svg" data-title="The corner nobody books" data-id="01.2">
+            <span class="meta"><span>The corner nobody books</span><span><b>01.2</b></span></span>
+            <img src="sketches-mono/corner-booth.svg" alt="A corner booth for six by the window, empty on a slow night" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/floor-plan.svg" data-title="A back room, sitting empty" data-id="01.3">
+            <span class="meta"><span>A back room, sitting empty</span><span><b>01.3</b></span></span>
+            <img src="sketches-mono/floor-plan.svg" alt="A venue floor plan with an empty back room that seats twenty" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/espresso-machine.svg" data-title="Machines on, seats empty" data-id="01.4">
+            <span class="meta"><span>Machines on, seats empty</span><span><b>01.4</b></span></span>
+            <img src="sketches-mono/espresso-machine.svg" alt="An espresso machine with cups warming on top" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/bike-rack.svg" data-title="Room out front, too" data-id="01.5">
+            <span class="meta"><span>Room out front, too</span><span><b>01.5</b></span></span>
+            <img src="sketches-mono/bike-rack.svg" alt="A bike rack with two bikes outside the venue" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/bar-stools.svg" data-title="Eight empty stools" data-id="01.6">
+            <span class="meta"><span>Eight empty stools</span><span><b>01.6</b></span></span>
+            <img src="sketches-mono/bar-stools.svg" alt="A row of bar stools along the window" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/chair-stack.svg" data-title="Chairs, still stacked" data-id="01.7">
+            <span class="meta"><span>Chairs, still stacked</span><span><b>01.7</b></span></span>
+            <img src="sketches-mono/chair-stack.svg" alt="A stack of chairs waiting for club nights" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/pendant-lamps.svg" data-title="Lights on anyway" data-id="01.8">
+            <span class="meta"><span>Lights on anyway</span><span><b>01.8</b></span></span>
+            <img src="sketches-mono/pendant-lamps.svg" alt="Three pendant lamps over an empty table" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/record-player.svg" data-title="Music, no crowd" data-id="01.9">
+            <span class="meta"><span>Music, no crowd</span><span><b>01.9</b></span></span>
+            <img src="sketches-mono/record-player.svg" alt="A record player turning in a quiet room" loading="lazy" />
+          </button>
+        </div>
+      </section>
+
+      <section class="chapter" id="clubs-story" aria-labelledby="ch-clubs">
+        <header class="card chapter-head">
+          <span class="ch-num">02</span>
+          <h2 id="ch-clubs">The clubs</h2>
+          <p>Knit clubs, book clubs, art clubs, run clubs, language clubs. Plenty of people, no regular place to meet.</p>
+        </header>
+        <div class="grid">
+          <button class="tile big" data-src="sketches-mono/club-kit.svg" data-title="Every club brings something" data-id="02.1">
+            <span class="meta"><span>Every club brings something</span><span><b>02.1</b></span></span>
+            <img src="sketches-mono/club-kit.svg" alt="A sneaker, books, yarn and needles, a chess pawn, a notebook and pen" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/run-route.svg" data-title="Run club: 5K, then where?" data-id="02.2">
+            <span class="meta"><span>Run club: 5K, then where?</span><span><b>02.2</b></span></span>
+            <img src="sketches-mono/run-route.svg" alt="A run club route map that ends at a café" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/language-night.svg" data-title="Six languages, one table" data-id="02.3">
+            <span class="meta"><span>Six languages, one table</span><span><b>02.3</b></span></span>
+            <img src="sketches-mono/language-night.svg" alt="A round table with hello in six languages" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/game-night.svg" data-title="Twelve players, no table" data-id="02.4">
+            <span class="meta"><span>Twelve players, no table</span><span><b>02.4</b></span></span>
+            <img src="sketches-mono/game-night.svg" alt="A chess board ready for a game night" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/bookshelf.svg" data-title="This month's book club pick" data-id="02.5">
+            <span class="meta"><span>This month's book club pick</span><span><b>02.5</b></span></span>
+            <img src="sketches-mono/bookshelf.svg" alt="A bookshelf: borrow one, bring one" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/name-tags.svg" data-title="New faces every week" data-id="02.6">
+            <span class="meta"><span>New faces every week</span><span><b>02.6</b></span></span>
+            <img src="sketches-mono/name-tags.svg" alt="Hello my name is stickers for Sam, Priya, Jo and Dev" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/post-run-coffee.svg" data-title="After the run, nowhere to sit" data-id="02.7">
+            <span class="meta"><span>After the run, nowhere to sit</span><span><b>02.7</b></span></span>
+            <img src="sketches-mono/post-run-coffee.svg" alt="A coffee and pastries after the run" loading="lazy" />
+          </button>
+        </div>
+      </section>
+
+      <section class="chapter" id="match-story" aria-labelledby="ch-match">
+        <header class="card chapter-head">
+          <span class="ch-num">03</span>
+          <h2 id="ch-match">The match</h2>
+          <p>Coop pairs each club with a venue that fits: the right neighborhood, the right size, the right night. Both sides say yes before anything is booked.</p>
+        </header>
+        <div class="grid">
+          <button class="tile big" data-src="sketches-mono/pilot-map.svg" data-title="Matched by neighborhood" data-id="03.1">
+            <span class="meta"><span>Matched by neighborhood</span><span><b>03.1</b></span></span>
+            <img src="sketches-mono/pilot-map.svg" alt="A Manhattan map with the Chelsea / Flatiron and East Village / LES pilot zones" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/no-app-needed.svg" data-title="Members just get a text" data-id="03.2">
+            <span class="meta"><span>Members just get a text</span><span><b>03.2</b></span></span>
+            <img src="sketches-mono/no-app-needed.svg" alt="Two phones: knit club tonight, I'm in, and an RSVP screen showing 18 going" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/smart-reserved-sign.svg" data-title="The group, on the table" data-id="03.3">
+            <span class="meta"><span>The group, on the table</span><span><b>03.3</b></span></span>
+            <img src="sketches-mono/smart-reserved-sign.svg" alt="A table sign showing book club, tonight, 18 people" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/bistro-chair.svg" data-title="A seat saved for you" data-id="03.4">
+            <span class="meta"><span>A seat saved for you</span><span><b>03.4</b></span></span>
+            <img src="sketches-mono/bistro-chair.svg" alt="A bistro chair: the one we save for you" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/reserved-card.svg" data-title="Reserved for the club" data-id="03.5">
+            <span class="meta"><span>Reserved for the club</span><span><b>03.5</b></span></span>
+            <img src="sketches-mono/reserved-card.svg" alt="A folded RESERVED table card and its flat pattern" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/logo-ideas.svg" data-title="Coop: a home for every flock" data-id="03.6">
+            <span class="meta"><span>Coop: a home for every flock</span><span><b>03.6</b></span></span>
+            <img src="sketches-mono/logo-ideas.svg" alt="Logo ideas: an egg, an egg inside a coop, and the word COOP" loading="lazy" />
+          </button>
+        </div>
+      </section>
+
+      <section class="chapter" id="regulars-story" aria-labelledby="ch-regulars">
+        <header class="card chapter-head">
+          <span class="ch-num">04</span>
+          <h2 id="ch-regulars">The regulars</h2>
+          <p>The club gets a table it can count on. The venue gets a room full of regulars on the nights it needed them most.</p>
+        </header>
+        <div class="grid">
+          <button class="tile big" data-src="sketches-mono/table-for-twenty.svg" data-title="A table for twenty" data-id="04.1">
+            <span class="meta"><span>A table for twenty</span><span><b>04.1</b></span></span>
+            <img src="sketches-mono/table-for-twenty.svg" alt="A long table set for twenty, with one chair saved for you" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/weekly-calendar.svg" data-title="Same night, every week" data-id="04.2">
+            <span class="meta"><span>Same night, every week</span><span><b>04.2</b></span></span>
+            <img src="sketches-mono/weekly-calendar.svg" alt="A calendar with the same night circled every week" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/headcount-clicker.svg" data-title="Headcount before they arrive" data-id="04.3">
+            <span class="meta"><span>Headcount before they arrive</span><span><b>04.3</b></span></span>
+            <img src="sketches-mono/headcount-clicker.svg" alt="A tally counter reading 18 of 20 RSVPs" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/set-menu.svg" data-title="A menu for the group" data-id="04.4">
+            <span class="meta"><span>A menu for the group</span><span><b>04.4</b></span></span>
+            <img src="sketches-mono/set-menu.svg" alt="A set menu for the group: $25 per person, family style" loading="lazy" />
+          </button>
+          <button class="tile big" data-src="sketches-mono/supper-club.svg" data-title="Plates to share" data-id="04.5">
+            <span class="meta"><span>Plates to share</span><span><b>04.5</b></span></span>
+            <img src="sketches-mono/supper-club.svg" alt="Pizza, noodles, sourdough and a plate: family style" loading="lazy" />
+          </button>
+          <button class="tile wide" data-src="sketches-mono/the-math.svg" data-title="What it adds up to (example)" data-id="04.6">
+            <span class="meta"><span>What it adds up to (example)</span><span><b>04.6</b></span></span>
+            <img src="sketches-mono/the-math.svg" alt="An example receipt: 25 people at $20 over four nights, a 10% fee, not a forecast" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/a-boards.svg" data-title="A different club every night" data-id="04.7">
+            <span class="meta"><span>A different club every night</span><span><b>04.7</b></span></span>
+            <img src="sketches-mono/a-boards.svg" alt="Sidewalk boards: Monday knit club, Wednesday book club, Thursday art club" loading="lazy" />
+          </button>
+          <button class="tile" data-src="sketches-mono/tab-printer.svg" data-title="One tab per group" data-id="04.8">
+            <span class="meta"><span>One tab per group</span><span><b>04.8</b></span></span>
+            <img src="sketches-mono/tab-printer.svg" alt="A receipt printer: one check per group" loading="lazy" />
+          </button>
+        </div>
+      </section>
       </main>
 
       <!-- ============ THE END ============ -->
       <footer class="card end">
-        <h2>Ohhh that's the end <span aria-hidden="true">🥺</span></h2>
+        <h2>That's the whole idea <span aria-hidden="true">🥚</span></h2>
 
         <div class="end-bottom">
-          <p class="end-note">Pull up a chair, we draw more every week. Till then ..</p>
+          <p class="end-note">Got a club that needs a home, or a room that needs regulars? Pull up a chair.</p>
           <nav class="plus-nav" aria-label="About Coop">
             <button data-open="how"><svg><use href="#plus" /></svg>How It Works</button>
             <button data-open="venues"><svg><use href="#plus" /></svg>For Venues</button>
@@ -211,14 +257,14 @@
           <div>
             <h2 id="t-idea">The Idea</h2>
             <p class="lede">
-              Right now a wine bar in Flatiron is half-empty on a Tuesday. Twelve blocks away, a book club is
-              squeezed into somebody's living room again. Coop introduces them, then keeps the night going,
-              week after week.
+              Right now a wine bar in Flatiron is half-empty on one of its slow nights. Twelve blocks away, a
+              knitting club is squeezed into somebody's living room again. Coop introduces them, then keeps the
+              night going, week after week.
             </p>
             <dl class="beats">
               <div><dt>No cold DMs.</dt><dd>Organizers stop messaging fifteen bars and hoping one writes back.</dd></div>
               <div><dt>No weekly scramble.</dt><dd>One standing night, one place, the details already sorted.</dd></div>
-              <div><dt>No empty Tuesdays.</dt><dd>Venues pick their slow nights. We fill them with people who come back.</dd></div>
+              <div><dt>No empty slow nights.</dt><dd>Venues pick their slow nights. We fill them with people who come back.</dd></div>
             </dl>
             <p class="small">We're not a directory or a booking app. We find the fit, sort out the details, and send a recap after every night. Starting in Chelsea / Flatiron and the East Village / LES.</p>
           </div>
@@ -237,7 +283,7 @@
               <li class="with-sketch"><span><b>Venues tell us their quiet nights.</b> Which days, how many seats, any spend minimum, house rules on noise and activities. Two minutes, no account.</span><img class="step-sketch" src="sketches-mono/floor-plan.svg" alt="" loading="lazy" /></li>
               <li class="with-sketch"><span><b>Clubs tell us how they really meet.</b> Who actually shows up (not follower counts), which neighborhoods, how often, and what members are happy to spend.</span><img class="step-sketch" src="sketches-mono/headcount-clicker.svg" alt="" loading="lazy" /></li>
               <li class="with-sketch"><span><b>We propose a real group for a real night.</b> A specific club on a specific evening. The venue approves, the club approves, terms go in writing. Either side can say no.</span><img class="step-sketch" src="sketches-mono/reserved-card.svg" alt="" loading="lazy" /></li>
-              <li class="with-sketch"><span><b>It turns into a habit.</b> Reminders, headcount updates two days out, a recap after each night, and the next date locked in before anyone leaves.</span><img class="step-sketch" src="sketches-mono/tuesday-calendar.svg" alt="" loading="lazy" /></li>
+              <li class="with-sketch"><span><b>It turns into a habit.</b> Reminders, headcount updates two days out, a recap after each night, and the next date locked in before anyone leaves.</span><img class="step-sketch" src="sketches-mono/weekly-calendar.svg" alt="" loading="lazy" /></li>
             </ol>
           </div>
           <img class="panel-sketch" src="sketches-mono/table-for-twenty.svg" alt="" />

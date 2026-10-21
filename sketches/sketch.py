@@ -288,6 +288,30 @@ class Sheet:
         self.fills[-1] = self.fills[-1].replace('<path ', f'<path stroke="{col}" stroke-opacity="{opacity}" ', 1)
 
     def text(self, s, x, y, size=24, rot=0.0, width=2.1, anchor='start'):
+        """Draw handwriting. Words listed in REWRITES for the current sheet are swapped for new ones
+        without disturbing the drawing: the original is still 'written' (so the pen's randomness
+        advances exactly as before) but its strokes are thrown away, and the new words are written
+        with their own random stream."""
+        new = REWRITES.get(CURRENT_SHEET, {}).get(s)
+        if isinstance(new, list):
+            new = new.pop(0) if new else None
+        if new is None:
+            return self._text_raw(s, x, y, size, rot, width, anchor)
+        kept = self.items
+        self.items = []
+        self._text_raw(s, x, y, size, rot, width, anchor)
+        self.items = kept
+        kept_r, self.r = self.r, random.Random(sum(map(ord, new)) * 31 + len(new))
+        self._text_raw(new, x, y, size, rot, width, anchor)
+        self.r = kept_r
+
+    def _text_raw(self, s, x, y, size=24, rot=0.0, width=2.1, anchor='start'):
+        n0 = len(self.items)
+        self._text_draw(s, x, y, size, rot, width, anchor)
+        if NO_TEXT:
+            del self.items[n0:]
+
+    def _text_draw(self, s, x, y, size=24, rot=0.0, width=2.1, anchor='start'):
         r = self.r
         k = size / 100
         adv = sum(PARSED[ch][0] * k + size * 0.16 if ch in PARSED else size * 0.45 for ch in s)
@@ -1635,6 +1659,27 @@ def sheet_bikes():
     return sh
 
 
+# Copy changes inside the sketches (the drawings themselves are untouched).
+REWRITES_BASE = {
+    'table-for-twenty':    {'+1 EVERY TUE': 'SAVED FOR YOU'},
+    'tuesday-calendar':    {'EVERY TUE': 'THEIR NIGHT', '4 WEEK PILOT': 'EVERY WEEK'},
+    'storefront':          {'QUIET TUESDAY?': 'QUIET NIGHT?', 'A-BOARD: TUE 7PM': 'CLUB NIGHT'},
+    'floor-plan':          {'QUIET TUE 6-10': 'EMPTY ON SLOW NIGHTS'},
+    'post-run-coffee':     {'8:15 AM SAT': 'AFTER THE RUN'},
+    'chair-stack':         {'OUT ON TUESDAYS': 'OUT ON CLUB NIGHTS'},
+    'a-boards':            {'MON': ['MON'], 'TUE': ['WED'], 'SUN': ['THU'],
+                            'BOOK CLUB': ['KNIT CLUB'], 'RUN CLUB': ['BOOK CLUB'], 'SUPPER': ['ART CLUB'],
+                            '7PM': ['6PM', '7:30'], '8PM': ['8PM']},
+    'no-app-needed':       {'BOOK CLUB': 'KNIT CLUB', 'TONIGHT 7PM': 'TONIGHT!', 'TUE': 'WED'},
+    'the-math':            {'X 4 TUES': 'X 4 NIGHTS'},
+    'smart-reserved-sign': {'TUE 7PM  18': 'TONIGHT  18'},
+    'corner-booth':        {'THE CORNER NOBODY BOOKS ON A TUESDAY': 'THE CORNER NOBODY BOOKS ON A SLOW NIGHT'},
+    'set-menu':            {'TUE': 'CLUB', 'TUESDAY': 'GROUP'},
+}
+REWRITES = {}
+CURRENT_SHEET = None
+NO_TEXT = False   # testing aid: drop all handwriting to compare drawings alone
+
 SHEETS = {
     'table-for-twenty': sheet_table,
     'bistro-chair': sheet_chair,
@@ -1682,6 +1727,11 @@ if __name__ == '__main__':
             PALETTE = {'yolk': hexc, 'dusk': hexc, 'ink': hexc, 'boost': 0.42}
             COLOR_INK = hexc
     only = [a for a in args if not a.startswith('--')] or list(SHEETS)
+    use_rewrites = '--original-text' not in args
+    NO_TEXT = '--no-text' in args
     for name in only:
+        CURRENT_SHEET = name
+        REWRITES = {k: {kk: (list(vv) if isinstance(vv, list) else vv) for kk, vv in v.items()}
+                    for k, v in REWRITES_BASE.items()} if use_rewrites else {}
         (out / f'{name}.svg').write_text(SHEETS[name]().svg(color=color), encoding='utf-8')
         print('wrote', name)

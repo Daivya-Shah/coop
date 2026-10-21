@@ -1,5 +1,5 @@
 table-for-twenty: olive
-tuesday-calendar: teal
+weekly-calendar: teal
 headcount-clicker: rust
 storefront: crimson
 supper-club: pink
