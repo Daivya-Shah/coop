@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>How it works — Coop</title>
+    <meta name="description" content="Coop brings NYC clubs and neighborhood spots together. Clubs find somewhere to keep coming back to; restaurants, bars and cafés get a few more familiar faces." />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="howpage">
+    <svg class="defs" aria-hidden="true">
+      <symbol id="plus" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="12" />
+        <path d="M12 6.5v11M6.5 12h11" stroke="#f5f5f5" stroke-width="2.6" stroke-linecap="round" />
+      </symbol>
+    </svg>
+    <header class="topbar">
+      <a class="brand" href="index.html"><img src="hero/wordmark.svg" alt="Coop" width="990" height="340" /></a>
+      <a class="plus-link on" href="how.html"><svg><use href="#plus" /></svg>How it works</a>
+      <nav class="side-links" aria-label="Join">
+        <button data-open="join" data-side="venue">I run a venue</button>
+        <button data-open="join" data-side="club">I run a club</button>
+      </nav>
+    </header>
+
+    <main class="how-main">
+      <section class="how-intro">
+        <h1>Here’s how it works.</h1>
+        <p>New York is full of little groups of people who make time for each other, and lovely neighborhood spots that could use a few more people on a quiet night. We thought, why not introduce them?</p>
+      </section>
+
+      <section class="how-steps3" aria-label="Three steps">
+        <article>
+                    <figure class="tile big"><span class="meta"><span>Hello, my name is</span><span>01</span></span><img src="sketches-mono/name-tags.svg" alt="Hello, my name is" loading="lazy" /></figure>
+          <h2><b>01</b> Tell us a little about yourself.</h2>
+          <p>Have a club looking for somewhere to meet? Or a space that could use a little more company? We’d love to hear about it.</p>
+        </article>
+        <article>
+                    <figure class="tile big"><span class="meta"><span>The right neighborhood</span><span>02</span></span><img src="sketches-mono/pilot-map.svg" alt="The right neighborhood" loading="lazy" /></figure>
+          <h2><b>02</b> We’ll see who might get along.</h2>
+          <p>We look for places and groups that make sense together: the right neighborhood, the right night, the right kind of crowd. Nothing gets booked until everyone’s happy with the plan.</p>
+        </article>
+        <article>
+                    <figure class="tile big"><span class="meta"><span>Their night, every week</span><span>03</span></span><img src="sketches-mono/weekly-calendar.svg" alt="Their night, every week" loading="lazy" /></figure>
+          <h2><b>03</b> Make yourself at home.</h2>
+          <p>The first get-together is just the beginning. Hopefully, before long, it’s the spot everyone knows to show up to.</p>
+        </article>
+      </section>
+
+      <section class="sides" aria-label="For venues and for clubs">
+        <article class="side venue">
+          <p class="kicker">Restaurants, bars &amp; cafés</p>
+          <h2>Got a quiet night? We’ve got some ideas.</h2>
+          <div class="side-tiles">
+                      <figure class="tile "><span class="meta"><span>The corner nobody books</span><span>V.1</span></span><img src="sketches-mono/corner-booth.svg" alt="The corner nobody books" loading="lazy" /></figure>
+                      <figure class="tile "><span class="meta"><span>A back room, empty</span><span>V.2</span></span><img src="sketches-mono/floor-plan.svg" alt="A back room, empty" loading="lazy" /></figure>
+          </div>
+          <p>Maybe Mondays are a little slow. Maybe there’s a back room that doesn’t get used much. We find local clubs looking for somewhere to meet regularly and introduce them to places like yours.</p>
+          <h3>Your space. Your rules.</h3>
+          <ul class="ticks">
+            <li>You decide which nights work and how many people you’re comfortable hosting.</li>
+            <li>You set any spending expectations, and you always have the final say before anything is booked.</li>
+            <li>No fee to join the pilot, and your first completed matched event is free of any Coop fee.</li>
+            <li>After that, a small percentage for completed club nights, agreed together in advance.</li>
+          </ul>
+          <button class="pill" data-open="join" data-side="venue">Let’s bring some people in →</button>
+        </article>
+
+        <article class="side club">
+          <p class="kicker">Clubs, communities &amp; little gatherings</p>
+          <h2>Your people deserve a place.</h2>
+          <div class="side-tiles">
+                      <figure class="tile "><span class="meta"><span>What each club brings</span><span>C.1</span></span><img src="sketches-mono/club-kit.svg" alt="What each club brings" loading="lazy" /></figure>
+                      <figure class="tile "><span class="meta"><span>Members just get a text</span><span>C.2</span></span><img src="sketches-mono/no-app-needed.svg" alt="Members just get a text" loading="lazy" /></figure>
+          </div>
+          <p>Maybe your book club keeps hopping between cafés, or your run club needs somewhere to wind down. Tell us what you’re looking for and we’ll help you find a neighborhood spot you can come back to again and again.</p>
+          <h3>No membership fee.</h3>
+          <ul class="ticks">
+            <li>Coop is free for clubs to join.</li>
+            <li>No venue-hunting every week. Just a place for your people.</li>
+            <li>Some places may have a minimum food or drink spend; you’ll know the details before agreeing to anything.</li>
+            <li>Weekly, every other week or monthly: whatever works for your group.</li>
+          </ul>
+          <button class="pill ghost" data-open="join" data-side="club">Let’s find your spot →</button>
+        </article>
+      </section>
+
+      <section class="how-end">
+        <p class="tagline">Because every flock needs one.</p>
+        <p>We’re starting small, right here in NYC. Come be part of it.</p>
+      </section>
+    </main>
+
+    <dialog class="panel" id="p-join" aria-labelledby="t-join">
+      <div class="panel-card">
+        <button class="close" data-close aria-label="Close"><svg><use href="#plus" /></svg></button>
+        <div class="panel-body">
+          <div>
+            <h2 id="t-join">Join the Pilot</h2>
+            <p class="lede">Two minutes. No account.</p>
+
+            <div class="switch" role="tablist" aria-label="Which side are you on?">
+              <button role="tab" id="tab-venue" aria-controls="form-venue" aria-selected="true">I run a venue</button>
+              <button role="tab" id="tab-club" aria-controls="form-club" aria-selected="false" tabindex="-1">I run a club</button>
+            </div>
+
+            <!-- Set data-endpoint to a form service URL (e.g. Formspree) to receive submissions. -->
+            <form class="intake" id="form-venue" role="tabpanel" aria-labelledby="tab-venue" data-endpoint="" novalidate>
+              <label><span>Venue name</span><input name="venue" required autocomplete="organization" /></label>
+              <label><span>Your name</span><input name="name" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>Neighborhood</span>
+                <select name="area"><option>Chelsea</option><option>Flatiron</option><option>East Village</option><option>Lower East Side</option><option>Somewhere else</option></select>
+              </label>
+              <fieldset>
+                <legend>Your quiet nights</legend>
+                <div class="chips">
+                  <label><input type="checkbox" name="nights" value="Mon" /><span>Mon</span></label>
+                  <label><input type="checkbox" name="nights" value="Tue" /><span>Tue</span></label>
+                  <label><input type="checkbox" name="nights" value="Wed" /><span>Wed</span></label>
+                  <label><input type="checkbox" name="nights" value="Thu" /><span>Thu</span></label>
+                  <label><input type="checkbox" name="nights" value="Fri" /><span>Fri</span></label>
+                  <label><input type="checkbox" name="nights" value="Sat" /><span>Sat</span></label>
+                  <label><input type="checkbox" name="nights" value="Sun" /><span>Sun</span></label>
+                </div>
+              </fieldset>
+              <label><span>Group size you could host</span>
+                <select name="capacity"><option>10–20</option><option>20–30</option><option>30–40</option><option>40+</option></select>
+              </label>
+              <button class="pill" type="submit">Send it</button>
+              <p class="small">Sending this isn't a booking. We'll only use it to talk to you about the pilot.</p>
+              <p class="done" hidden></p>
+            </form>
+
+            <form class="intake" id="form-club" role="tabpanel" aria-labelledby="tab-club" data-endpoint="" novalidate hidden>
+              <label><span>Club name</span><input name="club" required /></label>
+              <label><span>Your name</span><input name="name" required autocomplete="name" /></label>
+              <label><span>Email</span><input name="email" type="email" required autocomplete="email" /></label>
+              <label><span>Instagram or link</span><input name="link" placeholder="@yourclub" /></label>
+              <label><span>What do you do?</span>
+                <select name="type"><option>Run club</option><option>Book club</option><option>Craft night</option><option>Game night</option><option>Language exchange</option><option>Supper club</option><option>Writing group</option><option>Wellness group</option><option>Something else</option></select>
+              </label>
+              <label><span>How many usually show up?</span>
+                <select name="turnout"><option>Under 10</option><option>10–20</option><option>20–35</option><option>35+</option></select>
+              </label>
+              <label><span>How often?</span>
+                <select name="cadence"><option>Weekly</option><option>Every other week</option><option>Monthly</option></select>
+              </label>
+              <button class="pill" type="submit">Send it</button>
+              <p class="small">Free for clubs. You can turn down any match.</p>
+              <p class="done" hidden></p>
+            </form>
+          </div>
+          <img class="panel-sketch" src="sketches-mono/name-tags.svg" alt="" />
+        </div>
+      </div>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>

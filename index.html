@@ -4,97 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Coop — Because every flock needs one</title>
-    <meta
-      name="description"
-      content="Coop fills quiet nights at NYC restaurants, bars and cafés with the run clubs, book clubs and supper clubs that need a regular table."
-    />
+    <meta name="description" content="Coop brings NYC clubs and neighborhood spots together. Clubs find somewhere to keep coming back to; restaurants, bars and cafés get a few more familiar faces." />
     <meta name="theme-color" content="#ffffff" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
-    <!-- Plus icon, reused by every nav item -->
+  <body class="landing">
     <svg class="defs" aria-hidden="true">
       <symbol id="plus" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="12" />
         <path d="M12 6.5v11M6.5 12h11" stroke="#f5f5f5" stroke-width="2.6" stroke-linecap="round" />
       </symbol>
     </svg>
+    <header class="topbar">
+      <a class="brand" href="index.html"><img src="hero/wordmark.svg" alt="Coop" width="990" height="340" /></a>
+      <nav class="side-links" aria-label="Join">
+        <button data-open="join" data-side="venue">I run a venue</button>
+        <button data-open="join" data-side="club">I run a club</button>
+      </nav>
+    </header>
 
-    <div class="page">
-      <header class="card hello">
-        <div class="hello-top">
-          <h1 class="brand"><img src="hero/wordmark.svg" alt="Coop" width="990" height="340" /></h1>
-
-          <nav class="plus-nav" aria-label="About Coop">
-            <button data-open="how"><svg><use href="#plus" /></svg>How it works</button>
-          </nav>
-
-          <nav class="side-links" aria-label="Join">
-            <button data-open="join">Join the pilot</button>
-            <button data-open="join" data-side="venue">I run a venue</button>
-            <button data-open="join" data-side="club">I run a club</button>
-          </nav>
+    <main class="flip demo">
+      <div class="flip-copy">
+        <h1 class="tagline">Because every flock needs one.</h1>
+        <p class="intro">
+          We match social clubs with restaurants, bars and cafés that have empty seats on their
+          slow nights. The club gets a table it can count on. The venue gets regulars.
+        </p>
+        <div class="flip-tabs" role="tablist" aria-label="How Coop works, in four steps">
+          <button role="tab" aria-selected="true" aria-label="1, the venue" style="--c:#3E7396">1</button>
+          <button role="tab" aria-selected="false" aria-label="2, the clubs" style="--c:#C4572B">2</button>
+          <button role="tab" aria-selected="false" aria-label="3, the match" style="--c:#7B7A2C">3</button>
+          <button role="tab" aria-selected="false" aria-label="4, the regulars" style="--c:#B8232F">4</button>
         </div>
-
-        <figure class="four-steps">
-          <img src="hero/four-steps.svg" width="2000" height="1060"
-            alt="How Coop works in four steps: 1, a venue empty on a slow night; 2, clubs (knit, book, art, chess, run, language) with nowhere regular to meet; 3, Coop matches them on area, size and night, and both say yes; 4, the club fills a long table every week." />
-        </figure>
-
-        <div class="hello-words">
-          <p class="tagline">Because every flock needs one.</p>
-          <p class="intro">
-            We match social clubs with restaurants, bars and cafés that have empty seats on their
-            slow nights. The club gets a table it can count on. The venue gets regulars.
-          </p>
-        </div>
-      </header>
-    </div>
-
-    <!-- ============ HOW IT WORKS ============ -->
-    <dialog class="panel how" id="p-how" aria-labelledby="t-how">
-      <div class="panel-card">
-        <button class="close" data-close aria-label="Close"><svg><use href="#plus" /></svg></button>
-        <h2 id="t-how">How it works</h2>
-
-        <ol class="how-steps">
-          <li class="s1"><span class="n">01</span><b>The venue</b>
-            <p>A great spot that sits half-empty on its slow nights. Venues tell us which nights, how many seats, and any minimum.</p></li>
-          <li class="s2"><span class="n">02</span><b>The clubs</b>
-            <p>Knit, book, art, run and language clubs: plenty of people, no regular place to meet.</p></li>
-          <li class="s3"><span class="n">03</span><b>The match</b>
-            <p>We pair a club with a venue that fits on area, size and night. Both sides say yes before anything is booked.</p></li>
-          <li class="s4"><span class="n">04</span><b>The regulars</b>
-            <p>Same table, same club, every week. Reminders, headcounts, and a short recap after each night.</p></li>
-        </ol>
-
-        <div class="how-sides">
-          <section>
-            <h3>For venues</h3>
-            <ul class="ticks">
-              <li>You pick the nights, the seats and any minimum spend.</li>
-              <li>Nothing's booked without your OK.</li>
-              <li>Headcounts ahead of time, and one person to talk to.</li>
-              <li>Free to list. Your first matched night has no fee.</li>
-            </ul>
-            <button class="pill" data-open="join" data-side="venue">I run a venue →</button>
-          </section>
-          <section>
-            <h3>For clubs</h3>
-            <ul class="ticks">
-              <li>A place that fits your size, neighborhood and budget.</li>
-              <li>One standing night, no renegotiating every week.</li>
-              <li>Members don't need an app or an account.</li>
-              <li>Always free for clubs. Turn down any match.</li>
-            </ul>
-            <button class="pill ghost" data-open="join" data-side="club">I run a club →</button>
-          </section>
-        </div>
+        <a class="plus-link" href="how.html"><svg><use href="#plus" /></svg>How it works</a>
       </div>
-    </dialog>
+
+      <figure class="flip-stage" id="flip-stage" aria-live="polite">
+        <img class="on" src="hero/flip-step1.svg" width="900" height="900" alt="1, the venue: a bar with four empty stools and an empty table on a slow night." />
+        <img src="hero/flip-step2.svg" width="900" height="900" alt="2, the clubs: knit, book, art, run, chess and talk, with nowhere regular to meet." loading="lazy" />
+        <img src="hero/flip-step3.svg" width="900" height="900" alt="3, the match: the Coop house with the egg, right area, right size, right night." loading="lazy" />
+        <img src="hero/flip-step4.svg" width="900" height="900" alt="4, the regulars: the long table with lamps lit, one chair saved for you." loading="lazy" />
+      </figure>
+    </main>
 
     <dialog class="panel" id="p-join" aria-labelledby="t-join">
       <div class="panel-card">

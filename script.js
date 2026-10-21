@@ -85,3 +85,26 @@ document.querySelectorAll('.intake').forEach((form) => {
     }
   });
 });
+
+// ---------- Flip-through (landing) ----------
+(() => {
+  const stage = document.getElementById('flip-stage');
+  if (!stage) return;
+  const imgs = [...stage.querySelectorAll('img')];
+  const tabs = [...document.querySelectorAll('.flip-tabs [role="tab"]')];
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, timer;
+
+  function show(k) {
+    i = (k + imgs.length) % imgs.length;
+    imgs.forEach((im, j) => im.classList.toggle('on', j === i));
+    tabs.forEach((t, j) => t.setAttribute('aria-selected', j === i));
+  }
+  function restart() { clearInterval(timer); if (!still) timer = setInterval(() => show(i + 1), 4200); }
+
+  tabs.forEach((t, k) => t.addEventListener('click', () => { show(k); restart(); }));
+  stage.addEventListener('click', () => { show(i + 1); restart(); });
+  stage.addEventListener('mouseenter', () => clearInterval(timer));
+  stage.addEventListener('mouseleave', restart);
+  restart();
+})();
